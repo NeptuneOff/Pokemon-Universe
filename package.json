@@ -1,0 +1,13 @@
+{
+  "name": "pokemon-universe-meridian",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Campagne pilote PC et coopération asymétrique à deux joueurs",
+  "scripts": {
+    "start": "node server.cjs",
+    "test": "node --test tests/*.test.cjs"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

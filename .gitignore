@@ -1,0 +1,11 @@
+.sessions/
+node_modules/
+*.log
+.DS_Store
+screenshots/
+data/*-source.ts
+data/*-raw.json
+data/names.csv
+data/species.csv
+
+assets/pokemon/

@@ -1,0 +1,10 @@
+{
+  "retrieval_date": "2026-10-15",
+  "sha256": {
+    "moves-source.ts": "738b8cfc1ca491537c0188546ab697942aaa313c5e6be83a5432edd5dd8997f7",
+    "pokedex-source.ts": "73048386b864be5aff093e9393acf32e8016299e9d7b76078bf5120b769e2fe0",
+    "learnsets-source.ts": "26969c5e9ca7310b701612da8c9cea217b7d43efb8cd22a7e46783a6ca9b386e",
+    "names.csv": "820cde17074cdb1c2b0595c997fb8f998e773bd5da3bb525dec85703c86c5fd9",
+    "species.csv": "e66e2eeb25fd3836b0ebab6bf87bbf01960aa3c0555e2bac495fa8393c5e0c45"
+  }
+}
