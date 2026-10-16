@@ -1,5 +1,7 @@
 # De la campagne pilote au jeu complet
 
+> Ce document décrit le prototype web archivé. La base actuelle et son ordre de migration sont dans [PLATINUM-BASE.md](PLATINUM-BASE.md).
+
 ## Contrat de produit
 
 Le jeu final doit être une aventure PC complète, jouable en duo sur deux machines, traversant les sept premières régions dans un récit progressif. Tous les Pokémon du catalogue actuel et toutes les Méga-Évolutions doivent être obtenables et cohérents visuellement. Les autres mécaniques de transformation de combat demandées à l’exclusion restent absentes.

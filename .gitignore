@@ -9,3 +9,8 @@ data/names.csv
 data/species.csv
 
 assets/pokemon/
+
+# Personal game inputs and saves for the native Platinum base
+*.nds
+*.sav
+native-runtime/

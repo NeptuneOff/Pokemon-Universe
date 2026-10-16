@@ -1,0 +1,4 @@
+[submodule "engine/platinum"]
+	path = engine/platinum
+	url = https://github.com/cybervisi0n/pokeplatinum.git
+	shallow = true

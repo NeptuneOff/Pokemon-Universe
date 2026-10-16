@@ -1,3 +1,9 @@
+# Nouvelle base native
+
+Code existant : [cybervisi0n/pokeplatinum](https://github.com/cybervisi0n/pokeplatinum), dérivé de pret/pokeplatinum et des bibliothèques libntr. Les auteurs amont ne sont pas affiliés à Universe. Leurs notices restent dans les sources référencées.
+
+Les crédits ci-dessous concernent uniquement le prototype web archivé.
+
 # Crédits et provenance
 
 ## Code original de cette version
