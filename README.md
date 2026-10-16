@@ -1,6 +1,6 @@
 # Pokémon Universe — Méridien
 
-**Prototype PC jouable, version 0.1. Ce dépôt ne contient pas encore le jeu complet demandé.**
+**Prototype PC jouable, version 0.2. Ce dépôt ne contient pas encore le jeu complet demandé.**
 
 Objectif : une aventure continue dans les sept premières régions, tous les Pokémon, toutes les Méga-Évolutions recensées (y compris Z-A), une direction artistique pixel art commune et une véritable campagne en coopération à deux joueurs. Pas de capacités Z, Dynamax, Gigamax ni Téracristallisation.
 
@@ -26,6 +26,18 @@ Le second joueur n’a pas besoin d’installer Node.js. Il reçoit le client et
 
 **Reconnexion :** ouvrir la même adresse dans le même navigateur, puis **Jouer en duo → Reprendre ma connexion**. Les jetons de connexion sont propres à chaque navigateur. Le serveur conserve les parties dans `.sessions/`, exclu de Git. Copier ce dossier sauvegarde le monde commun ; l’export solo ne remplace pas cette sauvegarde coop.
 
+## Échanger avec son partenaire
+
+Les deux joueurs doivent être connectés au même relais, hors combat. Ouvrir **Menu → Échanger avec mon partenaire**.
+
+1. Choisir un Pokémon de son équipe, des Balls et/ou des potions, puis **Mettre à jour mon offre**. Un don sans contrepartie est possible.
+2. Vérifier les deux offres affichées. Chacun choisit **Confirmer cet échange**. Toute modification annule les confirmations.
+3. À la seconde confirmation, le serveur transfère les deux offres ensemble et sauvegarde les deux équipes. Le Pokédex du destinataire enregistre le Pokémon reçu.
+
+Les équipes restent entre un et six Pokémon. Pour proposer un Pokémon du refuge, l’ajouter d’abord à l’équipe. Pendant l’échange, les équipes et les sacs sont réservés : pas de combat, déplacement ou gestion d’équipe. Chacun peut annuler ; après dix minutes, l’offre expire sans transfert. Une reconnexion reprend l’offre en cours ou récupère le résultat sauvegardé.
+
+Cette version échange uniquement les Pokémon de l’équipe, les Balls et les potions. **Les évolutions déclenchées par échange ne sont pas encore implémentées.** Les niveaux, capacités, PP, PV et gemmes équipées sont conservés.
+
 ## Commandes
 
 | Action | Commande |
@@ -48,13 +60,14 @@ Au départ, parler à Lise devant le laboratoire au nord. Le centre Pokémon soi
 - Combats majeurs à deux contre deux adversaires actifs, avec relève. Chaque joueur choisit son action ; le serveur résout le tour quand les deux décisions sont arrivées.
 - Nom, couleur de veste et tempérament contribuent à une graine personnelle enregistrée. Les textes de découvertes secondaires varient selon cette graine et la région.
 - Deux votes de fin de chapitre : publication des preuves, restauration des habitats, ou compromis si les choix divergent. Ils changent le bilan et les ressources accordées pour la suite.
+- Échanges et dons de Pokémon, Balls et potions avec double confirmation et transfert atomique.
 - Sauvegarde commune sur le PC hôte et reprise avec les mêmes jetons.
 
 Les combats sauvages et les gardes de route restent personnels dans cette version. Les quêtes personnelles sont encore des variantes courtes, pas des embranchements complets de plusieurs heures.
 
 ## Données et limites
 
-| Domaine | État de la version 0.1 |
+| Domaine | État de la version 0.2 |
 |---|---|
 | Pokédex | 1 025 espèces de base importées ; formes régionales et variantes Méga supplémentaires |
 | Disponibilité | Espèces accessibles via les bureaux des habitats des sept régions ; légendaires après la campagne |
@@ -78,13 +91,22 @@ npm test
 npm start
 ```
 
-Aucune dépendance npm n’est nécessaire pour jouer, héberger ou exécuter les tests unitaires et d’intégration HTTP. Les tests navigateur requièrent Playwright et un Chromium local, séparément.
+Aucune dépendance npm n’est nécessaire pour jouer, héberger ou exécuter les tests unitaires et d’intégration HTTP. Le test navigateur optionnel vérifie deux clients indépendants, un échange et les reconnexions avant et après transfert :
+
+```bash
+npm install --no-save playwright
+npx playwright install chromium
+node tests/browser-trade.cjs
+```
+
+Il utilise un dossier temporaire et ne modifie pas les sauvegardes de jeu.
 
 - `src/core.js` : règles de combat et validation des sauvegardes.
 - `src/world.js` : cartes, collisions et interactions.
 - `src/game.js` : client, rendu, exploration et combats solo.
 - `src/coop-client.inc.js` : adaptateur coop, inséré dans `game.js` par `tools/assemble_coop.py`.
 - `server.cjs` : parties communes, API, persistance et combats coop.
+- `src/trade.cjs` : validation des offres et transaction d’échange.
 - `data/campaign.js` : scénario et progression.
 - `data/game-data.js` : catalogue généré, autonome hors ligne.
 - `tools/` : import et préparation des ressources. Les images sont regroupées dans `assets/pokemon-*.js` ; `python tools/unpack_sprites.py` restitue les PNG éditables et `python tools/pack_sprites.py` les regroupe à nouveau.

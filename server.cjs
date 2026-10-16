@@ -20,6 +20,7 @@ vm.runInNewContext(
 const D = ctx.window.GAME_DATA,
   R = ctx.window.CAMPAIGN,
   C = require("./src/core.js");
+const Trade = require("./src/trade.cjs");
 const sessions = new Map();
 fs.mkdirSync(STORE, { recursive: true });
 for (const f of fs.readdirSync(STORE)) {
@@ -80,6 +81,7 @@ function auth(req) {
   let p = s.players.find((p) => p.token === key);
   if (!p) fail("Jeton de joueur invalide.", 403);
   p.online = Date.now();
+  if (Trade.expire(s)) persist(s);
   return { s, p };
 }
 function snapshot(s, p) {
@@ -106,6 +108,8 @@ function snapshot(s, p) {
         : null,
     })),
     game: p.game,
+    gameEpoch: p.gameEpoch || 0,
+    trade: Trade.view(s),
   };
 }
 function bump(s) {
@@ -118,6 +122,7 @@ function at(p, zone) {
   return p.game.region;
 }
 function event(s, p, b) {
+  if (Trade.pending(s)) fail("Terminez ou annulez l’échange.", 409);
   let i = p.game?.region;
   if (!Number.isInteger(i)) fail("Choisis d’abord ton partenaire.");
   let r = R[i];
@@ -514,9 +519,22 @@ const server = http.createServer(async (req, res) => {
         result = { token: p.token, ...snapshot(s, p) };
       } else {
         let { s, p } = auth(req);
-        if (url.pathname === "/api/sync" && req.method === "POST") {
+        if (url.pathname === "/api/trade" && req.method === "POST") {
+          const next = Trade.transact(s, p.id, body);
+          persist(next);
+          sessions.set(s.code, next);
+          result = snapshot(
+            next,
+            next.players.find((x) => x.id === p.id),
+          );
+        } else if (url.pathname === "/api/sync" && req.method === "POST") {
+          p.activity = body.activity === "battle" ? "battle" : "world";
           let g = body.game;
-          if (g) {
+          if (
+            g &&
+            !Trade.pending(s) &&
+            (body.gameEpoch || 0) === (p.gameEpoch || 0)
+          ) {
             C.validateSave(g, D);
             let unlocked = s.progress.findIndex((x) => x !== 4);
             if (unlocked < 0) unlocked = 6;
@@ -547,6 +565,7 @@ const server = http.createServer(async (req, res) => {
           event(s, p, body);
           result = snapshot(s, p);
         } else if (url.pathname === "/api/ready" && req.method === "POST") {
+          if (Trade.pending(s)) fail("Terminez ou annulez l’échange.", 409);
           at(p, "site");
           if (s.battle)
             fail("Attends la fin et la validation du combat précédent.");

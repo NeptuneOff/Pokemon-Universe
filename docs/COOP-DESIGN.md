@@ -38,3 +38,16 @@ Le serveur fait autorité sur les étapes de campagne, les votes et les tours de
 ## À étendre
 
 Des combats ne doivent pas remplacer toutes les interactions coopératives. Prévoir : exploration simultanée de deux lieux, témoignages contradictoires, escorte pendant une réparation, observation discrète et capture consentie, ressources transférables, choix différés dont le partenaire constate les conséquences, et résolution de désaccords sans bloquer définitivement l’histoire.
+
+
+## Échanges au relais (0.2)
+
+Les deux personnages doivent être connectés, hors combat et dans le même relais. Une offre contient au maximum un Pokémon de l’équipe, 99 Balls et 99 potions, dans la limite du stock. Les dons sont permis ; ni équipe vide ni équipe de plus de six Pokémon ne sont autorisées.
+
+Chaque offre porte un identifiant et une version. Modifier une offre efface les deux confirmations. Une confirmation portant sur une ancienne version est refusée ; le joueur doit relire le récapitulatif. Après les deux confirmations, le serveur prépare les deux inventaires dans une copie de la session, écrit le résultat, puis remplace la session en mémoire. Si l’écriture échoue, aucun inventaire en mémoire n’est transféré et la confirmation peut être réessayée.
+
+Pendant une offre en cours, le serveur ignore les changements d’équipe et d’inventaire des synchronisations ordinaires et refuse les événements de campagne et les préparations de combat. Après le transfert, chaque joueur reçoit un nouveau compteur `gameEpoch`. Une synchronisation portant l’ancien compteur ne peut pas rétablir le Pokémon donné ou les anciens stocks. Le client adopte les données serveur avant d’envoyer le nouveau compteur.
+
+Les offres et confirmations sont sauvegardées avec la session. Une déconnexion ne confirme rien à la place du joueur. Il peut reprendre avec son jeton ; son partenaire peut annuler sans attendre. Une offre expire dix minutes après son ouverture, à la prochaine requête authentifiée. Une transaction déjà terminée ne peut pas être rejouée.
+
+Cela protège contre les conflits entre clients ordinaires et les requêtes périmées. Cela ne rend pas l’ensemble du jeu anti-triche : les équipes solo restent déclarées par les clients. Les évolutions par échange ne sont pas encore résolues.

@@ -4,7 +4,7 @@
 
 Le jeu final doit être une aventure PC complète, jouable en duo sur deux machines, traversant les sept premières régions dans un récit progressif. Tous les Pokémon du catalogue actuel et toutes les Méga-Évolutions doivent être obtenables et cohérents visuellement. Les autres mécaniques de transformation de combat demandées à l’exclusion restent absentes.
 
-La version 0.1 vérifie des bases techniques. Elle ne satisfait pas encore le contrat de produit final.
+La version 0.2 vérifie des bases techniques. Elle ne satisfait pas encore le contrat de produit final.
 
 ## 1. Solidifier le moteur
 
@@ -24,7 +24,8 @@ La version 0.1 vérifie des bases techniques. Elle ne satisfait pas encore le co
 - [x] Rôles, indices complémentaires, rapports croisés et combats communs.
 - [x] Décisions conjointes avec trois issues de récompense.
 - [x] Persistance serveur et reconnexion du navigateur.
-- [ ] Échanges de Pokémon et d’objets transactionnels.
+- [x] Échanges de Pokémon de l’équipe, Balls et potions avec double confirmation et transfert transactionnel.
+- [ ] Étendre les échanges au refuge, aux autres objets et aux évolutions associées.
 - [ ] Capture partagée optionnelle et rencontres scénarisées communes.
 - [ ] Sauvegarde résistante aux interruptions brutales et migration de schéma.
 - [ ] Arbitrage exhaustif des événements, inventaires et déplacements côté serveur.

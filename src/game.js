@@ -319,6 +319,7 @@
     toast(map.name);
   }
   async function interact(o) {
+    if (trading()) return tradeUI();
     if (!o || battle || !overlay.classList.contains("hidden")) return;
     if (await coopInteract(o)) return;
     const i = state.region,
@@ -653,6 +654,7 @@
     rowButtons([["Retour", close, true]]);
   }
   function partyMenu(inBattle = false) {
+    if (trading()) return tradeUI();
     if (!state) return;
     if (battle && !inBattle) return;
     modal(
@@ -775,6 +777,7 @@
     );
   }
   function boxMenu() {
+    if (trading()) return tradeUI();
     modal(
       '<div class="eyebrow">REFUGE</div><h2>Les autres partenaires.</h2><p>Sélectionne un Pokémon du refuge pour l’échanger avec le premier de ton équipe. Si une place est libre, il rejoint directement l’équipe.</p><div class="entries" id="boxEntries"></div>',
     );
@@ -791,6 +794,7 @@
     rowButtons([["Retour", () => partyMenu(), true]]);
   }
   function dex() {
+    if (trading()) return tradeUI();
     if (!state || battle) return;
     modal(
       '<div class="eyebrow">POKÉDEX MONDIAL</div><h2>' +
@@ -835,6 +839,7 @@
     rowButtons([["Fermer", close, true]]);
   }
   function journal() {
+    if (trading()) return tradeUI();
     if (!state || battle) return;
     modal(
       '<div class="eyebrow">LE FIL DE L’ENQUÊTE</div><h2>Sept étapes. Une histoire.</h2>' +
@@ -870,6 +875,7 @@
     setTimeout(() => URL.revokeObjectURL(u), 1000);
   }
   function menu() {
+    if (trading()) return tradeUI();
     if (!state) return title();
     if (battle || net?.snapshot?.battle?.status === "active") return;
     modal(
@@ -881,6 +887,7 @@
     );
     rowButtons([
       ["Reprendre", close],
+      ...(net ? [["Échanger avec mon partenaire", openTrade]] : []),
       ["Sauvegarder", () => save(true)],
       ["Exporter la sauvegarde", exportSave],
       [
@@ -930,6 +937,7 @@
   }
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
   function startBattle(enemies, kind) {
+    if (trading()) return tradeUI();
     if (!state.party.some((m) => m.hp > 0)) {
       heal();
       return toast("Ton équipe a été soignée.");
@@ -1642,6 +1650,10 @@
     if (["arrowup", "arrowdown", "arrowleft", "arrowright", " "].includes(k))
       e.preventDefault();
     if (e.repeat && ["e", "enter", "escape"].includes(k)) return;
+    if (trading()) {
+      if (k === "escape") tradeUI();
+      return;
+    }
     if (k === "escape") {
       if (battle) {
         if (!overlay.classList.contains("hidden")) {
@@ -1692,6 +1704,13 @@
   let net = null,
     netTimer = null;
   async function api(route, body) {
+    // Capture the inventory epoch with the outgoing state, never after awaiting I/O.
+    if (route === "sync")
+      body = {
+        ...body,
+        gameEpoch: net?.gameEpoch || 0,
+        activity: battle ? "battle" : "world",
+      };
     let headers = { "Content-Type": "application/json" };
     if (net) {
       headers["X-Session"] = net.code;
@@ -1783,7 +1802,18 @@
     }
   }
   function applyNet(s) {
-    if (!net) return;
+    if (!net || s.revision < (net.revision || 0)) return;
+    if (
+      state &&
+      s.game &&
+      (s.gameEpoch !== (net.gameEpoch || 0) ||
+        (s.trade?.status === "pending" &&
+          net.snapshot?.trade?.id !== s.trade.id))
+    ) {
+      state = cloneJSON(s.game);
+      map = World.make(state.region, state.zone);
+    }
+    net.gameEpoch = s.gameEpoch || 0;
     net.snapshot = s;
     net.revision = s.revision;
     if (!state) return;
@@ -1846,6 +1876,29 @@
         );
       }
     } else document.querySelector(".coop-ui")?.remove();
+    if (s.trade?.status === "pending") {
+      if (battle) {
+        if (!net.cancellingTrade) {
+          net.cancellingTrade = true;
+          api("trade", { action: "cancel", id: s.trade.id })
+            .then(applyNet)
+            .catch((e) => toast(e.message))
+            .finally(() => {
+              if (net) net.cancellingTrade = false;
+            });
+        }
+      } else tradeUI();
+    } else if (net.tradeKey) {
+      net.tradeKey = null;
+      close();
+      toast(
+        s.trade?.status === "completed"
+          ? "Échange terminé et sauvegardé pour vous deux."
+          : s.trade?.status === "expired"
+            ? "Échange expiré. Rien n’a été transféré."
+            : "Échange annulé. Rien n’a été transféré.",
+      );
+    }
     refresh();
     let partner = s.players.find((p) => p.id !== net.id);
     $("saveStatus").textContent =
@@ -2214,6 +2267,136 @@
         "center",
       );
     }
+  }
+
+  function trading() {
+    return net?.snapshot?.trade?.status === "pending";
+  }
+  async function openTrade() {
+    if (!net || !state || battle) return;
+    try {
+      applyNet(await api("sync", { game: state, revision: net.revision }));
+      applyNet(await api("trade", { action: "open" }));
+    } catch (e) {
+      toast(e.message);
+    }
+  }
+  async function sendTrade(action, extra = {}) {
+    const t = net?.snapshot?.trade;
+    if (!t) return;
+    try {
+      applyNet(
+        await api("trade", { action, id: t.id, version: t.version, ...extra }),
+      );
+    } catch (e) {
+      toast(e.message);
+      try {
+        applyNet(await api("state"));
+      } catch {}
+    }
+  }
+  function tradeUI() {
+    const t = net?.snapshot?.trade;
+    if (!t || t.status !== "pending") return;
+    const key = t.id + ":" + t.version;
+    if (net.tradeKey === key && $("tradePanel")) return;
+    net.tradeKey = key;
+    const mine = t.offers[net.id],
+      other = net.snapshot.players.find((p) => p.id !== net.id);
+    const summarize = (id) => {
+      const o = t.offers[id],
+        m = t.preview?.[id];
+      return (
+        (m
+          ? name(m) +
+            " · niv. " +
+            m.level +
+            " · PV " +
+            m.hp +
+            "/" +
+            maxhp(m) +
+            " · " +
+            m.moves.map((id) => D.moves[id].name).join(", ")
+          : "Aucun Pokémon") +
+        " · " +
+        o.balls +
+        " Balls · " +
+        o.potions +
+        " potions"
+      );
+    };
+    modal(
+      '<div id="tradePanel"><div class="eyebrow">ÉCHANGE AU RELAIS</div><h2>Un accord à deux.</h2>' +
+        "<p>Vos équipes et sacs sont réservés pendant cet échange. Chaque modification annule les deux confirmations. Sans accord sous dix minutes, rien ne sera transféré.</p>" +
+        "<h3>Tu donnes</h3><p>" +
+        escape(summarize(net.id)) +
+        "</p>" +
+        "<h3>" +
+        escape(other.profile.name) +
+        " donne</h3><p>" +
+        escape(summarize(other.id)) +
+        "</p>" +
+        '<label>Pokémon de ton équipe<select id="tradePokemon"><option value="">Aucun Pokémon</option>' +
+        state.party
+          .map(
+            (m, i) =>
+              '<option value="' +
+              i +
+              '"' +
+              (mine.slot === i ? " selected" : "") +
+              ">" +
+              escape(name(m) + " · niv. " + m.level) +
+              "</option>",
+          )
+          .join("") +
+        "</select></label>" +
+        '<label>Balls à donner<input id="tradeBalls" type="number" min="0" max="' +
+        Math.min(99, state.balls) +
+        '" value="' +
+        mine.balls +
+        '"></label>' +
+        '<label>Potions à donner<input id="tradePotions" type="number" min="0" max="' +
+        Math.min(99, state.potions) +
+        '" value="' +
+        mine.potions +
+        '"></label>' +
+        '<p id="tradeStatus" role="status">' +
+        (t.confirmed[net.id]
+          ? "Tu as confirmé. "
+          : "Ta confirmation est attendue. ") +
+        (t.confirmed[other.id]
+          ? "Ton partenaire a confirmé."
+          : "Ton partenaire n’a pas encore confirmé.") +
+        "</p></div>",
+    );
+    const apply = button("Mettre à jour mon offre", () =>
+      sendTrade("offer", {
+        offer: {
+          slot:
+            $("tradePokemon").value === ""
+              ? null
+              : Number($("tradePokemon").value),
+          balls: Number($("tradeBalls").value),
+          potions: Number($("tradePotions").value),
+        },
+      }),
+    );
+    const confirm = button("Confirmer cet échange", () => sendTrade("confirm"));
+    confirm.disabled = !!t.confirmed[net.id];
+    for (const id of ["tradePokemon", "tradeBalls", "tradePotions"])
+      $(id).oninput = () => {
+        confirm.disabled = true;
+        $("tradeStatus").textContent =
+          "Modifications non envoyées : mets ton offre à jour avant de confirmer.";
+      };
+    const row = document.createElement("div");
+    row.className = "row";
+    row.append(
+      apply,
+      confirm,
+      button("Annuler l’échange", () => sendTrade("cancel"), true),
+    );
+    overlay.querySelector(".modal").append(row);
   }
 
   // END COOP ADAPTER
