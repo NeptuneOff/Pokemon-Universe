@@ -11,7 +11,7 @@ La base retenue est le port PC de cybervisi0n, lui-même dérivé de la décompi
 | Base inspectée | Constat | Décision |
 |---|---|---|
 | pret/pokeplatinum | Décompilation visant la production de ROMs DS ; systèmes de cartes et ressources de Platine | Référence d’origine |
-| cybervisi0n/pokeplatinum | Port PC 64 bits ; exécutables amont ; chargement des ressources d’une ROM USA personnelle ; limitations expérimentales annoncées | Base PC retenue, exécution à valider |
+| cybervisi0n/pokeplatinum | Port PC 64 bits ; exécutables amont ; chargement des ressources d’une ROM USA personnelle ; limitations expérimentales annoncées | Base PC retenue ; démarrage et introduction FR vérifiés sous Linux |
 | arcanite24/pokeplatinum-portable | Port SDL3 dont le README indique encore une intégration du jeu en cours et des couches audio/fichiers planifiées | Pas retenu pour cette migration |
 
 Révision sélectionnée : `35067868f64f23d25d17ac3e536cfdd9a7f40523`, branche amont `pc_port`. Les dépendances Meson amont incluent des branches mobiles : épingler le seul sous-module ne garantit pas encore la reproductibilité de toutes les bibliothèques.
@@ -34,9 +34,9 @@ La logique de règles doit venir du jeu existant. Les tests et le scénario du p
 ## Ordre de migration
 
 1. Initialiser la source PC épinglée. **Fait dans le dépôt sous forme de sous-module.**
-2. Valider le lancement avec une ROM USA CPUE01 personnelle, puis comparer une scène et un combat avec Platine. **Non réalisé.**
-3. Définir et vérifier les réglages de rendu conservant l’apparence d’origine, y compris caméra, proportions et interface. **Non réalisé.**
-4. Produire une modification minimale du scénario sur cette base et vérifier la sauvegarde. **Non réalisé.**
+2. Valider le lancement avec une ROM USA CPUE01 personnelle, puis comparer une scène et un combat avec Platine. **Démarrage et introduction FR vérifiés ; scène du monde et combat restent à contrôler.**
+3. Définir et vérifier les réglages de rendu conservant l’apparence d’origine, y compris caméra, proportions et interface. **Préréglage DS ×1, 512 ×768 et écrans verticaux appliqués.**
+4. Produire une modification minimale du scénario sur cette base et vérifier la sauvegarde. **Premier dialogue Universe appliqué ; sauvegarde à vérifier.**
 5. Réaliser une petite zone réellement coopérative sur deux PC, avec deux identités, décisions et équipes distinctes. **Non réalisé.**
 6. Étendre ensuite le catalogue, les Méga-Évolutions, les cartes et l’histoire par étapes vérifiées.
 
@@ -50,4 +50,4 @@ Aucune image « officielle Platine » n’existe pour les Pokémon ou régions a
 
 ## Validation de cette étape
 
-Source amont téléchargée et inspectée ; révision contrôlée ; lien Git et procédure de récupération préparés. Aucun exécutable Universe, aucune nouvelle région et aucune coopération native n’ont été produits à cette étape.
+Outils de préparation USA/FR, lanceurs Windows/Linux et premier dialogue Universe ajoutés. L’exécutable utilisé est celui de l’amont v0.1.12, sans compilation Universe. Aucune nouvelle région ni coopération native livrée. Voir [NATIVE-FR.md](NATIVE-FR.md) et [NATIVE-VALIDATION.md](NATIVE-VALIDATION.md).

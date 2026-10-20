@@ -1,26 +1,23 @@
 @echo off
 setlocal
 cd /d "%~dp0"
-git --version >nul 2>&1
+py -3 --version >nul 2>&1
+if not errorlevel 1 (
+  py -3 tools\native\prepare_platinum.py --gui --platform windows
+) else (
+  python --version >nul 2>&1
+  if errorlevel 1 (
+    echo Python 3 est necessaire. Installe-le depuis https://www.python.org/downloads/windows/
+    echo Puis relance PREPARER-PLATINE.bat.
+    pause
+    exit /b 1
+  )
+  python tools\native\prepare_platinum.py --gui --platform windows
+)
 if errorlevel 1 (
-  echo Git est necessaire. Installe Git pour Windows puis relance ce fichier.
+  echo Preparation interrompue. Le dossier existant et ses sauvegardes sont conserves.
   pause
   exit /b 1
 )
-git rev-parse --is-inside-work-tree >nul 2>&1
-if errorlevel 1 (
-  echo Ce dossier doit provenir de git clone, pas de Download ZIP.
-  echo git clone --recurse-submodules https://github.com/NeptuneOff/Pokemon-Universe.git
-  pause
-  exit /b 1
-)
-git submodule update --init engine/platinum
-if errorlevel 1 (
-  echo Preparation interrompue. Consulte le message Git ci-dessus.
-  pause
-  exit /b 1
-)
-echo Source Platine PC preparee. Revision :
-git -C engine/platinum rev-parse HEAD
-echo Aucun jeu Universe compile. Voir README.md et docs/PLATINUM-BASE.md.
+echo Preparation terminee. Lance JOUER-PLATINE.bat.
 pause

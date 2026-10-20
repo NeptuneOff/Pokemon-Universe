@@ -1,4 +1,6 @@
-# Coopération asymétrique — conception et état actuel
+# Coopération asymétrique — archive du prototype web
+
+> Les mécanismes ci-dessous ne sont pas intégrés au moteur natif. Voir [le cahier des charges actuel](CAHIER-DES-CHARGES.md).
 
 ## Idée centrale
 

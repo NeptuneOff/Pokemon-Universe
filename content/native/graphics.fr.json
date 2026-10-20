@@ -1,0 +1,150 @@
+{
+  "schema": 1,
+  "archives": [
+    {
+      "target": "battle/graphic/b_plist_gra.narc",
+      "source": "resource/fra/b_plist/b_plist_gra.narc",
+      "members": 28
+    },
+    {
+      "target": "battle/graphic/batt_obj.narc",
+      "source": "resource/fra/battle_graphic/batt_obj.narc",
+      "members": 279
+    },
+    {
+      "target": "battle/graphic/pl_b_plist_gra.narc",
+      "source": "resource/fra/b_plist/pl_b_plist_gra.narc",
+      "members": 28
+    },
+    {
+      "target": "battle/graphic/pl_batt_obj.narc",
+      "source": "resource/fra/battle_graphic/pl_batt_obj.narc",
+      "members": 343
+    },
+    {
+      "target": "battle/graphic/vs_demo_gra.narc",
+      "source": "resource/fra/vs_demo/vs_demo_gra.narc",
+      "members": 9
+    },
+    {
+      "target": "contest/graphic/contest_bg.narc",
+      "source": "resource/fra/contest_graphic/contest_bg.narc",
+      "members": 41
+    },
+    {
+      "target": "contest/graphic/contest_obj.narc",
+      "source": "resource/fra/contest_graphic/contest_obj.narc",
+      "members": 103
+    },
+    {
+      "target": "data/namein.narc",
+      "source": "resource/fra/nameinput/namein.narc",
+      "members": 19
+    },
+    {
+      "target": "demo/title/titledemo.narc",
+      "source": "resource/fra/title/titledemo.narc",
+      "members": 29
+    },
+    {
+      "target": "graphic/bag_gra.narc",
+      "source": "resource/fra/bag/bag_gra.narc",
+      "members": 39
+    },
+    {
+      "target": "graphic/box.narc",
+      "source": "resource/fra/box/box.narc",
+      "members": 145
+    },
+    {
+      "target": "graphic/imageclip.narc",
+      "source": "resource/fra/dress_up_graphic/imageclip.narc",
+      "members": 236
+    },
+    {
+      "target": "graphic/mystery.narc",
+      "source": "resource/fra/mysterycard/mystery.narc",
+      "members": 46
+    },
+    {
+      "target": "graphic/nutmixer.narc",
+      "source": "resource/fra/nutmixer/nutmixer.narc",
+      "members": 48
+    },
+    {
+      "target": "graphic/pl_bag_gra.narc",
+      "source": "resource/fra/bag/pl_bag_gra.narc",
+      "members": 39
+    },
+    {
+      "target": "graphic/pl_plist_gra.narc",
+      "source": "resource/fra/pokelist/pl_plist_gra.narc",
+      "members": 24
+    },
+    {
+      "target": "graphic/pl_pst_gra.narc",
+      "source": "resource/fra/p_status/pl_pst_gra.narc",
+      "members": 137
+    },
+    {
+      "target": "graphic/plist_gra.narc",
+      "source": "resource/fra/pokelist/plist_gra.narc",
+      "members": 24
+    },
+    {
+      "target": "graphic/poketch.narc",
+      "source": "resource/fra/poketch/poketch.narc",
+      "members": 126
+    },
+    {
+      "target": "graphic/pst_gra.narc",
+      "source": "resource/fra/p_status/pst_gra.narc",
+      "members": 137
+    },
+    {
+      "target": "graphic/touch_subwindow.narc",
+      "source": "resource/fra/touch_subwindow/touch_subwindow.narc",
+      "members": 10
+    },
+    {
+      "target": "graphic/trainer_case.narc",
+      "source": "resource/fra/trainer_case/trainer_case.narc",
+      "members": 66
+    },
+    {
+      "target": "resource/eng/batt_rec/batt_rec_gra.narc",
+      "source": "resource/fra/batt_rec/batt_rec_gra.narc",
+      "members": 234
+    },
+    {
+      "target": "resource/eng/frontier_graphic/frontier_bg.narc",
+      "source": "resource/fra/frontier_graphic/frontier_bg.narc",
+      "members": 173
+    },
+    {
+      "target": "resource/eng/frontier_graphic/frontier_obj.narc",
+      "source": "resource/fra/frontier_graphic/frontier_obj.narc",
+      "members": 45
+    },
+    {
+      "target": "resource/eng/wifi_lobby_minigame/wlmngm_tool.narc",
+      "source": "resource/fra/wifi_lobby_minigame/wlmngm_tool.narc",
+      "members": 27
+    },
+    {
+      "target": "resource/eng/zukan/zukan.narc",
+      "source": "resource/fra/zukan/zukan.narc",
+      "members": 130
+    },
+    {
+      "target": "graphic/font.narc",
+      "source": "graphic/font.narc",
+      "members": 8
+    },
+    {
+      "target": "graphic/pl_font.narc",
+      "source": "graphic/pl_font.narc",
+      "members": 8
+    }
+  ]
+}

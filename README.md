@@ -6,7 +6,7 @@
 
 La nouvelle référence technique est [Pokémon Platinum PC Port](https://github.com/cybervisi0n/pokeplatinum), dérivé de [pret/pokeplatinum](https://github.com/pret/pokeplatinum) et des bibliothèques libntr.
 
-Le sous-module [engine/platinum](engine/platinum) référence exactement le commit `35067868f64f23d25d17ac3e536cfdd9a7f40523`. Il contient le code existant de Platine porté vers PC, sans modifications Universe pour l’instant. Il ne s’agit pas d’un nouveau moteur web imitant Pokémon.
+Le sous-module [engine/platinum](engine/platinum) référence exactement le commit `35067868f64f23d25d17ac3e536cfdd9a7f40523`. Il contient le code existant de Platine porté vers PC, sans modification de sa source. Les outils Universe appliquent séparément un premier dialogue aux ressources françaises locales. Il ne s’agit pas d’un nouveau moteur web imitant Pokémon.
 
 ```bash
 git clone --recurse-submodules https://github.com/NeptuneOff/Pokemon-Universe.git
@@ -19,7 +19,20 @@ git pull --ff-only
 git submodule update --init engine/platinum
 ```
 
-Sous Windows, `PREPARER-PLATINE.bat` initialise le sous-module et affiche sa révision. Il ne compile ni n’installe d’outils système. **Download ZIP ne contient pas le code des sous-modules : utiliser Git pour cette base.**
+## Lancer la base native en français
+
+Sous Windows : **`PREPARER-PLATINE.bat`**, sélectionner ses ROM personnelles USA Rev 1 et France (`.nds` ou ZIP), puis **`JOUER-PLATINE.bat`**. Python 3 est requis pour la préparation. Le port est téléchargé et vérifié automatiquement ; aucune compilation n’est demandée.
+
+Le ZIP du dépôt suffit pour cette préparation. Pour développer le moteur, utiliser Git et `INITIALISER-SOURCES-PLATINE.bat`.
+
+Sous Linux :
+
+```bash
+python3 tools/native/prepare_platinum.py --us /chemin/usa.zip --fr /chemin/fr.zip
+python3 tools/native/launch_platinum.py
+```
+
+[Mode d’emploi et dépannage](docs/NATIVE-FR.md).
 
 ## Direction visuelle obligatoire
 
@@ -31,10 +44,10 @@ Sous Windows, `PREPARER-PLATINE.bat` initialise le sous-module et affiche sa ré
 
 ## État réel
 
-**Ce changement prépare la base ; il ne livre pas encore Pokémon Universe sur ce moteur.** Le port amont est expérimental et annonce des bugs graphiques ou des plantages possibles. Nous n’avons pas encore validé son exécution dans cet environnement.
+**La base native démarre sous Linux avec les textes français et une première introduction Universe.** Voir [les contrôles et limites de validation](docs/NATIVE-VALIDATION.md). Le port amont reste expérimental ; Windows et la campagne complète ne sont pas encore validés ici.
 
-L’amont propose ses propres exécutables dans ses [releases](https://github.com/cybervisi0n/pokeplatinum/releases). Au premier lancement, il demande une ROM personnelle de Platine **USA, CPUE01**, pour charger les ressources originales. Aucun fichier ROM ni ensemble de ressources extraites n’est ajouté ici. Le code référencé est celui de l’amont, pas un travail de portage réalisé par Universe.
+L’amont propose ses propres exécutables dans ses [releases](https://github.com/cybervisi0n/pokeplatinum/releases). L’outil Universe prépare les ressources depuis une ROM personnelle **USA Rev 1, CPUE**, puis importe les textes et plusieurs interfaces de la ROM **France, CPUF**. Aucun fichier ROM ni ensemble de ressources extraites n’est ajouté ici. Le code référencé est celui de l’amont, pas un travail de portage réalisé par Universe.
 
 La coopération narrative à deux PC, les sept régions, les espèces supplémentaires et les Méga-Évolutions restent à intégrer dans cette base. Le multijoueur existant de Platine n’est pas déjà notre campagne coopérative. Les sauvegardes et le serveur JavaScript de Méridien ne sont pas compatibles avec ce moteur C.
 
-Voir [le dossier de migration](docs/PLATINUM-BASE.md). L’ancien mode d’emploi web est conservé dans [ARCHIVE-WEB.md](docs/ARCHIVE-WEB.md), uniquement pour référence.
+Les exigences sont conservées dans [le cahier des charges](docs/CAHIER-DES-CHARGES.md). Voir [le dossier de migration](docs/PLATINUM-BASE.md). L’ancien mode d’emploi web est conservé dans [ARCHIVE-WEB.md](docs/ARCHIVE-WEB.md), uniquement pour référence.

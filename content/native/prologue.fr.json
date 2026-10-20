@@ -1,0 +1,11 @@
+{
+  "id": "universe-prologue-001",
+  "bank": 389,
+  "message": 0,
+  "source_bank_sha256": "3fa0dcfcfc75fd5fe2e285c36876882ead5e791bd2e7c2289f97292d18aa9a61",
+  "text": [
+    "Bonjour !\nBienvenue dans Pokémon Universe !\r",
+    "Des Pokémon quittent leur région\npour des raisons encore inconnues.\r",
+    "À Sinnoh, une enquête commence.\nTon voyage va tout relier.\r"
+  ]
+}
