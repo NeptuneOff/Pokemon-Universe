@@ -15,7 +15,7 @@ Extraire ou cloner le dépôt, puis ouvrir `index.html` dans Chrome, Edge ou Fir
 ### Duo, chacun sur son PC
 
 1. Sur le PC hôte, installer Node.js 22 ou plus récent.
-2. Lancer `DEMARRER-DUO.bat`, ou exécuter `node server.cjs` dans ce dossier.
+2. Lancer `DEMARRER-PROTOTYPE-WEB-ARCHIVE.bat`, ou exécuter `node server.cjs` dans ce dossier.
 3. Ouvrir `http://localhost:8787` sur le PC hôte.
 4. Sur le deuxième PC, ouvrir `http://ADRESSE_IP_DU_PC_HOTE:8787`. L’adresse s’affiche dans le terminal du serveur. Les deux PC doivent être sur le même réseau local ou sur un VPN privé commun.
 5. Le premier joueur choisit **Jouer en duo → Créer la partie**, personnalise son personnage et choisit son partenaire.

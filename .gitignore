@@ -13,6 +13,7 @@ assets/pokemon/
 # Personal game inputs and saves for the native Platinum base
 *.nds
 *.sav
+save.bin
 native-runtime/
 
 __pycache__/

@@ -72,7 +72,11 @@ Le préréglage conserve la résolution interne DS ×1, deux écrans verticaux e
 
 ## Sauvegardes et dépannage
 
-Les lanceurs se placent dans `native-runtime/windows-fr` ou `native-runtime/linux-fr`, où résident les ressources et sauvegardes. Conserver le dossier entier avant une mise à jour.
+Les lanceurs se placent dans `native-runtime/windows-fr` ou `native-runtime/linux-fr`, où résident les ressources et la sauvegarde `save.bin`. Conserver le dossier entier avant une mise à jour. Python 3 sert aussi au lancement Windows pour activer les copies de secours.
+
+Le lanceur copie `save.bin` avant de démarrer le jeu et après sa fermeture, y compris si le jeu renvoie une erreur. Chaque contenu distinct est conservé dans `universe-backups/<sha256>.sav`, sans écraser les copies précédentes. Une copie identique n’est pas dupliquée. Si la copie préalable échoue, le lancement s’arrête et indique l’erreur. Les copies restent locales, sans envoi réseau ni suppression automatique.
+
+Ce mécanisme ne remplace pas **SAUVER** dans le menu du jeu : il copie uniquement les progrès déjà écrits sur disque. Il ne vérifie pas la validité interne de la partie. Fermer le jeu avant de restaurer une copie ; mettre d’abord le `save.bin` actuel à l’abri, puis copier le fichier `.sav` choisi sous le nom `save.bin` dans le même dossier. Trier les copies par date de modification pour les retrouver. Lancer directement `main.exe` ou l’AppImage contourne ce mécanisme.
 
 L’installateur **refuse toute destination déjà existante**. Il ne supprime ni ne remplace une sauvegarde. Utiliser `--output` pour une autre installation. En cas d’échec, seul son dossier temporaire est nettoyé.
 

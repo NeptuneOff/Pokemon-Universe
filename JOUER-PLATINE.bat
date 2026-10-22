@@ -1,17 +1,14 @@
 @echo off
 setlocal
-cd /d "%~dp0native-runtime\windows-fr"
-if errorlevel 1 goto missing
-if not exist universe-install.json goto missing
-if not exist main.exe goto missing
-main.exe
-if errorlevel 1 (
-  echo Le port natif s'est ferme avec une erreur. Voir DbgLog.txt dans ce dossier.
-  pause
-  exit /b 1
+cd /d "%~dp0"
+where py >nul 2>nul
+if not errorlevel 1 (
+  py -3 tools\native\launch_platinum.py
+) else (
+  python tools\native\launch_platinum.py
 )
-exit /b 0
-:missing
-echo Lance d'abord PREPARER-PLATINE.bat a la racine du projet.
+if not errorlevel 1 exit /b 0
+echo Le lancement ou le jeu a rencontre une erreur. Conserver le message ci-dessus.
+echo Voir aussi native-runtime\windows-fr\DbgLog.txt si le jeu a demarre.
 pause
 exit /b 1

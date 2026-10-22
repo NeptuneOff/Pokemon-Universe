@@ -34,6 +34,8 @@ python3 tools/native/launch_platinum.py
 
 [Mode d’emploi et dépannage](docs/NATIVE-FR.md).
 
+Les lanceurs conservent une copie de chaque sauvegarde distincte avant et après le jeu. La commande **SAUVER** du menu reste nécessaire. `DEMARRER-DUO.bat` indique l’état du duo natif ; l’ancien essai web dispose d’un lanceur explicitement nommé `DEMARRER-PROTOTYPE-WEB-ARCHIVE.bat`.
+
 ## Direction visuelle obligatoire
 
 - Reprendre les ressources, la caméra, les personnages, les interfaces et les animations de Platine comme référence.

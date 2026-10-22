@@ -6,14 +6,32 @@
 - Installation réelle sous Linux : 340 fichiers nommés, trois archives de textes françaises et 29 correspondances d’archives graphiques vérifiées.
 - Les fichiers installés sont recensés avec leur SHA-256 dans `universe-install.json` (local uniquement).
 - Sur les 724 banques de `pl_msg.narc`, seule la banque 389 est modifiée ; seul son message 0 change. Les autres messages chiffrés restent identiques. L’original français est conservé.
+- Installation Windows également générée : les 340 empreintes de ressources correspondent au manifeste ; `main.exe` est un PE x86-64. Cela ne constitue pas un test d’exécution Windows.
 - Dix tests sans ROM : lecture NitroFS, limites/cycles, structure NARC, conservation des messages et commandes inconnues, chiffrement connu, caractères français, correspondances graphiques, extraction ZIP, refus d’écraser une sauvegarde et nettoyage après téléchargement invalide.
 - Exécution native sous Linux avec rendu logiciel : démarrage, écran titre « Version Platine », introduction Universe, dialogues Sorbier en français, clavier, interaction avec l’écran tactile et sélection du personnage observés le 19 octobre. AppImage testée sans FUSE.
 
-Les captures temporaires du 19 octobre ont disparu lors du nettoyage de l’environnement avant publication. Elles ne sont pas remplacées par des illustrations simulées. La source des outils a été restaurée depuis le travail conservé dans la conversation ; les tests sont relancés avant publication.
+La source des outils a été restaurée après le nettoyage de l’environnement. Les dix tests ont été relancés ; GitHub Actions est vert pour `a251b08`. Le 20 octobre, l’installation a été recréée puis comparée octet par octet aux ressources sources, à l’exception du dialogue modifié. Les captures ci-dessous ont été prises dans le véritable exécutable natif le 20 octobre.
+
+![Écran titre français](evidence/platine-title-fr.png)
+
+![Introduction Universe dans le moteur natif](evidence/universe-intro-fr.png)
+
+## Contrôles du 22 octobre 2026
+
+- Nouvelle partie native : personnage TEST et rival AMI ; saisie des noms et dialogues en français.
+- Arrivée dans la chambre, déplacements, rencontre du rival, passage au rez-de-chaussée, sortie à Bonaugure et entrée dans la maison du rival observés.
+- Menu français **SAUVER**, confirmation, écriture de `save.bin`, arrêt complet du processus, redémarrage, écran **CONTINUER** avec TEST, puis retour dans la même chambre : reprise vérifiée. Le déplacement suivant déclenche correctement l’arrivée du rival.
+- Copie de cette sauvegarde réelle par le nouvel outil, puis comparaison octet par octet : identique. Les copies restent hors Git.
+- Quatorze tests Python locaux passent : les dix tests de ressources et quatre tests du lanceur (première partie sans fichier, conservation des anciens/nouveaux progrès même en cas de code de sortie non nul, échec de copie empêchant le lancement, détection d’une copie altérée).
+- La CI des outils Python est désormais configurée pour Linux et Windows. Elle ne lance pas le jeu et ne remplace pas un essai graphique Windows.
+
+![Bonaugure dans le moteur natif](evidence/bonaugure-fr.png)
+
+![Partie retrouvée après redémarrage](evidence/continuer-fr.png)
 
 ## Limites de cette validation
 
-L’arrivée dans le monde, un combat et la sauvegarde/reprise n’étaient pas encore validés à ce point de reprise. La campagne entière et tous les écrans localisés ne sont pas testés. Aucun essai graphique Windows n’a été effectué. Le son n’a pas été validé (pilote audio factice dans l’environnement de test).
+Le premier combat reste à contrôler à ce point de reprise. La campagne entière et tous les écrans localisés ne sont pas testés. Aucun essai graphique Windows n’a été effectué. Le son n’a pas été validé (pilote audio factice dans l’environnement de test).
 
 Aucune campagne coopérative, nouvelle région, espèce supplémentaire ni Méga-Évolution n’est livrée par cette étape.
 
@@ -25,4 +43,4 @@ python -m unittest discover -s tests/native -v
 
 ## Vérification manuelle à poursuivre
 
-Installer les ressources personnelles, créer une partie, atteindre Bonaugure, choisir un Pokémon, terminer un combat, sauvegarder, fermer puis reprendre. Ensuite valider les écrans du sac, de l’équipe, du Pokédex et les boutons français sur Windows et Linux. Conserver les captures réelles et résultats dans Git à chaque étape.
+Choisir un Pokémon, terminer un combat, sauvegarder à nouveau, fermer puis reprendre avec l’équipe conservée. Ensuite valider les écrans du sac, de l’équipe, du Pokédex et les boutons français sur Windows et Linux. Conserver les captures réelles et résultats dans Git à chaque étape.

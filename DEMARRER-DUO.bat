@@ -1,11 +1,9 @@
 @echo off
+setlocal
 cd /d "%~dp0"
-where node >nul 2>nul
-if errorlevel 1 (
- echo Installe Node.js 22 ou plus recent depuis https://nodejs.org puis relance ce fichier.
- pause
- exit /b 1
-)
-start "" "http://localhost:8787"
-node server.cjs
+echo Le mode duo natif de Pokemon Universe est encore en developpement.
+echo Pour tester la base Platine francaise : PREPARER-PLATINE.bat puis JOUER-PLATINE.bat.
+echo L'ancien essai web reste accessible avec DEMARRER-PROTOTYPE-WEB-ARCHIVE.bat.
+echo Voir docs\CAHIER-DES-CHARGES.md pour les fonctionnalites encore a integrer.
 pause
+exit /b 1
