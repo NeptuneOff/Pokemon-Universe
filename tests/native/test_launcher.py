@@ -38,8 +38,9 @@ class LauncherTests(unittest.TestCase):
                 save.write_bytes(b'previous progress')
 
                 def game(command, *, cwd, env):
-                    self.assertEqual(command, [str(executable)])
-                    self.assertEqual(cwd, root)
+                    self.assertEqual(len(command), 1)
+                    self.assertTrue(Path(command[0]).samefile(executable))
+                    self.assertTrue(Path(cwd).samefile(root))
                     self.assertEqual({p.read_bytes() for p in (root / 'universe-backups').glob('*.sav')},
                                      {b'previous progress'})
                     save.write_bytes(b'new progress')
