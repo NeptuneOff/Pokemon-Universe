@@ -46,7 +46,7 @@ Les lanceurs conservent une copie de chaque sauvegarde distincte avant et après
 
 ## État réel
 
-**La base native démarre sous Linux avec les textes français et une première introduction Universe.** Voir [les contrôles et limites de validation](docs/NATIVE-VALIDATION.md). Le port amont reste expérimental ; Windows et la campagne complète ne sont pas encore validés ici.
+**La base native fonctionne sous Linux avec les textes français et une première introduction Universe : exploration, premier combat et sauvegarde/reprise avant le combat vérifiés.** Voir [les contrôles et limites de validation](docs/NATIVE-VALIDATION.md). Le port amont reste expérimental ; Windows et la campagne complète ne sont pas encore validés ici.
 
 L’amont propose ses propres exécutables dans ses [releases](https://github.com/cybervisi0n/pokeplatinum/releases). L’outil Universe prépare les ressources depuis une ROM personnelle **USA Rev 1, CPUE**, puis importe les textes et plusieurs interfaces de la ROM **France, CPUF**. Aucun fichier ROM ni ensemble de ressources extraites n’est ajouté ici. Le code référencé est celui de l’amont, pas un travail de portage réalisé par Universe.
 

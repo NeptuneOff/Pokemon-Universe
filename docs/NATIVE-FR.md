@@ -87,3 +87,15 @@ L’installateur **refuse toute destination déjà existante**. Il ne supprime n
 - **Plantage** : conserver les journaux du jeu. Le port amont reste expérimental.
 
 Aucune ROM, ressource extraite ou sauvegarde n’est publiée dans Git. Les exécutables sont téléchargés depuis leur auteur ; ses crédits et notices restent applicables.
+
+## Contrôler les ressources installées
+
+Depuis la racine du dépôt, avec les mêmes ROM personnelles que pour la préparation :
+
+```bash
+python tools/native/verify_resources.py --us /chemin/usa.zip --fr /chemin/fr.zip
+```
+
+Le contrôle compare les 340 ressources attendues octet par octet aux ROM validées, avec les remplacements français et le dialogue Universe. Il ne se fie pas aux empreintes du manifeste local, qui pourrait avoir été modifié. Il indique les fichiers manquants ou différents et ne répare ni ne remplace aucun fichier ; la sauvegarde reste intacte.
+
+Utiliser `--runtime DOSSIER` pour une installation particulière, `--json` pour un résultat exploitable par un script, et les mêmes options `--vanilla`/`--text-only` que lors de la préparation si elles avaient été choisies. Codes de sortie : 0 = conforme, 1 = différences, 2 = contrôle impossible. Ce contrôle porte sur les ressources du jeu, pas sur l’exécutable, les réglages, les fichiers supplémentaires ni la validité des sauvegardes.

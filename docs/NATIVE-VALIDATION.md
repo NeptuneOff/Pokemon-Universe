@@ -29,9 +29,22 @@ La source des outils a été restaurée après le nettoyage de l’environnement
 
 ![Partie retrouvée après redémarrage](evidence/continuer-fr.png)
 
+## Contrôles du 23 octobre 2026
+
+- Comparaison octet par octet de 107 archives installées des familles `fielddata/`, `graphic/`, `battle/graphic/`, `poketool/pokegra/`, `poketool/pokeanm/`, `poketool/icongra/` et `resource/` avec les ROM personnelles validées : aucune différence par rapport aux originaux USA et aux remplacements français déclarés. Ce nombre compte des archives, pas des tuiles individuelles.
+- Les 29 correspondances graphiques françaises restent celles de `content/native/graphics.fr.json`. Les cartes et modèles du monde restent ceux de Platine.
+- Choix de Tortipouss et combat du rival contre Ouisticram : sprites avant/arrière, décor de combat, interface **ATTAQUE**, capacités **Charge**/**Repli**, PP et évolution de la barre de PV observés. Sélection tactile d’une capacité vérifiée. Combat terminé, retour sur la Route 201 puis scène de la mère à Bonaugure observés.
+- Les 14 tests Python passent désormais sur Linux et Windows dans [GitHub Actions](https://github.com/NeptuneOff/Pokemon-Universe/actions/runs/39924992628), commit `2b0f08c`. L’échec Windows précédent venait de la comparaison textuelle des chemins courts/longs dans le test ; la comparaison porte désormais sur l’identité du fichier.
+
+- Le nouvel outil `verify_resources.py` compare toute l’installation aux sources : **340/340 ressources conformes**, 29 correspondances graphiques françaises, aucune ressource manquante ou différente. Les 16 tests locaux passent, dont la détection d’une ressource modifiée malgré un manifeste falsifié et le maintien des sauvegardes intactes.
+
+![Choix de Tortipouss](evidence/choix-tortipouss-fr.png)
+
+![Premier combat natif en français](evidence/combat-tortipouss-fr.png)
+
 ## Limites de cette validation
 
-Le premier combat reste à contrôler à ce point de reprise. La campagne entière et tous les écrans localisés ne sont pas testés. Aucun essai graphique Windows n’a été effectué. Le son n’a pas été validé (pilote audio factice dans l’environnement de test).
+La reprise avec une équipe sauvegardée après le combat reste à contrôler. La session de test a été fermée avant cette sauvegarde ; le dernier point conservé est sur la Route 201 avant le choix du Pokémon. La campagne entière et tous les écrans localisés ne sont pas testés. Aucun essai graphique Windows n’a été effectué. Le son n’a pas été validé (pilote audio factice dans l’environnement de test).
 
 Aucune campagne coopérative, nouvelle région, espèce supplémentaire ni Méga-Évolution n’est livrée par cette étape.
 
@@ -43,4 +56,4 @@ python -m unittest discover -s tests/native -v
 
 ## Vérification manuelle à poursuivre
 
-Choisir un Pokémon, terminer un combat, sauvegarder à nouveau, fermer puis reprendre avec l’équipe conservée. Ensuite valider les écrans du sac, de l’équipe, du Pokédex et les boutons français sur Windows et Linux. Conserver les captures réelles et résultats dans Git à chaque étape.
+Depuis la sauvegarde de la Route 201, choisir un Pokémon, terminer le combat, finir le dialogue de la mère, sauvegarder puis fermer et reprendre avec l’équipe conservée. Ensuite valider les écrans du sac, de l’équipe, du Pokédex et les boutons français sur Windows et Linux. Conserver les captures réelles et résultats dans Git à chaque étape.

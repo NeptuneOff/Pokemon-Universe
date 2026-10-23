@@ -34,7 +34,7 @@ La logique de règles doit venir du jeu existant. Les tests et le scénario du p
 ## Ordre de migration
 
 1. Initialiser la source PC épinglée. **Fait dans le dépôt sous forme de sous-module.**
-2. Valider le lancement avec une ROM USA CPUE01 personnelle, puis comparer une scène et un combat avec Platine. **Démarrage, introduction FR et scène du monde vérifiés ; combat à contrôler.**
+2. Valider le lancement avec une ROM USA CPUE01 personnelle, puis comparer une scène et un combat avec Platine. **Démarrage, introduction FR, scène du monde et premier combat vérifiés sous Linux.**
 3. Définir et vérifier les réglages de rendu conservant l’apparence d’origine, y compris caméra, proportions et interface. **Préréglage DS ×1, 512 ×768 et écrans verticaux appliqués.**
 4. Produire une modification minimale du scénario sur cette base et vérifier la sauvegarde. **Premier dialogue Universe appliqué ; sauvegarde et reprise vérifiées à Bonaugure.**
 5. Réaliser une petite zone réellement coopérative sur deux PC, avec deux identités, décisions et équipes distinctes. **Non réalisé.**
