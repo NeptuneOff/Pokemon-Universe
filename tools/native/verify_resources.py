@@ -8,14 +8,14 @@ import sys
 if __package__:
     from .prepare_platinum import ROOT, french_resources, nitro_files, read_rom, safe_path
     from .patch_intro import apply_intro
-    from .patch_investigation import apply_investigation, SCRIPTS
+    from .patch_investigation import apply_investigation, apply_followup, SCRIPTS
 else:
     from prepare_platinum import ROOT, french_resources, nitro_files, read_rom, safe_path
     from patch_intro import apply_intro
-    from patch_investigation import apply_investigation, SCRIPTS
+    from patch_investigation import apply_investigation, apply_followup, SCRIPTS
 
 
-def verify(runtime, us_path, fr_path, *, vanilla=False, text_only=False, intro_only=False):
+def verify(runtime, us_path, fr_path, *, vanilla=False, text_only=False, intro_only=False, bonaugure_only=False):
     us = nitro_files(read_rom(us_path, 'us'))
     fr = nitro_files(read_rom(fr_path, 'fr'))
     localized, _, graphics = french_resources(us, fr, text_only)
@@ -24,6 +24,9 @@ def verify(runtime, us_path, fr_path, *, vanilla=False, text_only=False, intro_o
         if not intro_only:
             quest_resources, _ = apply_investigation(us[SCRIPTS], localized['msgdata/pl_msg.narc'])
             localized.update(quest_resources)
+            if not bonaugure_only:
+                quest_resources, _ = apply_followup(localized[SCRIPTS], localized['msgdata/pl_msg.narc'])
+                localized.update(quest_resources)
     expected = us | localized
     missing, changed = [], []
     runtime = Path(runtime).resolve()
@@ -39,6 +42,7 @@ def verify(runtime, us_path, fr_path, *, vanilla=False, text_only=False, intro_o
             'matching_resources': len(expected) - len(missing) - len(changed),
             'french_graphics': len(graphics), 'universe_intro': not vanilla,
             'universe_investigation': not vanilla and not intro_only,
+            'universe_followup': not vanilla and not intro_only and not bonaugure_only,
             'missing': missing, 'changed': changed}
 
 
@@ -50,12 +54,14 @@ def main():
                         ('windows-fr' if os.name == 'nt' else 'linux-fr'))
     parser.add_argument('--vanilla', action='store_true')
     parser.add_argument('--intro-only', action='store_true')
+    parser.add_argument('--bonaugure-only', action='store_true')
     parser.add_argument('--text-only', action='store_true')
     parser.add_argument('--json', action='store_true', dest='as_json')
     args = parser.parse_args()
     try:
         result = verify(args.runtime, args.us, args.fr,
-                        vanilla=args.vanilla, text_only=args.text_only, intro_only=args.intro_only)
+                        vanilla=args.vanilla, text_only=args.text_only, intro_only=args.intro_only,
+                        bonaugure_only=args.bonaugure_only)
     except (OSError, ValueError, KeyError) as error:
         print('Vérification interrompue : ' + str(error), file=sys.stderr)
         return 2

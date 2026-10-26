@@ -18,24 +18,27 @@ from test_resources import archive, message_bank
 QUEST = json.loads((ROOT / 'content/native/bonaugure.fr.json').read_text(encoding='utf-8'))
 
 
-def original_script():
+def original_script(count=9):
     # Nine harmless original entries, at distinct addresses after their table.
-    return b''.join(struct.pack('<i', 38 + 2 * i - (4 * i + 4)) for i in range(9)) + b'\x13\xfd' + b'\x02\0' * 9
+    start = count * 4 + 2
+    return b''.join(struct.pack('<i', start + 2 * i - (4 * i + 4)) for i in range(count)) + b'\x13\xfd' + b'\x02\0' * count
 
 
 class EventRunner:
-    def __init__(self, variant=0, state=None, potions=0):
-        self.original = original_script()
-        self.symbols = QUEST['variables'] | {key: 15 + i for i, key in enumerate(QUEST['messages'])}
-        self.code = append_events(self.original, QUEST['entries'], QUEST['instructions'], self.symbols, 9)
+    def __init__(self, variant=0, state=None, potions=0, *, quest=QUEST, first_message=15, inventory=None):
+        self.count = quest['entry_count']
+        self.original = original_script(self.count)
+        self.symbols = quest['variables'] | {key: first_message + i for i, key in enumerate(quest['messages'])}
+        self.code = append_events(self.original, quest['entries'], quest['instructions'], self.symbols, self.count)
         self.state = dict(state or {})
         self.variant = variant
         self.random_calls = 0
         self.potions = potions
+        self.inventory = dict(inventory or {})
 
     def run(self, entry, choices=(), *, bag_full=False):
         code = self.code
-        pc = entry_targets(code, 9)[entry]
+        pc = entry_targets(code, self.count)[entry]
         self.messages, self.fallback = [], False
         locked, comparison, selected = False, None, None
         answers = iter(choices)
@@ -87,10 +90,12 @@ class EventRunner:
                 locked = False
             elif opcode == 0x7b:
                 item, count, result = read('HHH')
-                assert item == 17 and count == 1
+                assert (item, count) in ((17, 1), (4, 3))
                 self.state[result] = 0 if bag_full else 1
                 if not bag_full:
-                    self.potions += 1
+                    self.inventory[item] = self.inventory.get(item, 0) + count
+                    if item == 17:
+                        self.potions += count
             elif opcode == 0x1b7:
                 var, bound = read('HH')
                 assert bound == 2

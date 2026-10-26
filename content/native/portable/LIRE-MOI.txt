@@ -11,6 +11,12 @@ CONTENU ACTUEL
 Platine natif avec textes et plusieurs interfaces en francais.
 Prologue Universe et enquete Les oiseaux de Bonaugure : parler au chercheur
 au sud du village, choisir analyste ou eclaireur et rapporter un indice.
+Suite Avant le depart : apres le rapport et l'obtention du Pokedex,
+reparler a Sorbier dans son laboratoire a Littorella, puis choisir Enquete.
+Analyste : consulter le PC au fond a droite du laboratoire.
+Eclaireur : interroger l'eleveur pres de la maison de l'assistant.
+Rapporter l'indice a Sorbier pour recevoir trois Poke Balls, une seule fois.
+L'option Pokedex garde les dialogues habituels du professeur accessibles.
 Le reste du jeu suit encore Platine. Les sept regions, la cooperation,
 les especes supplementaires et les Mega-Evolutions ne sont pas integrees.
 

@@ -48,7 +48,31 @@ La source des outils a été restaurée après le nettoyage de l’environnement
 - Les 25 tests Python passent localement, dont les deux rôles et les deux variantes dans un lecteur de bytecode indépendant, les annulations, les erreurs rattrapables, le Sac plein et la reprise de l’état. Cette reprise simulée ne constitue pas encore une vérification de la sauvegarde native de la quête.
 - Vérification sur les ROM personnelles : seul le membre 1052 de l’archive de scripts change ; dans les textes, seule la banque 554 change en plus du prologue 389. Les 15 messages originaux de Bonaugure restent identiques. Les 14 identifiants de commandes émis correspondent à la source moteur épinglée.
 - Nouvelle préparation Windows générée avec l’enquête ; le moteur graphique Windows n’est pas exécuté ici. Les 12 tests du prototype web archivé passent aussi et ne valident pas la coopération native.
-- Le parcours graphique complet de cette nouvelle quête et sa sauvegarde/reprise native restent à valider. Les captures précédentes montrent le jeu de base, pas cette quête.
+- Lors de cette première livraison, le parcours graphique et la reprise de l’enquête restaient à valider. Ils ont depuis été contrôlés pour le rôle analyste, ci-dessous.
+
+## Parcours natif de l’enquête — 26 octobre 2026
+
+- Reprise d’une sauvegarde de TEST dans sa chambre, puis scènes du rival et de la mère, sortie à Bonaugure et rencontre du chercheur : parcours exécuté dans le port Linux sans modifier la sauvegarde ni téléporter le personnage.
+- Choix **Analyste** dans la fenêtre native. Le capteur indique Littorella à 6 h et le lac à 6 h 10. Une réponse erronée affiche l’explication et laisse réessayer ; **Vers le lac** donne l’indice.
+- Retour au chercheur, compte rendu correspondant, réception d’une Potion. Une nouvelle visite affiche le rapport au lieu de donner une deuxième récompense. Le Sac français indique **Potion × 1**.
+- Sauvegarde avec **SAUVER**, fermeture complète du processus, redémarrage puis **CONTINUER** : retour au même endroit, même rapport vers le lac, **Potion × 1** conservée après une nouvelle interaction. L’étape de quête et l’inventaire ont donc persisté dans une véritable sauvegarde native.
+- Le rôle éclaireur et la direction vers Littorella restent couverts par le lecteur de bytecode indépendant ; leur parcours graphique n’a pas encore été exécuté.
+
+![Choix du rôle dans le moteur natif](evidence/enquete-choix-role-fr.png)
+
+![Indice obtenu au panneau](evidence/enquete-indice-fr.png)
+
+![Rapport retrouvé après fermeture et relance](evidence/enquete-rapport-repris-fr.png)
+
+![Une seule Potion, conservée après relance](evidence/enquete-sac-repris-fr.png)
+
+## Suite à Littorella — 26 octobre 2026
+
+- Ajout de deux banques de scripts : laboratoire (1064) et ville (1059), avec textes ajoutés dans les banques 565 et 561. La première enquête reste inchangée. Aucune archive graphique, carte ou animation n’est modifiée.
+- Après le rapport de Bonaugure, Sorbier offre **Enquête**, **Pokédex** et **Plus tard**. Les scènes d’obtention du Pokédex et les autres entrées de scripts restent identiques. Le PC pour l’analyste et l’éleveur pour l’éclaireur donnent un indice distinct ; le rapport final dépend aussi de la direction initiale.
+- 32 tests Python : 31 exécutés localement, un test PowerShell réservé à Windows. Les nouveaux cas couvrent les quatre combinaisons rôle/direction, les changements de carte, la reconstitution de l’état persistant, les annulations, les mauvaises réponses, le Sac plein, les trois Poké Balls uniques, les dialogues Pokédex accessibles et le refus de ressources incompatibles.
+- Installations Linux et Windows préparées et comparées aux ROM personnelles : **340/340 ressources conformes** pour chacune. La sauvegarde de la première enquête est copiée octet pour octet dans une nouvelle installation ; l’ancienne reste intacte.
+- Le parcours graphique de cette suite reste à valider ; les tests de scripts ne constituent pas une exécution de l’ensemble de la campagne.
 
 ## Archive Windows prête à extraire
 
@@ -58,7 +82,7 @@ La source des outils a été restaurée après le nettoyage de l’environnement
 
 ## Limites de cette validation
 
-La reprise avec une équipe sauvegardée après le combat reste à contrôler. La session de test a été fermée avant cette sauvegarde ; le dernier point conservé est sur la Route 201 avant le choix du Pokémon. La campagne entière et tous les écrans localisés ne sont pas testés. Aucun essai graphique Windows n’a été effectué. Le son n’a pas été validé (pilote audio factice dans l’environnement de test).
+La reprise avec une équipe sauvegardée après le combat reste à contrôler. Le point de test durable actuel est à Bonaugure après l’enquête analyste, avant le premier Pokémon. Les anciens essais de combat n’ont pas laissé une sauvegarde exploitable après le combat. La campagne entière et tous les écrans localisés ne sont pas testés. Aucun essai graphique Windows n’a été effectué. Le son n’a pas été validé (pilote audio factice dans l’environnement de test).
 
 Aucune campagne coopérative, nouvelle région, espèce supplémentaire ni Méga-Évolution n’est livrée par cette étape.
 
@@ -70,4 +94,4 @@ python -m unittest discover -s tests/native -v
 
 ## Vérification manuelle à poursuivre
 
-Depuis la sauvegarde de la Route 201, choisir un Pokémon, terminer le combat, finir le dialogue de la mère, sauvegarder puis fermer et reprendre avec l’équipe conservée. Ensuite valider les écrans du sac, de l’équipe, du Pokédex et les boutons français sur Windows et Linux. Conserver les captures réelles et résultats dans Git à chaque étape.
+Depuis le point de Bonaugure, poursuivre les scènes du rival, choisir un Pokémon, terminer le combat, finir le dialogue de la mère, sauvegarder puis fermer et reprendre avec l’équipe conservée. Rejoindre Littorella, obtenir le Pokédex et exécuter la suite de l’enquête. Valider aussi le parcours éclaireur, les écrans d’équipe et du Pokédex, puis le lancement et les boutons français sur Windows. Conserver les captures réelles et résultats dans Git à chaque étape.

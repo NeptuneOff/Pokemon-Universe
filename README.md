@@ -40,6 +40,8 @@ python3 tools/native/launch_platinum.py
 
 **Première quête : [Les oiseaux de Bonaugure](docs/NATIVE-INVESTIGATION.md).** Parler au chercheur au sud du village, choisir analyste ou éclaireur, recueillir un indice puis revenir pour une récompense unique. Le rôle, la piste tirée au départ et la progression utilisent la sauvegarde native. Le guide explique aussi comment reprendre une ancienne partie dans une installation séparée avec `--save-from`.
 
+**Suite : [Avant le départ, à Littorella](docs/NATIVE-INVESTIGATION.md#suite--avant-le-départ).** Après avoir rendu le premier rapport et obtenu le Pokédex, reparler à Sorbier et choisir **Enquête**. L’analyste examine le PC du laboratoire ; l’éclaireur interroge l’éleveur près de la maison de l’assistant. Le rapport final tient compte du rôle et de la direction observée. L’option **Pokédex** conserve les interactions habituelles de Sorbier.
+
 Les lanceurs conservent une copie de chaque sauvegarde distincte avant et après le jeu. La commande **SAUVER** du menu reste nécessaire. `DEMARRER-DUO.bat` indique l’état du duo natif ; l’ancien essai web dispose d’un lanceur explicitement nommé `DEMARRER-PROTOTYPE-WEB-ARCHIVE.bat`.
 
 ## Direction visuelle obligatoire

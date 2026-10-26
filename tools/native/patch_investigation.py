@@ -41,7 +41,7 @@ def apply_investigation(scripts, messages, definition=None):
     text = text_members[quest['text_bank']]
     for source, digest in [(script, quest['source_script_sha256']), (text, quest['source_text_sha256'])]:
         if hashlib.sha256(source).hexdigest() != digest:
-            raise ValueError('L’enquête exige les ressources originales compatibles de Bonaugure.')
+            raise ValueError('L’enquête exige les ressources originales compatibles : ' + quest['title'])
     new_text, first = append_messages(text, quest['messages'].values())
     symbols = quest['variables'] | {name: first + i for i, name in enumerate(quest['messages'])}
     new_script = append_events(script, quest['entries'], quest['instructions'], symbols, quest['entry_count'])
@@ -50,4 +50,19 @@ def apply_investigation(scripts, messages, definition=None):
     provenance = {'id': quest['id'], 'script_bank': quest['script_bank'], 'text_bank': quest['text_bank'],
                   'entries': quest['entries'], 'variables': quest['variables'],
                   'resources_sha256': {name: hashlib.sha256(data).hexdigest() for name, data in result.items()}}
+    return result, provenance
+
+
+def apply_followup(scripts, messages):
+    """Install the two maps of Rowan's follow-up after the Bonaugure patch.
+
+    Each definition checks its own original banks. No file is written until
+    both maps have passed validation, so a partial chapter cannot be installed.
+    """
+    result = {SCRIPTS: scripts, MESSAGES: messages}
+    provenance = []
+    for name in ('littorella-labo.fr.json', 'littorella-temoin.fr.json'):
+        result, source = apply_investigation(result[SCRIPTS], result[MESSAGES],
+                                             ROOT / 'content/native' / name)
+        provenance.append(source)
     return result, provenance

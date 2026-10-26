@@ -1,0 +1,169 @@
+{
+  "id": "universe-littorella-temoin-001",
+  "title": "Avant le départ — témoin",
+  "script_bank": 1059,
+  "text_bank": 561,
+  "entry_count": 12,
+  "source_script_sha256": "983137f0861f9637d7829703b87eacd65ed76d2d7e285b3c2e0b9c5d7d7b914f",
+  "source_text_sha256": "13a55085f0834260db69bbe6df5c228f000b573bff60e3a15ca8ac00b86ed374",
+  "variables": {
+    "role": 16618,
+    "stage": 16619,
+    "variant": 16620,
+    "followup": 16622,
+    "result": 32780
+  },
+  "entries": {
+    "4": "witness"
+  },
+  "messages": {
+    "offer": "Tu enquêtes pour Sorbier ?\nCe matin, près de Bonaugure,\rj’ai entendu un grondement.\nQue veux-tu savoir ?",
+    "when": "L’ordre des faits",
+    "who": "Le nom du coupable",
+    "later": "Plus tard",
+    "wrong": "Je n’ai vu aucun responsable.\nJe préfère te dire ce que\rj’ai observé. Pose ta question\nsans me suggérer de coupable.",
+    "evidence": "Le bruit m’a fait lever la tête.\nLes Étourmi sont passés après.\rC’est tout ce dont je suis sûr.\nRapporte ces faits à Sorbier."
+  },
+  "instructions": [
+    [
+      "label",
+      "witness"
+    ],
+    [
+      "compare",
+      "role",
+      2
+    ],
+    [
+      "if_eq",
+      "check_stage"
+    ],
+    [
+      "goto",
+      "original_4"
+    ],
+    [
+      "label",
+      "check_stage"
+    ],
+    [
+      "compare",
+      "followup",
+      1
+    ],
+    [
+      "if_eq",
+      "interview"
+    ],
+    [
+      "goto",
+      "original_4"
+    ],
+    [
+      "label",
+      "interview"
+    ],
+    [
+      "lock"
+    ],
+    [
+      "face"
+    ],
+    [
+      "message",
+      "offer"
+    ],
+    [
+      "menu",
+      1,
+      1,
+      0,
+      1,
+      "result"
+    ],
+    [
+      "option",
+      "when",
+      0
+    ],
+    [
+      "option",
+      "who",
+      1
+    ],
+    [
+      "option",
+      "later",
+      2
+    ],
+    [
+      "show_menu"
+    ],
+    [
+      "compare",
+      "result",
+      0
+    ],
+    [
+      "if_eq",
+      "evidence"
+    ],
+    [
+      "compare",
+      "result",
+      1
+    ],
+    [
+      "if_eq",
+      "wrong"
+    ],
+    [
+      "goto",
+      "exit"
+    ],
+    [
+      "label",
+      "wrong"
+    ],
+    [
+      "message",
+      "wrong"
+    ],
+    [
+      "wait"
+    ],
+    [
+      "goto",
+      "exit"
+    ],
+    [
+      "label",
+      "evidence"
+    ],
+    [
+      "set",
+      "followup",
+      2
+    ],
+    [
+      "message",
+      "evidence"
+    ],
+    [
+      "wait"
+    ],
+    [
+      "label",
+      "exit"
+    ],
+    [
+      "close"
+    ],
+    [
+      "release"
+    ],
+    [
+      "end"
+    ]
+  ]
+}

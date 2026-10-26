@@ -16,7 +16,7 @@ Ce document conserve les demandes de l’utilisateur pour les reprises du dével
 
 ## État natif
 
-L’étape actuelle installe le port existant avec les ressources françaises et modifie un dialogue. Le gameplay reste celui de Platine. La coopération, le catalogue étendu et les Méga-Évolutions du prototype JavaScript ne sont pas intégrés au moteur natif.
+L’étape actuelle installe le port existant avec les ressources françaises, un prologue et une enquête à Bonaugure prolongée à Littorella. Deux rôles solo conduisent à des interactions différentes, à un rapport persistant et à des récompenses uniques. Le parcours analyste de Bonaugure, sa sauvegarde et sa reprise ont été exécutés dans le moteur natif sous Linux ; les autres parcours ont des limites de validation détaillées dans NATIVE-VALIDATION.md. Le reste de la campagne suit Platine. La coopération, le catalogue étendu et les Méga-Évolutions du prototype JavaScript ne sont pas intégrés au moteur natif.
 
 Le prologue à Sinnoh valide une première scène sur la base d’origine ; il ne verrouille pas l’ordre final des sept régions.
 

@@ -16,10 +16,10 @@ import zipfile
 
 if __package__:
     from .patch_intro import apply_intro, narc_members
-    from .patch_investigation import apply_investigation, SCRIPTS
+    from .patch_investigation import apply_investigation, apply_followup, SCRIPTS
 else:
     from patch_intro import apply_intro, narc_members
-    from patch_investigation import apply_investigation, SCRIPTS
+    from patch_investigation import apply_investigation, apply_followup, SCRIPTS
 
 ROOT = Path(__file__).resolve().parents[2]
 RELEASE = 'v0.1.12'
@@ -167,7 +167,7 @@ def saved_progress(source, platform):
 
 
 def prepare(us_path, fr_path, platform, output, package=None, vanilla=False, text_only=False,
-            *, intro_only=False, save_from=None):
+            *, intro_only=False, bonaugure_only=False, save_from=None):
     output = Path(output).resolve()
     if output.exists():
         raise ValueError('Dossier déjà présent ; aucune sauvegarde ne sera écrasée : ' + str(output))
@@ -185,6 +185,10 @@ def prepare(us_path, fr_path, platform, output, package=None, vanilla=False, tex
             quest_resources, provenance = apply_investigation(us[SCRIPTS], localized['msgdata/pl_msg.narc'])
             localized.update(quest_resources)
             patches.append(provenance)
+            if not bonaugure_only:
+                quest_resources, provenance = apply_followup(localized[SCRIPTS], localized['msgdata/pl_msg.narc'])
+                localized.update(quest_resources)
+                patches.extend(provenance)
     output.parent.mkdir(parents=True, exist_ok=True)
     stage = Path(tempfile.mkdtemp(prefix='.platinum-', dir=output.parent))
     try:
@@ -233,6 +237,7 @@ def prepare(us_path, fr_path, platform, output, package=None, vanilla=False, tex
                     'package_sha256': digest, 'rom_sha1': {key: value[1] for key, value in ROMS.items()},
                     'named_resources': len(us), 'french_banks': counts, 'french_graphics': graphics,
                     'universe_campaign': False, 'universe_investigation': not vanilla and not intro_only,
+                    'universe_followup': not vanilla and not intro_only and not bonaugure_only,
                     'patches': patches, 'resources_sha256': resources}
         if progress is not None:
             manifest['imported_save_sha256'] = hashlib.sha256(progress).hexdigest()
@@ -257,6 +262,7 @@ def main():
     parser.add_argument('--gui', action='store_true')
     parser.add_argument('--vanilla', action='store_true', help='Omettre le prologue et l’enquête Universe.')
     parser.add_argument('--intro-only', action='store_true', help='Omettre l’enquête de Bonaugure.')
+    parser.add_argument('--bonaugure-only', action='store_true', help='Omettre la suite de l’enquête à Littorella.')
     parser.add_argument('--save-from', type=Path, help='Copier la sauvegarde d’une installation fermée, laissée intacte.')
     parser.add_argument('--text-only', action='store_true', help='Garder les graphismes USA pour comparaison.')
     args = parser.parse_args()
@@ -278,7 +284,8 @@ def main():
         parser.error('Fournis --us et --fr, ou utilise --gui.')
     prepare(args.us, args.fr, args.platform,
             args.output or ROOT / 'native-runtime' / (args.platform + '-fr'),
-            args.package, args.vanilla, args.text_only, intro_only=args.intro_only, save_from=args.save_from)
+            args.package, args.vanilla, args.text_only, intro_only=args.intro_only,
+            bonaugure_only=args.bonaugure_only, save_from=args.save_from)
     return 0
 
 
