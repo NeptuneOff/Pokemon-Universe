@@ -1,6 +1,6 @@
 # Lancer la base Platine PC en français
 
-Cette étape installe le port natif existant de Platine, ses textes et interfaces français, et un premier dialogue Universe. Le jeu après l’introduction reste Platine. La campagne à sept régions et la coopération Universe ne sont pas encore intégrées.
+Cette étape installe le port natif existant de Platine, ses textes et interfaces français, le prologue Universe et une première enquête facultative à Bonaugure. Le reste du parcours reste celui de Platine. La campagne à sept régions et la coopération Universe ne sont pas encore intégrées.
 
 ## Windows 64 bits
 
@@ -30,7 +30,9 @@ Options :
 - `--gui` : sélectionner les ROM dans des fenêtres.
 - `--output DOSSIER` : créer une installation distincte ; la lancer ensuite avec `launch_platinum.py --runtime DOSSIER`.
 - `--package FICHIER.zip` : utiliser un paquet natif déjà téléchargé.
-- `--vanilla` : conserver aussi le premier dialogue français original.
+- `--vanilla` : omettre l’enquête et conserver le premier dialogue français original.
+- `--intro-only` : installer uniquement le prologue Universe, sans l’enquête.
+- `--save-from DOSSIER` : copier une sauvegarde existante dans la nouvelle installation, avec copie de secours ; l’ancienne installation reste intacte. Fermer le jeu avant cette opération. Voir [le guide de reprise](NATIVE-INVESTIGATION.md).
 - `--text-only` : conserver les graphismes USA pour diagnostiquer la localisation.
 
 ## Versions reconnues
@@ -50,9 +52,9 @@ Les 340 fichiers nommés de la ROM USA sont extraits. Trois archives de textes s
 
 Vingt-neuf archives graphiques françaises sont importées aux chemins USA attendus par le moteur : titre, saisie de nom, boutons tactiles, polices et plusieurs interfaces (sac, équipe, combat, PC, Pokédex, etc.). Les correspondances explicites et nombres de membres sont dans `content/native/graphics.fr.json`. Chaque nombre est contrôlé avant installation. Ce contrôle structurel ne remplace pas un parcours de tous les menus.
 
-Le premier dialogue d’introduction (banque 389, message 0) présente Universe et une enquête sur les migrations de Pokémon. Son texte source est dans `content/native/prologue.fr.json`. Tous les autres messages sont conservés à l’identique, commandes de texte comprises. Ce dialogue ne crée pas encore une quête avec objectifs ou récompenses.
+Le premier dialogue d’introduction (banque 389, message 0) présente Universe et une enquête sur les migrations de Pokémon. Son texte source est dans `content/native/prologue.fr.json`. L’enquête **Les oiseaux de Bonaugure**, définie dans `content/native/bonaugure.fr.json`, ajoute 24 messages à la banque 554 et trois interactions aux scripts de cette carte. Les autres messages sont conservés à l’identique, commandes de texte comprises. [Parcours, choix et intégration](NATIVE-INVESTIGATION.md).
 
-L’archive française originale est conservée dans `universe-original/msgdata/pl_msg.narc`. Pour comparer sans le prologue, créer une installation distincte avec `--vanilla`.
+Les archives originales sont conservées dans `universe-original/msgdata/pl_msg.narc` et `universe-original/fielddata/script/scr_seq.narc`. Pour comparer sans les événements Universe, créer une installation distincte avec `--vanilla`.
 
 La vidéo d’ouverture garde son archive USA : son équivalent français contient 113 membres contre 116 et ne peut pas être remplacé intégralement sans adaptation. Certains mini-jeux et données propres aux versions commerciales restent à auditer. Les menus techniques du port restent anglais. La localisation intégrale n’est donc pas encore garantie.
 
@@ -96,6 +98,6 @@ Depuis la racine du dépôt, avec les mêmes ROM personnelles que pour la prépa
 python tools/native/verify_resources.py --us /chemin/usa.zip --fr /chemin/fr.zip
 ```
 
-Le contrôle compare les 340 ressources attendues octet par octet aux ROM validées, avec les remplacements français et le dialogue Universe. Il ne se fie pas aux empreintes du manifeste local, qui pourrait avoir été modifié. Il indique les fichiers manquants ou différents et ne répare ni ne remplace aucun fichier ; la sauvegarde reste intacte.
+Le contrôle compare les 340 ressources attendues octet par octet aux ROM validées, avec les remplacements français, le prologue et l’enquête Universe. Il ne se fie pas aux empreintes du manifeste local, qui pourrait avoir été modifié. Il indique les fichiers manquants ou différents et ne répare ni ne remplace aucun fichier ; la sauvegarde reste intacte.
 
-Utiliser `--runtime DOSSIER` pour une installation particulière, `--json` pour un résultat exploitable par un script, et les mêmes options `--vanilla`/`--text-only` que lors de la préparation si elles avaient été choisies. Codes de sortie : 0 = conforme, 1 = différences, 2 = contrôle impossible. Ce contrôle porte sur les ressources du jeu, pas sur l’exécutable, les réglages, les fichiers supplémentaires ni la validité des sauvegardes.
+Utiliser `--runtime DOSSIER` pour une installation particulière, `--json` pour un résultat exploitable par un script, et les mêmes options `--vanilla`/`--intro-only`/`--text-only` que lors de la préparation si elles avaient été choisies. Codes de sortie : 0 = conforme, 1 = différences, 2 = contrôle impossible. Ce contrôle porte sur les ressources du jeu, pas sur l’exécutable, les réglages, les fichiers supplémentaires ni la validité des sauvegardes.

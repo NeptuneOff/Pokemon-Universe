@@ -42,6 +42,14 @@ La source des outils a été restaurée après le nettoyage de l’environnement
 
 ![Premier combat natif en français](evidence/combat-tortipouss-fr.png)
 
+## Première enquête Universe — 26 octobre 2026
+
+- Ajout des événements natifs de Bonaugure : choix de rôle, piste persistante, collecte d’indice et Potion unique. Les scènes obligatoires de Platine restent en place.
+- Les 25 tests Python passent localement, dont les deux rôles et les deux variantes dans un lecteur de bytecode indépendant, les annulations, les erreurs rattrapables, le Sac plein et la reprise de l’état. Cette reprise simulée ne constitue pas encore une vérification de la sauvegarde native de la quête.
+- Vérification sur les ROM personnelles : seul le membre 1052 de l’archive de scripts change ; dans les textes, seule la banque 554 change en plus du prologue 389. Les 15 messages originaux de Bonaugure restent identiques. Les 14 identifiants de commandes émis correspondent à la source moteur épinglée.
+- Nouvelle préparation Windows générée avec l’enquête ; le moteur graphique Windows n’est pas exécuté ici. Les 12 tests du prototype web archivé passent aussi et ne valident pas la coopération native.
+- Le parcours graphique complet de cette nouvelle quête et sa sauvegarde/reprise native restent à valider. Les captures précédentes montrent le jeu de base, pas cette quête.
+
 ## Limites de cette validation
 
 La reprise avec une équipe sauvegardée après le combat reste à contrôler. La session de test a été fermée avant cette sauvegarde ; le dernier point conservé est sur la Route 201 avant le choix du Pokémon. La campagne entière et tous les écrans localisés ne sont pas testés. Aucun essai graphique Windows n’a été effectué. Le son n’a pas été validé (pilote audio factice dans l’environnement de test).

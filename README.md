@@ -6,7 +6,7 @@
 
 La nouvelle référence technique est [Pokémon Platinum PC Port](https://github.com/cybervisi0n/pokeplatinum), dérivé de [pret/pokeplatinum](https://github.com/pret/pokeplatinum) et des bibliothèques libntr.
 
-Le sous-module [engine/platinum](engine/platinum) référence exactement le commit `35067868f64f23d25d17ac3e536cfdd9a7f40523`. Il contient le code existant de Platine porté vers PC, sans modification de sa source. Les outils Universe appliquent séparément un premier dialogue aux ressources françaises locales. Il ne s’agit pas d’un nouveau moteur web imitant Pokémon.
+Le sous-module [engine/platinum](engine/platinum) référence exactement le commit `35067868f64f23d25d17ac3e536cfdd9a7f40523`. Il contient le code existant de Platine porté vers PC, sans modification de sa source. Les outils Universe appliquent séparément un prologue et une première enquête aux ressources françaises locales. Il ne s’agit pas d’un nouveau moteur web imitant Pokémon.
 
 ```bash
 git clone --recurse-submodules https://github.com/NeptuneOff/Pokemon-Universe.git
@@ -33,6 +33,8 @@ python3 tools/native/launch_platinum.py
 ```
 
 [Mode d’emploi et dépannage](docs/NATIVE-FR.md).
+
+**Première quête : [Les oiseaux de Bonaugure](docs/NATIVE-INVESTIGATION.md).** Parler au chercheur au sud du village, choisir analyste ou éclaireur, recueillir un indice puis revenir pour une récompense unique. Le rôle, la piste tirée au départ et la progression utilisent la sauvegarde native. Le guide explique aussi comment reprendre une ancienne partie dans une installation séparée avec `--save-from`.
 
 Les lanceurs conservent une copie de chaque sauvegarde distincte avant et après le jeu. La commande **SAUVER** du menu reste nécessaire. `DEMARRER-DUO.bat` indique l’état du duo natif ; l’ancien essai web dispose d’un lanceur explicitement nommé `DEMARRER-PROTOTYPE-WEB-ARCHIVE.bat`.
 

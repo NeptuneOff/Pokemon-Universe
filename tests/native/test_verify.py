@@ -41,7 +41,7 @@ class VerificationTests(unittest.TestCase):
                     patch('tools.native.verify_resources.french_resources', return_value=(
                         {'graphic/ui.narc': b'French buttons'}, {}, {'graphic/ui.narc': {}})), \
                     patch('tools.native.verify_resources.apply_intro', return_value=(b'Universe intro', {})):
-                report = verify(root, 'us', 'fr')
+                report = verify(root, 'us', 'fr', intro_only=True)
             self.assertTrue(report['ok'])
             self.assertEqual(report['matching_resources'], 2)
             self.assertEqual(report['french_graphics'], 1)

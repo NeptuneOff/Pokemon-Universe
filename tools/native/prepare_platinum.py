@@ -16,8 +16,10 @@ import zipfile
 
 if __package__:
     from .patch_intro import apply_intro, narc_members
+    from .patch_investigation import apply_investigation, SCRIPTS
 else:
     from patch_intro import apply_intro, narc_members
+    from patch_investigation import apply_investigation, SCRIPTS
 
 ROOT = Path(__file__).resolve().parents[2]
 RELEASE = 'v0.1.12'
@@ -152,10 +154,24 @@ def french_resources(us, fr, text_only=False):
     return localized, counts, graphics
 
 
-def prepare(us_path, fr_path, platform, output, package=None, vanilla=False, text_only=False):
+def saved_progress(source, platform):
+    """Read a compatible installation's save without changing the source."""
+    source = Path(source).resolve()
+    manifest = json.loads((source / 'universe-install.json').read_text(encoding='utf-8'))
+    if manifest.get('platform') != platform or manifest.get('upstream_release') != RELEASE:
+        raise ValueError('La sauvegarde doit venir du même port et du même système.')
+    data = (source / 'save.bin').read_bytes()
+    if not data:
+        raise ValueError('La sauvegarde à reprendre est vide.')
+    return data
+
+
+def prepare(us_path, fr_path, platform, output, package=None, vanilla=False, text_only=False,
+            *, intro_only=False, save_from=None):
     output = Path(output).resolve()
     if output.exists():
         raise ValueError('Dossier déjà présent ; aucune sauvegarde ne sera écrasée : ' + str(output))
+    progress = saved_progress(save_from, platform) if save_from is not None else None
     print('Vérification des ROM et des textes français…', flush=True)
     us = nitro_files(read_rom(us_path, 'us'))
     fr = nitro_files(read_rom(fr_path, 'fr'))
@@ -165,6 +181,10 @@ def prepare(us_path, fr_path, platform, output, package=None, vanilla=False, tex
     if not vanilla:
         localized['msgdata/pl_msg.narc'], provenance = apply_intro(original_intro)
         patches.append(provenance)
+        if not intro_only:
+            quest_resources, provenance = apply_investigation(us[SCRIPTS], localized['msgdata/pl_msg.narc'])
+            localized.update(quest_resources)
+            patches.append(provenance)
     output.parent.mkdir(parents=True, exist_ok=True)
     stage = Path(tempfile.mkdtemp(prefix='.platinum-', dir=output.parent))
     try:
@@ -196,6 +216,15 @@ def prepare(us_path, fr_path, platform, output, package=None, vanilla=False, tex
             backup = runtime / 'universe-original/msgdata/pl_msg.narc'
             backup.parent.mkdir(parents=True)
             backup.write_bytes(original_intro)
+            if not intro_only:
+                script_backup = runtime / 'universe-original' / SCRIPTS
+                script_backup.parent.mkdir(parents=True, exist_ok=True)
+                script_backup.write_bytes(us[SCRIPTS])
+        if progress is not None:
+            (runtime / 'save.bin').write_bytes(progress)
+            saves = runtime / 'universe-backups'
+            saves.mkdir(exist_ok=True)
+            (saves / (hashlib.sha256(progress).hexdigest() + '.sav')).write_bytes(progress)
         (runtime / 'sim_config.ini').write_text(
             '[General]\nInternalResolutionScale=1\nWindowWidth=512\nWindowHeight=768\n'
             'FullScreen=false\nScreenLayout=vertical\nSwapScreens=false\nVsyncInterval=1\nCapFrameRate=true\n',
@@ -203,7 +232,10 @@ def prepare(us_path, fr_path, platform, output, package=None, vanilla=False, tex
         manifest = {'schema': 1, 'upstream_release': RELEASE, 'platform': platform,
                     'package_sha256': digest, 'rom_sha1': {key: value[1] for key, value in ROMS.items()},
                     'named_resources': len(us), 'french_banks': counts, 'french_graphics': graphics,
-                    'universe_campaign': False, 'patches': patches, 'resources_sha256': resources}
+                    'universe_campaign': False, 'universe_investigation': not vanilla and not intro_only,
+                    'patches': patches, 'resources_sha256': resources}
+        if progress is not None:
+            manifest['imported_save_sha256'] = hashlib.sha256(progress).hexdigest()
         (runtime / 'universe-install.json').write_text(json.dumps(manifest, indent=2), encoding='utf-8')
         if platform == 'linux':
             (runtime / executable).chmod(0o755)
@@ -223,7 +255,9 @@ def main():
     parser.add_argument('--output', type=Path)
     parser.add_argument('--package', type=Path)
     parser.add_argument('--gui', action='store_true')
-    parser.add_argument('--vanilla', action='store_true', help='Conserver le premier dialogue français original.')
+    parser.add_argument('--vanilla', action='store_true', help='Omettre le prologue et l’enquête Universe.')
+    parser.add_argument('--intro-only', action='store_true', help='Omettre l’enquête de Bonaugure.')
+    parser.add_argument('--save-from', type=Path, help='Copier la sauvegarde d’une installation fermée, laissée intacte.')
     parser.add_argument('--text-only', action='store_true', help='Garder les graphismes USA pour comparaison.')
     args = parser.parse_args()
     if args.gui:
@@ -244,7 +278,7 @@ def main():
         parser.error('Fournis --us et --fr, ou utilise --gui.')
     prepare(args.us, args.fr, args.platform,
             args.output or ROOT / 'native-runtime' / (args.platform + '-fr'),
-            args.package, args.vanilla, args.text_only)
+            args.package, args.vanilla, args.text_only, intro_only=args.intro_only, save_from=args.save_from)
     return 0
 
 

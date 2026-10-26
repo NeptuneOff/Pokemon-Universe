@@ -1,5 +1,6 @@
 """ROM-free regression tests: corrupt archives, untouched messages and save protection."""
 import io
+import hashlib
 import json
 import struct
 import tempfile
@@ -11,8 +12,8 @@ import zipfile
 from tools.native.patch_intro import (apply_intro, character_map, crypt_message, encode_text,
                                       encrypted_messages, narc_members, replace_message,
                                       replace_narc_member)
-from tools.native.prepare_platinum import (FRENCH, ROOT, extract_package, french_resources,
-                                           nitro_files, prepare, safe_path)
+from tools.native.prepare_platinum import (FRENCH, ROOT, RELEASE, extract_package, french_resources,
+                                           nitro_files, prepare, safe_path, saved_progress)
 
 
 def archive(members):
@@ -155,6 +156,37 @@ class ResourceTests(unittest.TestCase):
                     prepare('us', 'fr', 'windows', root / 'game', package, vanilla=True, text_only=True)
             self.assertFalse((root / 'game').exists())
             self.assertEqual(list(root.glob('.platinum-*')), [])
+
+    def test_save_import_preserves_source_and_creates_a_backup_in_the_new_install(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            source = root / 'previous'
+            source.mkdir()
+            (source / 'universe-install.json').write_text(json.dumps({
+                'platform': 'windows', 'upstream_release': RELEASE}), encoding='utf-8')
+            progress = b'personal native save: role=analyst; quest=started'
+            (source / 'save.bin').write_bytes(progress)
+            package = root / 'runtime.zip'
+            with zipfile.ZipFile(package, 'w') as z:
+                z.writestr('main.exe', b'not executed in this test')
+            resources = {name: archive([b'text']) for name in FRENCH}
+            before = {p.name: p.read_bytes() for p in source.iterdir()}
+            with patch('tools.native.prepare_platinum.read_rom', return_value=b''), \
+                    patch('tools.native.prepare_platinum.nitro_files', return_value=resources), \
+                    patch.dict('tools.native.prepare_platinum.PACKAGES', {'windows': (
+                        'runtime.zip', hashlib.sha256(package.read_bytes()).hexdigest(), 'main.exe')}):
+                manifest = prepare('us', 'fr', 'windows', root / 'new', package,
+                                   vanilla=True, text_only=True, save_from=source)
+            digest = hashlib.sha256(progress).hexdigest()
+            self.assertEqual((root / 'new/save.bin').read_bytes(), progress)
+            self.assertEqual((root / 'new/universe-backups' / (digest + '.sav')).read_bytes(), progress)
+            self.assertEqual(manifest['imported_save_sha256'], digest)
+            self.assertEqual(before, {p.name: p.read_bytes() for p in source.iterdir()})
+            with self.assertRaisesRegex(ValueError, 'même port'):
+                saved_progress(source, 'linux')
+            (source / 'save.bin').write_bytes(b'')
+            with self.assertRaisesRegex(ValueError, 'vide'):
+                saved_progress(source, 'windows')
 
 
 if __name__ == '__main__':

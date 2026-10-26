@@ -8,17 +8,22 @@ import sys
 if __package__:
     from .prepare_platinum import ROOT, french_resources, nitro_files, read_rom, safe_path
     from .patch_intro import apply_intro
+    from .patch_investigation import apply_investigation, SCRIPTS
 else:
     from prepare_platinum import ROOT, french_resources, nitro_files, read_rom, safe_path
     from patch_intro import apply_intro
+    from patch_investigation import apply_investigation, SCRIPTS
 
 
-def verify(runtime, us_path, fr_path, *, vanilla=False, text_only=False):
+def verify(runtime, us_path, fr_path, *, vanilla=False, text_only=False, intro_only=False):
     us = nitro_files(read_rom(us_path, 'us'))
     fr = nitro_files(read_rom(fr_path, 'fr'))
     localized, _, graphics = french_resources(us, fr, text_only)
     if not vanilla:
         localized['msgdata/pl_msg.narc'], _ = apply_intro(fr['msgdata/pl_msg.narc'])
+        if not intro_only:
+            quest_resources, _ = apply_investigation(us[SCRIPTS], localized['msgdata/pl_msg.narc'])
+            localized.update(quest_resources)
     expected = us | localized
     missing, changed = [], []
     runtime = Path(runtime).resolve()
@@ -33,6 +38,7 @@ def verify(runtime, us_path, fr_path, *, vanilla=False, text_only=False):
     return {'ok': not missing and not changed, 'expected_resources': len(expected),
             'matching_resources': len(expected) - len(missing) - len(changed),
             'french_graphics': len(graphics), 'universe_intro': not vanilla,
+            'universe_investigation': not vanilla and not intro_only,
             'missing': missing, 'changed': changed}
 
 
@@ -43,12 +49,13 @@ def main():
     parser.add_argument('--runtime', type=Path, default=ROOT / 'native-runtime' /
                         ('windows-fr' if os.name == 'nt' else 'linux-fr'))
     parser.add_argument('--vanilla', action='store_true')
+    parser.add_argument('--intro-only', action='store_true')
     parser.add_argument('--text-only', action='store_true')
     parser.add_argument('--json', action='store_true', dest='as_json')
     args = parser.parse_args()
     try:
         result = verify(args.runtime, args.us, args.fr,
-                        vanilla=args.vanilla, text_only=args.text_only)
+                        vanilla=args.vanilla, text_only=args.text_only, intro_only=args.intro_only)
     except (OSError, ValueError, KeyError) as error:
         print('Vérification interrompue : ' + str(error), file=sys.stderr)
         return 2

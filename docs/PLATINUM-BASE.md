@@ -36,7 +36,7 @@ La logique de règles doit venir du jeu existant. Les tests et le scénario du p
 1. Initialiser la source PC épinglée. **Fait dans le dépôt sous forme de sous-module.**
 2. Valider le lancement avec une ROM USA CPUE01 personnelle, puis comparer une scène et un combat avec Platine. **Démarrage, introduction FR, scène du monde et premier combat vérifiés sous Linux.**
 3. Définir et vérifier les réglages de rendu conservant l’apparence d’origine, y compris caméra, proportions et interface. **Préréglage DS ×1, 512 ×768 et écrans verticaux appliqués.**
-4. Produire une modification minimale du scénario sur cette base et vérifier la sauvegarde. **Premier dialogue Universe appliqué ; sauvegarde et reprise vérifiées à Bonaugure.**
+4. Produire une modification minimale du scénario sur cette base et vérifier la sauvegarde. **Prologue et première enquête à rôles distincts ajoutés ; sauvegarde et reprise du jeu de base vérifiées à Bonaugure. Voir [la quête](NATIVE-INVESTIGATION.md) et ses validations.**
 5. Réaliser une petite zone réellement coopérative sur deux PC, avec deux identités, décisions et équipes distinctes. **Non réalisé.**
 6. Étendre ensuite le catalogue, les Méga-Évolutions, les cartes et l’histoire par étapes vérifiées.
 
@@ -50,4 +50,4 @@ Aucune image « officielle Platine » n’existe pour les Pokémon ou régions a
 
 ## Validation de cette étape
 
-Outils de préparation USA/FR, lanceurs Windows/Linux et premier dialogue Universe ajoutés. L’exécutable utilisé est celui de l’amont v0.1.12, sans compilation Universe. Aucune nouvelle région ni coopération native livrée. Voir [NATIVE-FR.md](NATIVE-FR.md) et [NATIVE-VALIDATION.md](NATIVE-VALIDATION.md).
+Outils de préparation USA/FR, lanceurs Windows/Linux, prologue et première enquête solo Universe ajoutés. L’exécutable utilisé est celui de l’amont v0.1.12, sans compilation Universe. Aucune nouvelle région ni coopération native livrée. Voir [NATIVE-FR.md](NATIVE-FR.md) et [NATIVE-VALIDATION.md](NATIVE-VALIDATION.md).
