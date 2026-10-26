@@ -71,8 +71,21 @@ La source des outils a été restaurée après le nettoyage de l’environnement
 - Ajout de deux banques de scripts : laboratoire (1064) et ville (1059), avec textes ajoutés dans les banques 565 et 561. La première enquête reste inchangée. Aucune archive graphique, carte ou animation n’est modifiée.
 - Après le rapport de Bonaugure, Sorbier offre **Enquête**, **Pokédex** et **Plus tard**. Les scènes d’obtention du Pokédex et les autres entrées de scripts restent identiques. Le PC pour l’analyste et l’éleveur pour l’éclaireur donnent un indice distinct ; le rapport final dépend aussi de la direction initiale.
 - 32 tests Python : 31 exécutés localement, un test PowerShell réservé à Windows. Les nouveaux cas couvrent les quatre combinaisons rôle/direction, les changements de carte, la reconstitution de l’état persistant, les annulations, les mauvaises réponses, le Sac plein, les trois Poké Balls uniques, les dialogues Pokédex accessibles et le refus de ressources incompatibles.
+- [GitHub Actions pour `941c916`](https://github.com/NeptuneOff/Pokemon-Universe/actions/runs/40328054165) : contrôles Linux et Windows réussis. Les 32 tests s’exécutent sous Windows, dont le lanceur PowerShell ; le jeu Windows lui-même n’est pas lancé par ces tests.
 - Installations Linux et Windows préparées et comparées aux ROM personnelles : **340/340 ressources conformes** pour chacune. La sauvegarde de la première enquête est copiée octet pour octet dans une nouvelle installation ; l’ancienne reste intacte.
 - Le parcours graphique de cette suite reste à valider ; les tests de scripts ne constituent pas une exécution de l’ensemble de la campagne.
+
+## Progression de Platine après l’enquête
+
+Dans la nouvelle installation, TEST reprend son rapport et poursuit normalement la visite du rival, la rencontre de Sorbier, le choix de Tortipouss, le combat contre Ouisticram puis la scène de la mère. Les captures suivantes viennent de cette même partie, après l’enquête et la copie de sauvegarde vers l’installation mise à jour.
+
+![Choix du premier Pokémon après l’enquête](evidence/apres-enquete-tortipouss-fr.png)
+
+![Combat du rival après l’enquête](evidence/apres-enquete-combat-fr.png)
+
+Après la scène de la mère et l’obtention des Chaussures de Sport, utilisation de **SAUVER**, arrêt du processus, redémarrage et **CONTINUER**. L’écran d’équipe retrouve **Tortipouss mâle, niveau 6, 24/24 PV**, dans la maison du joueur. Ce point de reprise est conservé séparément de l’archive destinée aux joueurs.
+
+![Équipe conservée après fermeture et relance](evidence/apres-enquete-equipe-reprise-fr.png)
 
 ## Archive Windows prête à extraire
 
@@ -82,7 +95,7 @@ La source des outils a été restaurée après le nettoyage de l’environnement
 
 ## Limites de cette validation
 
-La reprise avec une équipe sauvegardée après le combat reste à contrôler. Le point de test durable actuel est à Bonaugure après l’enquête analyste, avant le premier Pokémon. Les anciens essais de combat n’ont pas laissé une sauvegarde exploitable après le combat. La campagne entière et tous les écrans localisés ne sont pas testés. Aucun essai graphique Windows n’a été effectué. Le son n’a pas été validé (pilote audio factice dans l’environnement de test).
+La reprise de l’équipe après le premier combat est maintenant contrôlée. Le point de test durable actuel est dans la maison du joueur après la scène de la mère, avec Tortipouss niveau 6 ; les points précédents de l’enquête sont aussi conservés. La campagne entière et tous les écrans localisés ne sont pas testés. Aucun essai graphique Windows n’a été effectué. Le son n’a pas été validé (pilote audio factice dans l’environnement de test).
 
 Aucune campagne coopérative, nouvelle région, espèce supplémentaire ni Méga-Évolution n’est livrée par cette étape.
 
@@ -94,4 +107,4 @@ python -m unittest discover -s tests/native -v
 
 ## Vérification manuelle à poursuivre
 
-Depuis le point de Bonaugure, poursuivre les scènes du rival, choisir un Pokémon, terminer le combat, finir le dialogue de la mère, sauvegarder puis fermer et reprendre avec l’équipe conservée. Rejoindre Littorella, obtenir le Pokédex et exécuter la suite de l’enquête. Valider aussi le parcours éclaireur, les écrans d’équipe et du Pokédex, puis le lancement et les boutons français sur Windows. Conserver les captures réelles et résultats dans Git à chaque étape.
+Depuis le point conservé après le combat, rejoindre Littorella, obtenir le Pokédex et exécuter la suite de l’enquête. Valider aussi le parcours éclaireur, le Pokédex, puis le lancement et les boutons français sur Windows. Conserver les captures réelles et résultats dans Git à chaque étape.
