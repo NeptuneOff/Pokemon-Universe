@@ -12,8 +12,8 @@ Ce document conserve les demandes de l’utilisateur pour les reprises du dével
 - Deux joueurs sur deux PC dans une campagne commune. Identités, équipes, objets et décisions distincts ; la coopération modifie le scénario et les situations de jeu.
 - Personnalisation initiale et événements personnels issus d’un hasard persistant. Actions différentes et complémentaires selon les rôles. La reconnexion ne relance pas les résultats aléatoires.
 - Sauvegarde fiable, reprise de partie, désaccords résolubles, combats communs et échanges sans duplication.
-- Lancement simple sur PC, sans fournir de ROM ni installer Python au moment de jouer.
-- Suivi sur `NeptuneOff/Pokemon-Universe` et demande d’une version prête à jouer téléchargeable depuis GitHub. Actuellement, le dépôt contient les sources et les outils ; l’archive préparée est fournie séparément et aucune Release complète n’est publiée.
+- Lancement sous Windows 64 bits depuis Git : un seul `JOUER.bat` qui prépare, vérifie et lance le jeu, conserve les sauvegardes et écrit des logs exploitables. Aucun ZIP manuel, aucune ROM ni installation de Python au moment de jouer.
+- Suivi sur `NeptuneOff/Pokemon-Universe`. Les sources, le lanceur et les fichiers de la base Windows sont inclus dans Git ; les mises à jour se récupèrent avec `git pull --ff-only`. Une Release ou une archive séparée ne doit pas être nécessaire.
 
 ## État natif
 

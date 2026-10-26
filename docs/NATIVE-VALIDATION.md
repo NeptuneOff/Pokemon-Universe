@@ -93,6 +93,18 @@ Après la scène de la mère et l’obtention des Chaussures de Sport, utilisati
 - `JOUER.cmd` utilise Windows PowerShell ; Python n’est pas une dépendance de cette archive. Les sauvegardes distinctes sont conservées avant et après le jeu. Deux lanceurs ne peuvent pas partager simultanément le même dossier de sauvegarde.
 - Test du paquet : contenu autorisé, sauvegardes exclues, originaux inchangés, exécutable altéré refusé. Un test Windows exécute le lanceur avec un petit programme de test pour contrôler la reprise après un code de sortie non nul et le refus d’une copie de secours corrompue. Ce programme de test n’est pas le jeu.
 
+## Distribution Git et lanceur Windows unique — 26 octobre 2026
+
+Le parcours joueur utilise maintenant `git pull --ff-only`, puis `JOUER.bat`. Les cinq anciens lanceurs à la racine sont supprimés. Le moteur précompilé, les 340 ressources préparées et les notices sont répartis en paquets versionnés dans Git : aucun téléchargement de ZIP séparé, aucune ROM et aucun Python ne sont nécessaires pour jouer.
+
+- Les **340/340 ressources** de la nouvelle installation Windows correspondent aux sources validées avec les trois étapes Universe (prologue, Bonaugure, Littorella). Les paquets reconstruits ont été décompressés et leurs **355/355 fichiers** comparés aux empreintes attendues.
+- [CI Windows du lanceur](https://github.com/NeptuneOff/Pokemon-Universe/actions/runs/40344903368), commit `6e91155` : **42 tests réussis**, dont six nouveaux parcours d’intégration sous Windows PowerShell 5.1. Ils emploient un petit exécutable indépendant afin de vérifier l’installation, la réparation d’une ressource, la journalisation des deux sorties natives et d’un code d’erreur, l’import d’une ancienne partie, la mise à jour et le retour de version avec la progression la plus récente, le refus d’un paquet ou d’une copie de secours altérés, et le verrouillage de deux sessions concurrentes.
+- Le BAT est exécuté depuis un autre dossier avec un chemin contenant espaces, accent et esperluette. Une préparation seule ne crée aucune sauvegarde et ne change pas l’installation active. Un deuxième lancement vérifie les fichiers déjà installés.
+- Deux incompatibilités PowerShell 5.1 détectées pendant ces tests ont été corrigées : les empreintes utilisent directement SHA-256 .NET et l’écriture atomique transmet une vraie chaîne nulle à `File.Replace`.
+- Les journaux indiquent la révision, le build, les étapes, les fichiers concernés, les exceptions et le code de sortie ; les traces natives sont conservées séparément et reprises dans le diagnostic à la fermeture. Les sauvegardes distinctes restent locales dans `native-runtime/universe-backups`.
+
+La CI est également configurée pour installer la vraie distribution depuis Git, puis vérifier l’installation existante, avec `-PrepareOnly`. Cette préparation valide les données et le parcours d’installation ; elle ne constitue pas une exécution graphique du jeu Windows.
+
 ## Limites de cette validation
 
 La reprise de l’équipe après le premier combat est maintenant contrôlée. Le point de test durable actuel est dans la maison du joueur après la scène de la mère, avec Tortipouss niveau 6 ; les points précédents de l’enquête sont aussi conservés. La campagne entière et tous les écrans localisés ne sont pas testés. Aucun essai graphique Windows n’a été effectué. Le son n’a pas été validé (pilote audio factice dans l’environnement de test).

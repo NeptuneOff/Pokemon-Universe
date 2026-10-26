@@ -1,45 +1,69 @@
-# Lancer la base Platine PC en français
+# Jouer sous Windows depuis Git
 
-Cette étape installe le port natif existant de Platine, ses textes et interfaces français, le prologue Universe et une première enquête facultative à Bonaugure. Le reste du parcours reste celui de Platine. La campagne à sept régions et la coopération Universe ne sont pas encore intégrées.
+## Installation et mise à jour
 
-## Archive Windows déjà préparée
+Fermer le jeu, exécuter `git pull --ff-only` dans le dépôt, puis ouvrir **JOUER.bat**. Pour un premier clone :
 
-Extraire entièrement l’archive privée **Pokémon Universe Windows FR**, puis ouvrir **`JOUER.cmd`**. Aucun fichier ROM à choisir, aucune installation de Python et aucun émulateur. Les ressources sont déjà présentes. Windows PowerShell, fourni avec Windows, lance le moteur dans le bon dossier et copie chaque sauvegarde distincte avant et après la session.
+```bat
+git clone https://github.com/NeptuneOff/Pokemon-Universe.git
+cd Pokemon-Universe
+JOUER.bat
+```
 
-Cette version reste un jeu en développement, avec Platine et la première enquête Universe. Les fichiers du ZIP de code téléchargé sur GitHub ne constituent pas cette archive préparée.
+Un seul lanceur est nécessaire. Windows PowerShell 5.1, fourni avec Windows 10/11 64 bits, prépare le moteur et les ressources déjà contenus dans le dépôt. Aucun téléchargement supplémentaire, aucune sélection de ROM, aucun Python, Git LFS, émulateur ou compilateur au moment de jouer. Le sous-module du moteur sert uniquement au développement.
 
-## Préparation Windows depuis le dépôt
+Le premier clone récupère environ 92 Mo de données de jeu, en plus des sources. Prévoir environ 1 Go libre pour les fichiers Git, l’installation temporaire et le jeu installé. Les mises à jour conservent les anciennes installations et copies de sauvegarde : leur espace augmente avec les versions.
 
-1. Récupérer ce dépôt avec Git ou **Code → Download ZIP**, puis extraire le ZIP.
-2. Installer Python 3 avec Tcl/Tk depuis [python.org](https://www.python.org/downloads/windows/) si nécessaire.
-3. Ouvrir `PREPARER-PLATINE.bat`.
-4. Choisir sa ROM personnelle **USA Rev 1**, puis sa ROM personnelle **France**. Les `.nds` et les ZIP contenant une seule ROM sont acceptés.
-5. Attendre la fin de la préparation, puis ouvrir `JOUER-PLATINE.bat`.
+À chaque lancement, les fichiers installés sont contrôlés par SHA-256. Un fichier absent ou altéré déclenche une préparation depuis les paquets du dépôt. Les paquets sont tous vérifiés avant de remplacer des fichiers du moteur. La configuration et la partie ne font pas partie des fichiers remplacés. Le lanceur applique la version du dépôt local ; il n’exécute pas lui-même `git pull`.
 
-Le port natif est téléchargé automatiquement et son empreinte est contrôlée. Aucune compilation n’est nécessaire. Git et `INITIALISER-SOURCES-PLATINE.bat` servent à récupérer le code du moteur pour le développement ; le sous-module n’est pas requis par l’installateur.
+## Commandes
 
-Le paquet Windows a été téléchargé et son empreinte vérifiée. L’exécution graphique a été testée sous Linux ; Windows reste à valider sur une machine Windows.
+| Action | Touche par défaut |
+|---|---|
+| Se déplacer / choisir | Flèches |
+| Confirmer / parler (A) | Z |
+| Annuler / courir lorsque disponible (B) | X |
+| Menu (X DS) | C |
+| Objet enregistré (Y DS) | V |
+| Start | Entrée |
+| Écran tactile | Clic dans l’écran inférieur |
 
-## Linux x86-64
+Le réglage initial conserve la résolution interne DS ×1, deux écrans verticaux et une fenêtre 512 ×768. Les décors et personnages sont ceux de Platine. Utiliser **SAUVER** dans le menu du jeu avant de quitter.
 
-Python 3 et un environnement graphique sont nécessaires. Depuis la racine du dépôt :
+## Sauvegardes
+
+Le jeu installé et sa partie se trouvent dans `native-runtime/windows-builds/<version>/`. Le fichier `native-runtime/windows-current.json` indique la version utilisée pour la dernière session. Les sauvegardes distinctes sont copiées avant et après la session dans `native-runtime/universe-backups/<sha256>.sav`.
+
+Après une mise à jour, le lanceur importe la partie de la dernière installation utilisée, garde l’original et copie ses réglages si le nouveau dossier n’en a pas. Le même mécanisme conserve la progression la plus récente lorsqu’on revient à une ancienne version compatible. Une sauvegarde déjà présente dans la destination est protégée avant remplacement. Les versions du moteur doivent être compatibles ; sinon le lancement s’arrête en conservant les fichiers.
+
+Lors de la première utilisation, une ancienne partie située dans `native-runtime/windows-fr` est reprise automatiquement si son manifeste indique le même moteur Windows. Une partie issue d’une ancienne archive située ailleurs n’est pas recherchée sur le disque : fermer le jeu et conserver son dossier pour une migration explicite.
+
+Les copies protègent les données déjà écrites sur disque ; elles ne remplacent pas **SAUVER**, ne récupèrent pas les progrès non enregistrés et ne vérifient pas la validité interne de la partie. Une sauvegarde vide ou une copie de secours altérée arrête le lancement. Rien n’est envoyé sur Internet et les anciennes copies ne sont pas supprimées automatiquement.
+
+Éviter de lancer directement `main.exe` : cela contourne les copies et le journal du lanceur. Deux sessions lancées par `JOUER.bat` ne peuvent pas écrire en même temps. Pour restaurer manuellement une copie, fermer le jeu, identifier son dossier dans le dernier journal, mettre le `save.bin` actuel à l’abri, puis copier la sauvegarde choisie à cet emplacement sous le nom `save.bin`.
+
+## Logs et dépannage
+
+Le fichier à transmettre est **`logs/dernier-lancement.log`**. Une copie datée de chaque session est conservée dans le même dossier, avec la sortie standard et les erreurs natives séparées. Le journal indique la version du jeu et du moteur, la révision Git lorsqu’elle est accessible, Windows/PowerShell, les étapes, les chemins, les vérifications, les exceptions, les sauvegardes protégées et le code de sortie. Après la fermeture du jeu, il inclut les dernières lignes des sorties natives et de `DbgLog.txt` si ce fichier a été écrit pendant la session.
+
+Si le jeu se bloque sans se fermer, conserver aussi les fichiers `jeu-*.stdout.log` et `jeu-*.stderr.log` de cette session. Si un second lancement est refusé, son diagnostic daté est affiché dans la console ; le journal de la session active reste intact.
+
+- **Fichier absent / taille ou empreinte incorrecte** : le diagnostic nomme le fichier concerné. Vérifier que `git pull --ff-only` s’est terminé. Ne pas supprimer `native-runtime` ni les sauvegardes.
+- **Jeu déjà ouvert / fichier verrouillé** : fermer la session précédente avant de relancer.
+- **Copie de secours altérée / sauvegarde vide / installation précédente absente** : conserver les fichiers et transmettre le log pour restaurer la bonne partie.
+- **Échec graphique ou fermeture immédiate** : transmettre le log ; il contient les erreurs natives disponibles et le code de sortie. Le port reste expérimental et dépend du pilote graphique de la machine.
+- **Échec de pull pour modifications locales** : conserver les modifications et le message Git ; ne pas employer `reset --hard` ou `clean` pour tenter une réparation.
+
+## Outils de développement et Linux
+
+Cette section n’est pas nécessaire pour jouer sous Windows. Les anciens scripts de préparation restent disponibles pour fabriquer une nouvelle distribution ou une installation Linux à partir des sources personnelles :
 
 ```bash
-python3 tools/native/prepare_platinum.py --us /chemin/platine-usa.zip --fr /chemin/platine-fr.zip
+python3 tools/native/prepare_platinum.py --us /chemin/usa.zip --fr /chemin/fr.zip
 python3 tools/native/launch_platinum.py
 ```
 
-Le lanceur utilise l’AppImage amont et ses bibliothèques, avec extraction temporaire sans FUSE. Les dépendances graphiques du système restent nécessaires. Les ROM ne sont jamais envoyées sur Internet ; le téléchargement concerne uniquement le port natif.
-
-Options :
-
-- `--gui` : sélectionner les ROM dans des fenêtres.
-- `--output DOSSIER` : créer une installation distincte ; la lancer ensuite avec `launch_platinum.py --runtime DOSSIER`.
-- `--package FICHIER.zip` : utiliser un paquet natif déjà téléchargé.
-- `--vanilla` : omettre l’enquête et conserver le premier dialogue français original.
-- `--intro-only` : installer uniquement le prologue Universe, sans l’enquête.
-- `--save-from DOSSIER` : copier une sauvegarde existante dans la nouvelle installation, avec copie de secours ; l’ancienne installation reste intacte. Fermer le jeu avant cette opération. Voir [le guide de reprise](NATIVE-INVESTIGATION.md).
-- `--text-only` : conserver les graphismes USA pour diagnostiquer la localisation.
+Sous Linux, Python 3 et un environnement graphique sont nécessaires. Le lanceur utilise l’AppImage amont avec extraction temporaire sans FUSE. `--output DOSSIER` prépare une installation distincte ; `launch_platinum.py --runtime DOSSIER` la lance. `--save-from DOSSIER` importe une sauvegarde compatible en conservant sa source. `--package FICHIER.zip` utilise le paquet moteur local. Les options `--vanilla`, `--intro-only`, `--bonaugure-only` et `--text-only` permettent de comparer les étapes de modification. La préparation refuse une destination déjà existante.
 
 ## Versions reconnues
 
@@ -63,38 +87,6 @@ Le premier dialogue d’introduction (banque 389, message 0) présente Universe 
 Les archives originales sont conservées dans `universe-original/msgdata/pl_msg.narc` et `universe-original/fielddata/script/scr_seq.narc`. Pour comparer sans les événements Universe, créer une installation distincte avec `--vanilla`.
 
 La vidéo d’ouverture garde son archive USA : son équivalent français contient 113 membres contre 116 et ne peut pas être remplacé intégralement sans adaptation. Certains mini-jeux et données propres aux versions commerciales restent à auditer. Les menus techniques du port restent anglais. La localisation intégrale n’est donc pas encore garantie.
-
-## Commandes
-
-| Action | Touche par défaut |
-|---|---|
-| Se déplacer / choisir | Flèches |
-| Confirmer / parler (A) | Z |
-| Annuler / courir lorsque disponible (B) | X |
-| Menu (X DS) | C |
-| Objet enregistré (Y DS) | V |
-| Start | Entrée |
-| Écran tactile | Clic dans l’écran inférieur |
-
-Le préréglage conserve la résolution interne DS ×1, deux écrans verticaux et une fenêtre 512 ×768. Les décors et personnages proviennent de Platine, pas de l’ancien prototype web.
-
-## Sauvegardes et dépannage
-
-Les lanceurs se placent dans `native-runtime/windows-fr` ou `native-runtime/linux-fr`, où résident les ressources et la sauvegarde `save.bin`. Conserver le dossier entier avant une mise à jour. Python 3 sert aussi au lancement Windows pour activer les copies de secours.
-
-Le lanceur copie `save.bin` avant de démarrer le jeu et après sa fermeture, y compris si le jeu renvoie une erreur. Chaque contenu distinct est conservé dans `universe-backups/<sha256>.sav`, sans écraser les copies précédentes. Une copie identique n’est pas dupliquée. Si la copie préalable échoue, le lancement s’arrête et indique l’erreur. Les copies restent locales, sans envoi réseau ni suppression automatique.
-
-Ce mécanisme ne remplace pas **SAUVER** dans le menu du jeu : il copie uniquement les progrès déjà écrits sur disque. Il ne vérifie pas la validité interne de la partie. Fermer le jeu avant de restaurer une copie ; mettre d’abord le `save.bin` actuel à l’abri, puis copier le fichier `.sav` choisi sous le nom `save.bin` dans le même dossier. Trier les copies par date de modification pour les retrouver. Lancer directement `main.exe` ou l’AppImage contourne ce mécanisme.
-
-L’installateur **refuse toute destination déjà existante**. Il ne supprime ni ne remplace une sauvegarde. Utiliser `--output` pour une autre installation. En cas d’échec, seul son dossier temporaire est nettoyé.
-
-- **ROM incompatible** : vérifier région et révision ; renommer le fichier ne change pas sa compatibilité.
-- **Empreinte incorrecte** : le paquet n’est pas celui attendu ; aucune extraction n’est effectuée.
-- **Dossier déjà présent** : conserver ses sauvegardes et choisir une autre destination.
-- **Sélecteur indisponible** : utiliser `--us` et `--fr` dans un terminal.
-- **Plantage** : conserver les journaux du jeu. Le port amont reste expérimental.
-
-Aucune ROM, ressource extraite ou sauvegarde n’est publiée dans Git. Les exécutables sont téléchargés depuis leur auteur ; ses crédits et notices restent applicables.
 
 ## Contrôler les ressources installées
 

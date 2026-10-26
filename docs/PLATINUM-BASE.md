@@ -42,9 +42,9 @@ La logique de règles doit venir du jeu existant. Les tests et le scénario du p
 
 ## Ressources et distribution
 
-Le lancement amont extrait les ressources d’une ROM USA fournie par le joueur. Il ne suffit pas de posséder une ROM française pour supposer une compatibilité directe ; l’amont documente séparément le remplacement de certains fichiers de texte.
+La préparation de développement part des sources personnelles USA/France validées. Le lancement Windows Universe utilise maintenant les fichiers préparés et versionnés dans `distribution/windows`, sans ROM demandée au joueur. Voir [la distribution Git](../distribution/README.md).
 
-Respecter les notices et crédits des dépendances, notamment ceux de libntr. L’amont demande de ne pas distribuer ses exécutables accompagnés des ressources compilées du jeu. Aucun téléchargement de ROM n’est fourni.
+Les notices et crédits du moteur et des dépendances, notamment libntr, sont conservés et installés avec le jeu. L’amont demeure un projet distinct ; aucun travail de portage de son moteur n’est attribué à Universe.
 
 Aucune image « officielle Platine » n’existe pour les Pokémon ou régions apparus après ce jeu. Leur intégration exigera du pixel art et des modèles compatibles, puis une validation visuelle ; elle ne sera pas annoncée comme déjà faite.
 
