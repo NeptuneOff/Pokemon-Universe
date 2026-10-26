@@ -44,7 +44,12 @@ function Relative-File([string]$Base, [string]$Name) {
 }
 
 function Hash-File([string]$Path) {
-    return (Get-FileHash -LiteralPath $Path -Algorithm SHA256).Hash.ToLowerInvariant()
+    $hasher = [Security.Cryptography.SHA256]::Create()
+    try {
+        $stream = [IO.File]::OpenRead($Path)
+        try { return [BitConverter]::ToString($hasher.ComputeHash($stream)).Replace('-', '').ToLowerInvariant() }
+        finally { $stream.Dispose() }
+    } finally { $hasher.Dispose() }
 }
 
 function Assert-File([string]$Path, [long]$Size, [string]$Sha256) {
