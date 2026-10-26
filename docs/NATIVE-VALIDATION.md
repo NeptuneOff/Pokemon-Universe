@@ -103,7 +103,7 @@ Le parcours joueur utilise maintenant `git pull --ff-only`, puis `JOUER.bat`. Le
 - Deux incompatibilités PowerShell 5.1 détectées pendant ces tests ont été corrigées : les empreintes utilisent directement SHA-256 .NET et l’écriture atomique transmet une vraie chaîne nulle à `File.Replace`.
 - Les journaux indiquent la révision, le build, les étapes, les fichiers concernés, les exceptions et le code de sortie ; les traces natives sont conservées séparément et reprises dans le diagnostic à la fermeture. Les sauvegardes distinctes restent locales dans `native-runtime/universe-backups`.
 
-La CI est également configurée pour installer la vraie distribution depuis Git, puis vérifier l’installation existante, avec `-PrepareOnly`. Cette préparation valide les données et le parcours d’installation ; elle ne constitue pas une exécution graphique du jeu Windows.
+[Contrôle de la distribution complète depuis Git](https://github.com/NeptuneOff/Pokemon-Universe/actions/runs/40346829188), commit `518eb60` : **42 tests Windows réussis**, puis `JOUER.bat -PrepareOnly` installe **355/355 fichiers** du build `e54911cd93dbf5e82db0`, avec code de sortie 0. Une seconde invocation vérifie les 355 fichiers déjà installés et termine aussi avec le code 0. Un clone Git neuf distinct a également été reconstruit et comparé aux 355 empreintes ; le dépôt ne contient qu’un seul BAT à la racine. Cette préparation valide les données et le parcours d’installation ; elle ne constitue pas une exécution graphique du jeu Windows.
 
 ## Limites de cette validation
 
