@@ -15,6 +15,7 @@ assets/pokemon/
 *.sav
 save.bin
 native-runtime/
+logs/
 
 __pycache__/
 *.pyc

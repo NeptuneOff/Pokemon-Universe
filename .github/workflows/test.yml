@@ -14,6 +14,14 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m unittest discover -s tests/native -v
+      - name: Install and verify the Windows game directly from Git
+        if: runner.os == 'Windows' && hashFiles('distribution/windows/release.json') != ''
+        shell: powershell
+        run: |
+          & .\JOUER.bat -PrepareOnly
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          & powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File tools/native/start_windows.ps1 -PrepareOnly
+          exit $LASTEXITCODE
   test:
     runs-on: ubuntu-latest
     steps:
