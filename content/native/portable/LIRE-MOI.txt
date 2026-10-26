@@ -1,0 +1,35 @@
+POKEMON UNIVERSE - VERSION DE DEVELOPPEMENT WINDOWS
+
+1. Extraire tout le ZIP dans un dossier accessible en ecriture.
+2. Ouvrir JOUER.cmd dans ce dossier.
+
+Aucune ROM a selectionner. Aucune installation de Python ou d'emulateur.
+Les ressources ont deja ete preparees depuis les fichiers personnels fournis.
+Windows 10/11 64 bits. Le port PC reste experimental.
+
+CONTENU ACTUEL
+Platine natif avec textes et plusieurs interfaces en francais.
+Prologue Universe et enquete Les oiseaux de Bonaugure : parler au chercheur
+au sud du village, choisir analyste ou eclaireur et rapporter un indice.
+Le reste du jeu suit encore Platine. Les sept regions, la cooperation,
+les especes supplementaires et les Mega-Evolutions ne sont pas integrees.
+
+COMMANDES
+Fleches : se deplacer. Z : confirmer/parler. X : annuler.
+C : menu du jeu. V : objet enregistre. Entree : Start.
+Clic dans l'ecran du bas : ecran tactile.
+Les touches sont les commandes par defaut du port.
+
+SAUVEGARDE
+Utiliser SAUVER dans le menu du jeu. La partie est dans save.bin.
+JOUER.cmd conserve les copies distinctes dans universe-backups avant et
+apres le jeu. Garder ce dossier lors des mises a jour.
+Ne pas lancer deux instances du jeu dans le meme dossier.
+
+Un port PC existant sert de moteur : cybervisi0n/pokeplatinum v0.1.12,
+derive de pret/pokeplatinum et utilisant libntr. Universe n'est pas l'auteur
+de ce port. Credits et licences dans le dossier licenses.
+Code Universe : https://github.com/NeptuneOff/Pokemon-Universe
+
+Cette archive contient les ressources personnelles preparees pour cette
+partie. Elle n'est pas publiee comme une release du depot GitHub.

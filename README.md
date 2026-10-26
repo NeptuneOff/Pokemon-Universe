@@ -21,6 +21,10 @@ git submodule update --init engine/platinum
 
 ## Lancer la base native en français
 
+**Avec une archive Windows déjà préparée :** extraire tout le ZIP, puis ouvrir **`JOUER.cmd`**. Aucun choix de ROM, aucune installation de Python et aucun émulateur ne sont nécessaires. Le lanceur conserve les sauvegardes avec Windows PowerShell. Cette archive privée est préparée séparément ; le ZIP public du code GitHub ne contient pas les ressources du jeu.
+
+**Préparation depuis le code source** (développement ou nouvelle installation) :
+
 Sous Windows : **`PREPARER-PLATINE.bat`**, sélectionner ses ROM personnelles USA Rev 1 et France (`.nds` ou ZIP), puis **`JOUER-PLATINE.bat`**. Python 3 est requis pour la préparation. Le port est téléchargé et vérifié automatiquement ; aucune compilation n’est demandée.
 
 Le ZIP du dépôt suffit pour cette préparation. Pour développer le moteur, utiliser Git et `INITIALISER-SOURCES-PLATINE.bat`.

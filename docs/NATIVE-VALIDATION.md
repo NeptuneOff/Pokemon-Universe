@@ -50,6 +50,12 @@ La source des outils a été restaurée après le nettoyage de l’environnement
 - Nouvelle préparation Windows générée avec l’enquête ; le moteur graphique Windows n’est pas exécuté ici. Les 12 tests du prototype web archivé passent aussi et ne valident pas la coopération native.
 - Le parcours graphique complet de cette nouvelle quête et sa sauvegarde/reprise native restent à valider. Les captures précédentes montrent le jeu de base, pas cette quête.
 
+## Archive Windows prête à extraire
+
+- Outil `package_windows.py` : copie uniquement les huit fichiers du paquet moteur vérifié, les 340 ressources recensées, la configuration et les fichiers du lanceur. Les ROM, sauvegardes de test, journaux et fichiers sans rapport sont exclus.
+- `JOUER.cmd` utilise Windows PowerShell ; Python n’est pas une dépendance de cette archive. Les sauvegardes distinctes sont conservées avant et après le jeu. Deux lanceurs ne peuvent pas partager simultanément le même dossier de sauvegarde.
+- Test du paquet : contenu autorisé, sauvegardes exclues, originaux inchangés, exécutable altéré refusé. Un test Windows exécute le lanceur avec un petit programme de test pour contrôler la reprise après un code de sortie non nul et le refus d’une copie de secours corrompue. Ce programme de test n’est pas le jeu.
+
 ## Limites de cette validation
 
 La reprise avec une équipe sauvegardée après le combat reste à contrôler. La session de test a été fermée avant cette sauvegarde ; le dernier point conservé est sur la Route 201 avant le choix du Pokémon. La campagne entière et tous les écrans localisés ne sont pas testés. Aucun essai graphique Windows n’a été effectué. Le son n’a pas été validé (pilote audio factice dans l’environnement de test).

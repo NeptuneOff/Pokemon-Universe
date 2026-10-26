@@ -2,7 +2,13 @@
 
 Cette étape installe le port natif existant de Platine, ses textes et interfaces français, le prologue Universe et une première enquête facultative à Bonaugure. Le reste du parcours reste celui de Platine. La campagne à sept régions et la coopération Universe ne sont pas encore intégrées.
 
-## Windows 64 bits
+## Archive Windows déjà préparée
+
+Extraire entièrement l’archive privée **Pokémon Universe Windows FR**, puis ouvrir **`JOUER.cmd`**. Aucun fichier ROM à choisir, aucune installation de Python et aucun émulateur. Les ressources sont déjà présentes. Windows PowerShell, fourni avec Windows, lance le moteur dans le bon dossier et copie chaque sauvegarde distincte avant et après la session.
+
+Cette version reste un jeu en développement, avec Platine et la première enquête Universe. Les fichiers du ZIP de code téléchargé sur GitHub ne constituent pas cette archive préparée.
+
+## Préparation Windows depuis le dépôt
 
 1. Récupérer ce dépôt avec Git ou **Code → Download ZIP**, puis extraire le ZIP.
 2. Installer Python 3 avec Tcl/Tk depuis [python.org](https://www.python.org/downloads/windows/) si nécessaire.
