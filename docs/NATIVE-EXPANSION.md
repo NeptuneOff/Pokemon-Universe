@@ -18,7 +18,7 @@ Le module applique un modèle de sélection au tour par tour destiné à Univers
 Les révisions et empreintes exactes sont enregistrées dans `content/native/expansion/sources/provenance.json` et recopiées dans le catalogue.
 
 - [Pokémon Showdown, révision b354a81](https://github.com/smogon/pokemon-showdown/blob/b354a81f11003a03f0dcd1dafd4edc641e6763bd/data/pokedex.ts) : données des espèces et formes. Notice MIT conservée dans `data/SHOWDOWN-LICENSE`.
-- [PokéAPI, révision 2bf639e](https://github.com/PokeAPI/pokeapi/blob/2bf639e5572812a67d2b94903fdcb9d095f5aeb2/data/v2/csv/pokemon_species_names.csv) : noms français des espèces.
+- [PokéAPI, révision 2bf639e](https://github.com/PokeAPI/pokeapi/blob/2bf639e5572812a67d2b94903fdcb9d095f5aeb2/data/v2/csv/pokemon_species_names.csv) : noms français des espèces. Notice conservée dans `content/native/expansion/sources/POKEAPI-LICENSE.txt`.
 
 Les sources ne sont pas automatiquement actualisées au lancement du jeu. Un changement de catalogue doit être reconstruit, contrôlé et versionné.
 
