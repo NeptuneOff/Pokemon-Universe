@@ -125,5 +125,44 @@
     "delay_ms": 900,
     "wait": 3,
     "capture": "17-new-game"
+  },
+  {
+    "key": "z",
+    "repeat": 20,
+    "delay_ms": 650,
+    "wait": 10,
+    "capture": "18-after-tv"
+  },
+  {
+    "key": "z",
+    "repeat": 20,
+    "delay_ms": 650,
+    "wait": 2,
+    "capture": "19-bedroom"
+  },
+  {
+    "key": "c",
+    "wait": 2,
+    "capture": "20-field-menu"
+  },
+  {
+    "key": "Down",
+    "repeat": 2
+  },
+  {
+    "key": "z",
+    "wait": 2,
+    "capture": "21-save-prompt"
+  },
+  {
+    "key": "z",
+    "repeat": 8,
+    "delay_ms": 900,
+    "wait": 4,
+    "capture": "22-save-result"
+  },
+  {
+    "key": "x",
+    "wait": 1
   }
 ]

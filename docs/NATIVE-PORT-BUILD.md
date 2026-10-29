@@ -63,3 +63,11 @@ Cette branche est une **version de développement du moteur relié**, pas la cam
 Les tests de préparation contrôlent le maintien des sources originales, les révisions incompatibles, les modifications ambiguës, le refus d’écrasement et le nettoyage d’un échec. Les tests d’assemblage contrôlent la conservation des ressources françaises, le remplacement du moteur, l’exclusion des données personnelles et le refus d’une ressource ou d’un exécutable incompatible.
 
 Le bilan de compilation et les limites de validation graphique sont consignés dans [NATIVE-VALIDATION.md](NATIVE-VALIDATION.md).
+
+## Parcours graphique de développement
+
+Le workflow `visual-native-port.yml` reconstruit le candidat depuis ses paquets Git, vérifie tous les fichiers, puis lance son véritable exécutable Windows sous Wine, Xvfb et Mesa logiciel. Les captures proviennent directement de sa fenêtre ; elles ne sont pas recréées. Les actions clavier et tactiles sont dans `tests/native/visual_recipe.json`. Un résultat positif indique que ce parcours a été exécuté et capturé ; il ne valide pas automatiquement les textes, l'histoire complète, une Méga ou un bureau Windows natif.
+
+Le test utilise une installation neuve et son propre préfixe Wine. Son fichier de mémoire flash `save.bin`, lorsqu'il existe, peut être conservé dans l'artefact `universe-disposable-qa-checkpoint`, avec une empreinte et le numéro exact du build. Il n'est jamais ajouté aux preuves Git ou aux paquets du jeu. Son intégrité ne prouve pas que le jeu a terminé une sauvegarde valide.
+
+Pour reprendre un tel point de test, indiquer le numéro du précédent run dans `tests/native/visual_checkpoint.json` et adapter le parcours à l'écran de reprise. Le checkpoint doit correspondre exactement au build candidat ; un fichier altéré, supplémentaire ou d'un autre build est refusé avant copie. Le test ne cherche aucune sauvegarde sur un poste joueur et refuse d'écraser un fichier flash existant.

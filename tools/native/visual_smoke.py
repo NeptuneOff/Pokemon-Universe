@@ -16,6 +16,7 @@ import zipfile
 
 from publish_linked_candidate import pack_bytes
 from prepare_platinum import safe_path
+from visual_checkpoint import write_checkpoint, restore_checkpoint
 
 
 def install(distribution, output):
@@ -56,6 +57,7 @@ def main():
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--candidate-commit', required=True)
     parser.add_argument('--recipe', type=Path, required=True)
+    parser.add_argument('--checkpoint-dir', type=Path)
     args = parser.parse_args()
     root = args.output.resolve()
     root.mkdir(parents=True, exist_ok=False)
@@ -63,6 +65,9 @@ def main():
     evidence.mkdir()
     runtime = root / 'runtime'
     release = install(args.distribution.resolve(), runtime)
+    resumed = args.checkpoint_dir is not None and args.checkpoint_dir.exists()
+    if resumed:
+        restore_checkpoint(args.checkpoint_dir, runtime, release['build_id'])
     env = os.environ.copy()
     env.update(WINEPREFIX=str(root / 'wine-prefix'), WINEARCH='win64',
                WINEDEBUG='-all', SDL_AUDIODRIVER='dummy', LIBGL_ALWAYS_SOFTWARE='1')
@@ -74,6 +79,7 @@ def main():
               'environment': 'Windows x64 executable under Wine on Linux, Xvfb and software Mesa',
               'native_windows_desktop_tested': False, 'audio_tested': False,
               'graphical_mega_battle_tested': False, 'captures': [], 'steps': []}
+    report['resumed_disposable_flash'] = resumed
     report['wine_version'] = subprocess.check_output([wine, '--version'], env=env, text=True).strip()
     report['glxinfo'] = subprocess.check_output(['glxinfo', '-B'], env=env, text=True)
     (evidence / 'report.json').write_text(json.dumps(report, indent=2) + '\n')
@@ -138,8 +144,14 @@ def main():
                     shot = ImageGrab.grab(bbox=(x, y, x + w, y + h), xdisplay=env['DISPLAY'])
                     if max(ImageStat.Stat(shot).stddev) < 2:
                         raise RuntimeError('The captured game window is blank')
-                    shot.save(evidence / (name + '.png'))
-                    report['captures'].append({'file': name + '.png', 'width': w, 'height': h})
+                    screenshot = evidence / (name + '.png')
+                    shot.save(screenshot)
+                    capture = {'file': name + '.png', 'width': w, 'height': h}
+                    if shutil.which('tesseract'):
+                        ocr = subprocess.run(['tesseract', str(screenshot), 'stdout', '--psm', '11'],
+                                             env=env, text=True, capture_output=True, timeout=15)
+                        capture['observed_ocr_text'] = ocr.stdout.strip()
+                    report['captures'].append(capture)
                 report['steps'].append(step)
                 (evidence / 'report.json').write_text(json.dumps(report, indent=2) + '\n')
             report['actual_startup_hook_observed'] = '[Universe] Native registry linked:' in log.read_text(errors='replace')
@@ -159,6 +171,7 @@ def main():
                 process.wait(timeout=10)
         if process:
             report['process_exit'] = process.returncode
+        report['disposable_flash_retained'] = write_checkpoint(runtime, root / 'checkpoint', release['build_id'])
         (evidence / 'report.json').write_text(json.dumps(report, indent=2) + '\n')
     print(json.dumps(report, indent=2))
 
