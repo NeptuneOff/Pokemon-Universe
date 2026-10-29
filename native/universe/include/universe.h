@@ -3,7 +3,7 @@
 #include <stddef.h>
 #include <stdint.h>
 
-/* Metadata/rules component, not linked into the shipped PC port yet. */
+/* Rules component linked into the development PC port. */
 typedef struct {
     const char *id;
     uint16_t national_dex;
@@ -28,8 +28,23 @@ typedef enum {
     UNIV_MISSING_ITEM, UNIV_MISSING_MOVE
 } UnivResult;
 
+/* Catalog order: HP, Attack, Defense, SpA, SpD, Speed. Nature IDs retain the
+ * native Platinum order (Hardy=0 ... Quirky=24), whose Speed axis differs. */
+typedef struct {
+    uint8_t level;
+    uint8_t nature;
+    uint8_t iv[6];
+    uint8_t ev[6];
+} UnivTraining;
+
 size_t univ_species_count(void);
 const UnivSpecies *univ_species_find(const char *id);
+UnivResult univ_calculate_stats(const UnivSpecies *species, const UnivTraining *training,
+                                uint16_t output[6]);
+/* Preserve damage when maximum HP changes; a fainted mon stays fainted.
+ * An alive mon is clamped to at least one HP on return to a smaller form. */
+UnivResult univ_adjust_hp(uint16_t current, uint16_t old_max, uint16_t new_max,
+                          uint16_t *output);
 void univ_battle_init(UnivBattle *battle);
 UnivResult univ_mon_init(UnivBattleMon *mon, const char *id, unsigned trainer);
 UnivResult univ_mega_try(UnivBattle *battle, UnivBattleMon *mon, const char *target_id,

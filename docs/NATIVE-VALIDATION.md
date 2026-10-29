@@ -123,9 +123,21 @@ Le véritable `main.exe` a renvoyé `universe_native_linked: true`, `registry_fo
 
 Le diagnostic s’exécute avant le démarrage graphique du SDK. **Il ne constitue pas une scène graphique de combat Méga ni une nouvelle campagne jouable.** Les appels de cycle de vie sont en place dans la source compilée ; leur exécution pendant un vrai combat reste à observer. Voir [le fonctionnement du build](NATIVE-PORT-BUILD.md).
 
+## Rendu réel du candidat Windows — 29 octobre 2026
+
+[Parcours graphique du candidat](https://github.com/NeptuneOff/Pokemon-Universe/actions/runs/40852209332), build `8dd569f7ec057fdc4853`, exécutable SHA-256 `b2a64b7384508f29e5d1c21015c779adf84cc0e76dbab568fa9f87ac5c8f3c10` : une installation neuve de 357 fichiers est reconstruite et vérifiée depuis Git, sans ROM ni sauvegarde de joueur. L’exécutable Windows tourne sous Wine 9, Xvfb et Mesa llvmpipe ; ce contrôle ne remplace pas un essai sur un bureau Windows natif et ne valide pas le son.
+
+Les captures viennent directement de la fenêtre 512 ×768. L’écran titre est en français ; le prologue Universe et Sorbier sont rendus avec les ressources de Platine. Le journal de cette exécution graphique contient bien le chargement du registre Universe de 1 329 formes. Le programme se ferme avec le code 0. Les six captures, les étapes, la version du pilote et les empreintes sont conservées dans [la branche de preuves](https://github.com/NeptuneOff/Pokemon-Universe/tree/builds/windows-visual-qa/docs/evidence/linked-port-40852209332).
+
+![Écran titre français du moteur recompilé](evidence/port-lie-titre-fr.png)
+
+![Sorbier dans le véritable exécutable Windows recompilé](evidence/port-lie-sorbier-fr.png)
+
+Ce premier parcours atteint la question initiale de Sorbier ; il ne crée pas encore d’équipe et n’atteint pas de combat. Les appels de création et libération d’un contexte de combat ne sont donc pas validés par ces captures.
+
 ## Limites générales du jeu
 
-La reprise de l’équipe après le premier combat est maintenant contrôlée. Le point de test durable actuel est dans la maison du joueur après la scène de la mère, avec Tortipouss niveau 6 ; les points précédents de l’enquête sont aussi conservés. La campagne entière et tous les écrans localisés ne sont pas testés. Aucun essai graphique Windows n’a été effectué. Le son n’a pas été validé (pilote audio factice dans l’environnement de test).
+La reprise de l’équipe après le premier combat est contrôlée pour le moteur précédent. Le point de test durable correspondant est dans la maison du joueur après la scène de la mère, avec Tortipouss niveau 6 ; les points précédents de l’enquête sont aussi conservés. La campagne entière et tous les écrans localisés ne sont pas testés. Le nouveau moteur Windows n’a été observé graphiquement que sous Wine, pas sur un bureau Windows natif. Le son n’a pas été validé (pilote audio factice dans l’environnement de test).
 
 Aucune campagne coopérative, nouvelle région, espèce supplémentaire ni Méga-Évolution n’est livrée par cette étape.
 

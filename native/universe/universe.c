@@ -17,6 +17,55 @@ const UnivSpecies *univ_species_find(const char *id)
     return NULL;
 }
 
+UnivResult univ_calculate_stats(const UnivSpecies *species, const UnivTraining *training,
+                                uint16_t output[6])
+{
+    static const uint8_t nature_axes[5] = {1, 2, 5, 3, 4};
+    uint16_t result[6];
+    unsigned i, total_ev = 0, raised, lowered;
+    if (!species || !training || !output || training->level < 1 ||
+        training->level > 100 || training->nature > 24) return UNIV_INVALID;
+    for (i = 0; i < 6; ++i) {
+        if (training->iv[i] > 31 || species->base_stats[i] == 0) return UNIV_INVALID;
+        total_ev += training->ev[i];
+    }
+    /* Gen IV saves can contain 255 EV in a stat; division by four gives the
+     * same contribution as 252. Keep compatibility with those legal saves. */
+    if (total_ev > 510) return UNIV_INVALID;
+    raised = nature_axes[training->nature / 5];
+    lowered = nature_axes[training->nature % 5];
+    for (i = 0; i < 6; ++i) {
+        uint32_t value = ((uint32_t)2 * species->base_stats[i] + training->iv[i]
+                          + training->ev[i] / 4) * training->level / 100;
+        if (i == 0) {
+            value = species->national_dex == 292 ? 1 : value + training->level + 10;
+        } else {
+            value += 5;
+            if (raised != lowered) {
+                if (i == raised) value = value * 110 / 100;
+                if (i == lowered) value = value * 90 / 100;
+            }
+        }
+        if (value > UINT16_MAX) return UNIV_INVALID;
+        result[i] = (uint16_t)value;
+    }
+    memcpy(output, result, sizeof(result));
+    return UNIV_OK;
+}
+
+UnivResult univ_adjust_hp(uint16_t current, uint16_t old_max, uint16_t new_max,
+                          uint16_t *output)
+{
+    int value;
+    if (!output || !old_max || !new_max || current > old_max) return UNIV_INVALID;
+    if (!current) { *output = 0; return UNIV_OK; }
+    value = (int)current + (int)new_max - (int)old_max;
+    if (value < 1) value = 1;
+    if (value > new_max) value = new_max;
+    *output = (uint16_t)value;
+    return UNIV_OK;
+}
+
 void univ_battle_init(UnivBattle *battle)
 {
     if (battle) memset(battle, 0, sizeof(*battle));

@@ -14,7 +14,7 @@ La base retenue est le port PC de cybervisi0n, lui-même dérivé de la décompi
 | cybervisi0n/pokeplatinum | Port PC 64 bits ; exécutables amont ; chargement des ressources d’une ROM USA personnelle ; limitations expérimentales annoncées | Base PC retenue ; monde, introduction FR et sauvegarde/reprise vérifiés sous Linux |
 | arcanite24/pokeplatinum-portable | Port SDL3 dont le README indique encore une intégration du jeu en cours et des couches audio/fichiers planifiées | Pas retenu pour cette migration |
 
-Révision sélectionnée : `35067868f64f23d25d17ac3e536cfdd9a7f40523`, branche amont `pc_port`. Les dépendances Meson amont incluent des branches mobiles : épingler le seul sous-module ne garantit pas encore la reproductibilité de toutes les bibliothèques.
+Révision sélectionnée : `35067868f64f23d25d17ac3e536cfdd9a7f40523`, branche amont `pc_port`. Pour les builds Universe, [la préparation isolée](NATIVE-PORT-BUILD.md) remplace les cinq branches mobiles des bibliothèques par des révisions précises. Le sous-module amont reste intact. Les outils de compilation et autres dépendances restent à auditer lors des mises à jour.
 
 ## Points du code à conserver et étendre
 
@@ -50,4 +50,4 @@ Aucune image « officielle Platine » n’existe pour les Pokémon ou régions a
 
 ## Validation de cette étape
 
-Outils de préparation USA/FR, lanceurs Windows/Linux, prologue et première enquête solo Universe ajoutés. L’exécutable utilisé est celui de l’amont v0.1.12, sans compilation Universe. Aucune nouvelle région ni coopération native livrée. Voir [NATIVE-FR.md](NATIVE-FR.md) et [NATIVE-VALIDATION.md](NATIVE-VALIDATION.md).
+Outils de préparation USA/FR, lanceurs Windows/Linux, prologue et enquêtes solo Universe ajoutés. La distribution principale utilise encore l’exécutable amont v0.1.12 ; la branche `builds/windows-linked` propose maintenant un moteur compilé avec le composant Universe. Son diagnostic portable et son introduction graphique sous Wine sont vérifiés. Aucune nouvelle région ni coopération native livrée. Voir [NATIVE-FR.md](NATIVE-FR.md) et [NATIVE-VALIDATION.md](NATIVE-VALIDATION.md).

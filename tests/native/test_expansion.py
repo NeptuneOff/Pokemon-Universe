@@ -90,11 +90,75 @@ class ExpansionTests(unittest.TestCase):
 #include <string.h>
 #define CHECK(x) do { if (!(x)) { fprintf(stderr, "line %d: %s\n", __LINE__, #x); return 1; } } while (0)
 static const char *cases[][4] = { ROWS };
+static int test_stats(void) {
+    UnivTraining training = {50, 13, {31, 31, 31, 31, 31, 31}, {0, 252, 0, 0, 4, 252}};
+    const uint16_t charizard_x[6] = {153, 182, 131, 135, 106, 167};
+    const uint16_t slowbro_mega[6] = {202, 85, 255, 150, 101, 50};
+    uint16_t stats[6], before[6], hp;
+    UnivSpecies oversized = *univ_species_find("bulbasaur");
+    CHECK(univ_calculate_stats(univ_species_find("charizardmegax"), &training, stats) == UNIV_OK);
+    CHECK(!memcmp(stats, charizard_x, sizeof(stats)));
+    training.ev[1] = 255; training.ev[4] = 0;
+    CHECK(univ_calculate_stats(univ_species_find("charizardmegax"), &training, stats) == UNIV_OK);
+    CHECK(stats[1] == 182 && stats[5] == 167);
+    training.nature = 5;
+    memset(training.ev, 0, sizeof(training.ev));
+    training.ev[0] = 252; training.ev[2] = 252; training.ev[4] = 4;
+    CHECK(univ_calculate_stats(univ_species_find("slowbro"), &training, before) == UNIV_OK);
+    CHECK(before[0] == 202 && before[2] == 178 && before[3] == 120);
+    CHECK(univ_calculate_stats(univ_species_find("slowbromega"), &training, stats) == UNIV_OK);
+    CHECK(!memcmp(stats, slowbro_mega, sizeof(stats)));
+    training.level = 1; training.nature = 0;
+    memset(training.iv, 0, sizeof(training.iv));
+    memset(training.ev, 0, sizeof(training.ev));
+    CHECK(univ_calculate_stats(univ_species_find("bulbasaur"), &training, stats) == UNIV_OK);
+    CHECK(stats[0] == 11 && stats[1] == 5 && stats[2] == 5 && stats[3] == 6 && stats[4] == 6 && stats[5] == 5);
+    CHECK(univ_calculate_stats(univ_species_find("shedinja"), &training, stats) == UNIV_OK && stats[0] == 1);
+    training.level = 100;
+    CHECK(univ_calculate_stats(univ_species_find("shedinja"), &training, stats) == UNIV_OK && stats[0] == 1);
+    memcpy(before, stats, sizeof(stats));
+    training.iv[0] = 32;
+    CHECK(univ_calculate_stats(univ_species_find("slowbro"), &training, stats) == UNIV_INVALID);
+    CHECK(!memcmp(before, stats, sizeof(stats)));
+    training.iv[0] = 0; training.nature = 25;
+    CHECK(univ_calculate_stats(univ_species_find("slowbro"), &training, stats) == UNIV_INVALID);
+    training.nature = 0; training.level = 0;
+    CHECK(univ_calculate_stats(univ_species_find("slowbro"), &training, stats) == UNIV_INVALID);
+    training.level = 101;
+    CHECK(univ_calculate_stats(univ_species_find("slowbro"), &training, stats) == UNIV_INVALID);
+    training.level = 100;
+    memset(training.ev, 255, sizeof(training.ev));
+    CHECK(univ_calculate_stats(univ_species_find("slowbro"), &training, stats) == UNIV_INVALID);
+    memset(training.ev, 0, sizeof(training.ev));
+    oversized.base_stats[1] = UINT16_MAX;
+    CHECK(univ_calculate_stats(&oversized, &training, stats) == UNIV_INVALID);
+    CHECK(!memcmp(before, stats, sizeof(stats)));
+    CHECK(univ_calculate_stats(NULL, &training, stats) == UNIV_INVALID);
+    CHECK(univ_calculate_stats(univ_species_find("slowbro"), NULL, stats) == UNIV_INVALID);
+    CHECK(univ_calculate_stats(univ_species_find("slowbro"), &training, NULL) == UNIV_INVALID);
+    CHECK(univ_adjust_hp(120, 153, 252, &hp) == UNIV_OK && hp == 219);
+    CHECK(univ_adjust_hp(200, 252, 153, &hp) == UNIV_OK && hp == 101);
+    CHECK(univ_adjust_hp(1, 252, 153, &hp) == UNIV_OK && hp == 1);
+    CHECK(univ_adjust_hp(0, 252, 153, &hp) == UNIV_OK && hp == 0);
+    CHECK(univ_adjust_hp(153, 153, 252, &hp) == UNIV_OK && hp == 252);
+    CHECK(univ_adjust_hp(154, 153, 252, &hp) == UNIV_INVALID && hp == 252);
+    CHECK(univ_adjust_hp(1, 0, 252, &hp) == UNIV_INVALID && hp == 252);
+    CHECK(univ_adjust_hp(1, 153, 0, &hp) == UNIV_INVALID && hp == 252);
+    CHECK(univ_adjust_hp(1, 153, 252, NULL) == UNIV_INVALID);
+    training.level = 50;
+    memset(training.iv, 31, sizeof(training.iv));
+    CHECK(univ_calculate_stats(univ_species_find("zygarde"), &training, before) == UNIV_OK && before[0] == 183);
+    CHECK(univ_calculate_stats(univ_species_find("zygardemega"), &training, stats) == UNIV_OK && stats[0] == 291);
+    CHECK(univ_adjust_hp(100, before[0], stats[0], &hp) == UNIV_OK && hp == 208);
+    puts("native battle stat calculations passed");
+    return 0;
+}
 int main(void) {
     size_t i;
     UnivBattle battle;
     UnivBattleMon left, right;
     const char *dragon_ascent[] = {"dragonascent"};
+    CHECK(test_stats() == 0);
     CHECK(univ_species_count() == 1329);
     CHECK(univ_species_find(NULL) == NULL && univ_species_find("missing") == NULL);
     CHECK(univ_species_find("victini")->national_dex == 494);
@@ -172,3 +236,4 @@ int main(void) {
             run = subprocess.run([str(exe)], cwd=base, capture_output=True, text=True, timeout=30)
             self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
             self.assertIn('Mega rules passed', run.stdout)
+            self.assertIn('battle stat calculations passed', run.stdout)

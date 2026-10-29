@@ -1,0 +1,168 @@
+[
+  {
+    "wait": 20,
+    "capture": "01-boot"
+  },
+  {
+    "key": "Return",
+    "wait": 5,
+    "capture": "02-start"
+  },
+  {
+    "key": "z",
+    "repeat": 8,
+    "delay_ms": 1200,
+    "wait": 2,
+    "capture": "03-intro"
+  },
+  {
+    "key": "z",
+    "repeat": 8,
+    "delay_ms": 1200,
+    "wait": 2,
+    "capture": "04-intro"
+  },
+  {
+    "key": "z",
+    "repeat": 8,
+    "delay_ms": 1200,
+    "wait": 2,
+    "capture": "05-intro"
+  },
+  {
+    "key": "z",
+    "repeat": 8,
+    "delay_ms": 1200,
+    "wait": 2,
+    "capture": "06-intro"
+  },
+  {
+    "key": "z",
+    "wait": 2,
+    "capture": "07-first-adventure-menu"
+  },
+  {
+    "key": "Down"
+  },
+  {
+    "key": "z",
+    "wait": 2,
+    "capture": "08-adventure-choice"
+  },
+  {
+    "key": "z",
+    "repeat": 6,
+    "delay_ms": 900,
+    "wait": 2,
+    "capture": "09-pokemon-intro"
+  },
+  {
+    "click": [
+      240,
+      544
+    ],
+    "wait": 3,
+    "capture": "10-touch-confirmation"
+  },
+  {
+    "key": "z",
+    "wait": 2,
+    "capture": "11-info-menu"
+  },
+  {
+    "key": "Down",
+    "repeat": 2,
+    "delay_ms": 650
+  },
+  {
+    "key": "z",
+    "repeat": 8,
+    "delay_ms": 900,
+    "wait": 2,
+    "capture": "12-pokeball"
+  },
+  {
+    "click": [
+      256,
+      584
+    ],
+    "wait": 3,
+    "capture": "13-open-pokeball"
+  },
+  {
+    "key": "z",
+    "repeat": 12,
+    "delay_ms": 900,
+    "wait": 2,
+    "capture": "14-player-name"
+  },
+  {
+    "key": "Return"
+  },
+  {
+    "key": "z",
+    "repeat": 12,
+    "delay_ms": 900,
+    "wait": 2,
+    "capture": "15-rival-name"
+  },
+  {
+    "key": "Return"
+  },
+  {
+    "key": "z",
+    "repeat": 16,
+    "delay_ms": 900,
+    "wait": 2,
+    "capture": "16-after-names"
+  },
+  {
+    "key": "Return"
+  },
+  {
+    "key": "z",
+    "repeat": 16,
+    "delay_ms": 900,
+    "wait": 3,
+    "capture": "17-new-game"
+  },
+  {
+    "key": "z",
+    "repeat": 20,
+    "delay_ms": 650,
+    "wait": 10,
+    "capture": "18-after-tv"
+  },
+  {
+    "key": "z",
+    "repeat": 20,
+    "delay_ms": 650,
+    "wait": 2,
+    "capture": "19-bedroom"
+  },
+  {
+    "key": "c",
+    "wait": 2,
+    "capture": "20-field-menu"
+  },
+  {
+    "key": "Down",
+    "repeat": 2
+  },
+  {
+    "key": "z",
+    "wait": 2,
+    "capture": "21-save-prompt"
+  },
+  {
+    "key": "z",
+    "repeat": 8,
+    "delay_ms": 900,
+    "wait": 4,
+    "capture": "22-save-result"
+  },
+  {
+    "key": "x",
+    "wait": 1
+  }
+]

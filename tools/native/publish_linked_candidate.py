@@ -50,7 +50,8 @@ def publish(source_root, candidate, output, source_sha, run_id, self_test):
     release = json.loads((distribution / 'release.json').read_text(encoding='utf-8'))
     provenance = json.loads(data_at(candidate, 'universe-port-build.json'))
     expected_forms = json.loads(data_at(source_root, 'content/native/expansion/catalog.json'))['counts']['forms']
-    if self_test.get('universe_native_linked') is not True or self_test.get('mega_rules') != 'passed' or self_test.get('registry_forms') != expected_forms:
+    if (self_test.get('universe_native_linked') is not True or self_test.get('mega_rules') != 'passed'
+            or self_test.get('stats_rules') != 'passed' or self_test.get('registry_forms') != expected_forms):
         raise ValueError('The executable diagnostic did not verify the linked component')
     identity = json.loads(data_at(candidate, 'universe-install.json'))
     lock = json.loads(data_at(source_root, 'native/universe/port-lock.json'))
@@ -70,12 +71,22 @@ def publish(source_root, candidate, output, source_sha, run_id, self_test):
     with zipfile.ZipFile(io.BytesIO(pack_bytes(distribution, packages['story']))) as archive:
         original_identity = json.loads(archive.read('universe-install.json'))
     for name, value in original_identity.items():
+        if name in {'engine_variant', 'compiled_engine_sha256'}:
+            # These two fields describe the new, independently checked engine.
+            # Resource identities and every other field must still match.
+            continue
         if identity.get(name) != value:
             raise ValueError('The original installation identity changed: ' + name)
     groups = {'engine': {}, 'story': {}}
     records = []
     for entry in release['files']:
         name, group = entry['path'], entry['package']
+        if name in {'universe-port-build.json', 'licenses/showdown.txt'}:
+            if group != 'story':
+                raise ValueError('Development metadata in an unexpected package')
+            # Replaced below from the newly verified build and source notice.
+            # A candidate may itself be based on an earlier linked build.
+            continue
         data = data_at(candidate, name)
         if group == 'engine':
             if digest(data) != provenance['compiled_engine_sha256'][name]:
