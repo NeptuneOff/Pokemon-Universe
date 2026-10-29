@@ -1,5 +1,6 @@
 import io
 import json
+import shutil
 from pathlib import Path
 import tempfile
 import unittest
@@ -96,6 +97,40 @@ class PublishLinkedTests(unittest.TestCase):
                 with self.assertRaises(ValueError):
                     publish(source, candidate, root / 'output', 'a' * 40, 123, self.proof)
                 self.assertFalse((root / 'output').exists())
+
+    def test_a_second_compiled_generation_preserves_resources_and_refreshes_provenance(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            source, candidate, distribution = self.fixture(root)
+            first = root / 'first'
+            first_id = publish(source, candidate, first, 'a' * 40, 123, self.proof)
+            shutil.rmtree(distribution)
+            shutil.copytree(first, distribution)
+            (candidate / 'main.exe').write_bytes(b'second compiled engine')
+            identity = json.loads((candidate / 'universe-install.json').read_text())
+            identity['compiled_engine_sha256']['main.exe'] = digest(b'second compiled engine')
+            (candidate / 'universe-install.json').write_text(json.dumps(identity))
+            provenance = json.loads((candidate / 'universe-port-build.json').read_text())
+            provenance.update(base_resource_build=first_id,
+                              compiled_engine_sha256=identity['compiled_engine_sha256'])
+            (candidate / 'universe-port-build.json').write_text(json.dumps(provenance))
+            second = root / 'second'
+            second_id = publish(source, candidate, second, 'b' * 40, 124, self.proof)
+            self.assertNotEqual(first_id, second_id)
+            release = json.loads((second / 'release.json').read_text())
+            seen = {}
+            for package in release['packages']:
+                with zipfile.ZipFile(io.BytesIO(pack_bytes(second, package))) as archive:
+                    seen.update({name: archive.read(name) for name in archive.namelist()})
+            self.assertEqual(seen['main.exe'], b'second compiled engine')
+            self.assertEqual(seen['world.narc'], b'French pixels')
+            proof = json.loads(seen['universe-port-build.json'])
+            self.assertEqual(proof['base_resource_build'], first_id)
+            self.assertEqual(proof['ci_run_id'], 124)
+            self.assertEqual(proof['source_commit'], 'b' * 40)
+            self.assertEqual(len(release['files']), len({f['path'] for f in release['files']}))
+            for entry in release['files']:
+                self.assertEqual(digest(seen[entry['path']]), entry['sha256'])
 
     def test_missing_or_failed_executable_diagnostic_is_refused(self):
         with tempfile.TemporaryDirectory() as folder:
