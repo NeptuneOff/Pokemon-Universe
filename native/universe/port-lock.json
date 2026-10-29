@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "engine_commit": "35067868f64f23d25d17ac3e536cfdd9a7f40523",
+  "source_sha256": {
+    "meson.build": "f97fc75a3ded6b4ea6525d3568ae3de29b30c5b87bdb2e0e5fd6b4d22487d8c9",
+    "src/main.c": "09782e533b3e02f30bb3a94edb0ae9a661834844281cddc519706b42290f0cc9",
+    "src/battle/battle_controller_player.c": "e408b90ac82c062de84e4d1cdc281966a1c643195e9cd1ee4d5c06d4792435f8"
+  },
+  "dependency_commits": {
+    "libntr": "1555d911ac80c0190ac1c321f99f1323de8b3c09",
+    "libntrsystem": "cd778c9d5e45869f8ecb8245b316ac20ea576958",
+    "libntrwifi": "067dabb137dfaf80b8ceeb3b3c4a7256bfabc3e0",
+    "libntrdwc": "16246ba7b4269e6686f3e4da068e3c996a103739",
+    "libvct": "a34ad47fc0d7d964483c287759b704b3b1f3b967"
+  }
+}

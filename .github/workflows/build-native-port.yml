@@ -1,0 +1,63 @@
+name: Build the linked Universe Windows port
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, 'codex/linked-port-*']
+    paths:
+      - 'native/universe/**'
+      - 'tools/native/prepare_universe_port.py'
+      - '.github/workflows/build-native-port.yml'
+permissions:
+  contents: read
+jobs:
+  windows-port:
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Prepare isolated downstream sources
+        run: python tools/native/prepare_universe_port.py
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: UCRT64
+          update: true
+          install: >-
+            make p7zip git python flex bison ninja
+            mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-SDL2
+            mingw-w64-ucrt-x86_64-nasm mingw-w64-ucrt-x86_64-enet
+            mingw-w64-ucrt-x86_64-arm-none-eabi-gcc zip
+            mingw-w64-ucrt-x86_64-libpng mingw-w64-ucrt-x86_64-pkgconf
+      - name: Compile the complete Windows PC port with Universe
+        shell: msys2 {0}
+        run: |
+          set -o pipefail
+          cd native-runtime/universe-port
+          make win64 2>&1 | tee ../universe-port-build.log
+      - name: Run diagnostics from the actual linked game executable
+        shell: msys2 {0}
+        run: |
+          set -o pipefail
+          cd native-runtime/universe-port/build_win64/pokeplatinum
+          ./main.exe --universe-self-test | tee ../../../universe-port-selftest.json
+      - name: Keep build logs and source provenance
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: universe-native-build-diagnostics
+          path: |
+            native-runtime/universe-port-build.log
+            native-runtime/universe-port-selftest.json
+            native-runtime/universe-port/universe-port-build.json
+            native-runtime/universe-port/build_win64/meson-logs/meson-log.txt
+      - name: Keep the development executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: universe-linked-windows-development
+          path: |
+            native-runtime/universe-port/build_win64/pokeplatinum/main.exe
+            native-runtime/universe-port/build_win64/pokeplatinum/*.dll
