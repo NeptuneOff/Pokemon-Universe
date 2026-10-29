@@ -27,7 +27,7 @@ jobs:
           msystem: UCRT64
           update: true
           install: >-
-            make p7zip git python flex bison ninja
+            make p7zip git python flex bison ninja mingw-w64-ucrt-x86_64-python
             mingw-w64-ucrt-x86_64-gcc mingw-w64-ucrt-x86_64-SDL2
             mingw-w64-ucrt-x86_64-nasm mingw-w64-ucrt-x86_64-enet
             mingw-w64-ucrt-x86_64-arm-none-eabi-gcc zip
