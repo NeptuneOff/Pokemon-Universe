@@ -15,7 +15,9 @@ class PortSourceTests(unittest.TestCase):
         engine, component = base / 'engine', base / 'component'
         engine.mkdir()
         component.mkdir()
-        files = {'meson.build': "subdir('src')\n", 'src/main.c': 'void NitroMain(void)\n{\n}\n',
+        # Match the upstream repository's explicit LF export attributes; this
+        # must not depend on the runner's global core.autocrlf setting.
+        files = {'.gitattributes': '* text eol=lf\n', 'meson.build': "subdir('src')\n", 'src/main.c': 'void NitroMain(void)\n{\n}\n',
             'src/battle/battle_controller_player.c': 'void *BattleContext_New(void)\n{\n    MI_CpuClearFast(battleContext, sizeof(BattleContext));\n}\nvoid BattleContext_Free(BattleContext *battleCtx)\n{\n}\n',
             'subprojects/example.wrap': '[wrap-git]\nrevision = main\n'}
         for name, text in files.items():
