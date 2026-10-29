@@ -1,6 +1,6 @@
 # Extension native : registre et règles de Méga-Évolution
 
-**Statut : composant C de développement, pas encore raccordé à l’exécutable de Platine.** Le contenu jouable lancé par `JOUER.bat` reste celui décrit dans le README. Cette étape n’ajoute pas encore d’espèces capturables, de région ou de coopération réseau.
+**Statut : composant C relié au candidat de développement Windows, pas encore activé comme mécanique de combat.** La distribution principale conserve son moteur précédent. Le contenu jouable lancé par `JOUER.bat` reste celui décrit dans le README. Cette étape n’ajoute pas encore d’espèces capturables, de région ou de coopération réseau.
 
 **Mise à jour du 29 octobre :** le [candidat du port Windows](NATIVE-PORT-BUILD.md) compile maintenant ce module dans l’exécutable complet, avec des appels au démarrage et au cycle de vie des combats. Les diagnostics de l’exécutable et du candidat français portable ont réussi. Ce raccordement ne déclenche pas encore une Méga-Évolution dans un combat du jeu. La branche générée `builds/windows-linked` contient le moteur de développement prêt à lancer par Git ; `main` conserve sa distribution principale.
 
