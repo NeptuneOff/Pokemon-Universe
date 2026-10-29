@@ -34,18 +34,41 @@ jobs:
             mingw-w64-ucrt-x86_64-nasm mingw-w64-ucrt-x86_64-enet
             mingw-w64-ucrt-x86_64-arm-none-eabi-gcc zip
             mingw-w64-ucrt-x86_64-libpng mingw-w64-ucrt-x86_64-pkgconf
+      - name: Identify the installed toolchain
+        id: toolchain
+        shell: msys2 {0}
+        run: |
+          fingerprint=$(pacman -Q | sha256sum | cut -d' ' -f1)
+          echo "sha=$fingerprint" >> "$(cygpath -u "$GITHUB_OUTPUT")"
+          gcc --version
+          python3 --version
+      - uses: actions/cache@v4
+        with:
+          path: |
+            native-runtime/universe-port/build_win64
+            native-runtime/universe-port/subprojects
+            native-runtime/universe-port/tools/metroskrew
+          key: ${{ runner.os }}-universe-port-${{ steps.toolchain.outputs.sha }}-${{ hashFiles('native/universe/port-lock.json', '.github/workflows/build-native-port.yml') }}
       - name: Compile the complete Windows PC port with Universe
         shell: msys2 {0}
         run: |
           set -o pipefail
           cd native-runtime/universe-port
-          make win64 2>&1 | tee ../universe-port-build.log
+          make build_win64/build.ninja 2>&1 | tee ../universe-port-build.log
+          subprojects/meson-1.12.0/meson.py compile -C build_win64 main 2>&1 | tee -a ../universe-port-build.log
+          mkdir -p build_win64/universe-engine
+          cp build_win64/main.exe build_win64/universe-engine/main.exe
+          cp res/pc_port/header.bin build_win64/universe-engine/header.bin
+          cp res/pc_port/dwc_nv.bin build_win64/universe-engine/firmware.bin
+          for library in SDL2.dll libwinpthread-1.dll libenet-7.dll libgcc_s_seh-1.dll libstdc++-6.dll; do
+            cp "/ucrt64/bin/$library" "build_win64/universe-engine/$library"
+          done
       - name: Run diagnostics from the actual linked game executable
         timeout-minutes: 2
         shell: msys2 {0}
         run: |
           set -o pipefail
-          cd native-runtime/universe-port/build_win64/pokeplatinum
+          cd native-runtime/universe-port/build_win64/universe-engine
           ./main.exe --universe-self-test | tee ../../../universe-port-selftest.json
       - name: Assemble a verified French candidate without a ROM
         shell: powershell
@@ -53,7 +76,7 @@ jobs:
           & powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File tools/native/start_windows.ps1 -PrepareOnly
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           $release = Get-Content distribution/windows/release.json -Raw | ConvertFrom-Json
-          python tools/native/stage_linked_runtime.py --base-runtime "native-runtime/windows-builds/$($release.build_id)" --built-engine native-runtime/universe-port/build_win64/pokeplatinum --build-manifest native-runtime/universe-port/universe-port-build.json --output native-runtime/universe-linked-fr
+          python tools/native/stage_linked_runtime.py --base-runtime "native-runtime/windows-builds/$($release.build_id)" --built-engine native-runtime/universe-port/build_win64/universe-engine --build-manifest native-runtime/universe-port/universe-port-build.json --output native-runtime/universe-linked-fr
           exit $LASTEXITCODE
       - name: Verify the portable candidate without the compiler DLL path
         timeout-minutes: 2
