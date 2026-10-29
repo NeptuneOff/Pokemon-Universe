@@ -1,0 +1,8 @@
+[
+  {"wait": 20, "capture": "01-boot"},
+  {"key": "Return", "wait": 5, "capture": "02-start"},
+  {"key": "z", "repeat": 8, "delay_ms": 1200, "wait": 2, "capture": "03-intro"},
+  {"key": "z", "repeat": 8, "delay_ms": 1200, "wait": 2, "capture": "04-intro"},
+  {"key": "z", "repeat": 8, "delay_ms": 1200, "wait": 2, "capture": "05-intro"},
+  {"key": "z", "repeat": 8, "delay_ms": 1200, "wait": 2, "capture": "06-intro"}
+]

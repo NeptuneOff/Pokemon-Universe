@@ -1,0 +1,72 @@
+name: Capture the linked Platinum game
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/visual-native-port.yml'
+      - 'tools/native/visual_smoke.py'
+      - 'tests/native/visual_recipe.json'
+permissions:
+  contents: write
+concurrency:
+  group: universe-visual-evidence
+  cancel-in-progress: false
+jobs:
+  graphical-check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          ref: builds/windows-linked
+          path: candidate
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install the isolated graphical test dependencies
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y --no-install-recommends wine64 xvfb xdotool xauth mesa-utils libgl1-mesa-dri
+          python -m pip install Pillow
+      - name: Run the Windows executable and capture its real pixels
+        run: |
+          candidate_sha=$(git -C candidate rev-parse HEAD)
+          xvfb-run -a -s '-screen 0 1024x900x24 -ac' python tools/native/visual_smoke.py --distribution candidate/distribution/windows --output native-runtime/visual-check --candidate-commit "$candidate_sha" --recipe tests/native/visual_recipe.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: universe-real-game-captures
+          path: native-runtime/visual-check/evidence/
+      - name: Retain the disposable test checkpoint for the next graphical check
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: universe-disposable-qa-checkpoint
+          path: native-runtime/visual-check/runtime/*.sav
+          if-no-files-found: ignore
+      - name: Record visual evidence in Git
+        env:
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          previous=$(git ls-remote origin refs/heads/builds/windows-visual-qa | cut -f1)
+          if [ -n "$previous" ]; then
+            git fetch origin builds/windows-visual-qa
+            git read-tree "$previous"
+          else
+            git read-tree --empty
+          fi
+          folder="docs/evidence/linked-port-$RUN_ID"
+          mkdir -p "$folder"
+          cp native-runtime/visual-check/evidence/* "$folder/"
+          git add -f "$folder"
+          tree=$(git write-tree)
+          export GIT_AUTHOR_NAME='github-actions[bot]' GIT_COMMITTER_NAME='github-actions[bot]'
+          export GIT_AUTHOR_EMAIL='41898282+github-actions[bot]@users.noreply.github.com' GIT_COMMITTER_EMAIL='41898282+github-actions[bot]@users.noreply.github.com'
+          if [ -n "$previous" ]; then
+            commit=$(git commit-tree "$tree" -p "$previous" -m "Capture the actual linked game, visual check $RUN_ID")
+          else
+            commit=$(git commit-tree "$tree" -m "Capture the actual linked game, visual check $RUN_ID")
+          fi
+          git push origin "$commit:refs/heads/builds/windows-visual-qa"
