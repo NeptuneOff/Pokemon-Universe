@@ -107,6 +107,16 @@ Le parcours joueur utilise maintenant `git pull --ff-only`, puis `JOUER.bat`. Le
 
 ## Limites de cette validation
 
+## Composant d’extension C — 29 octobre 2026
+
+[CI du registre natif et des règles Méga](https://github.com/NeptuneOff/Pokemon-Universe/actions/runs/40838239914), commit `c75fa69` : **47 tests réussis sous Windows**, dont la compilation/exécution du composant C avec MSVC et la reconstruction du catalogue depuis les instantanés versionnés. Les contrôles Linux et ceux du prototype archivé réussissent aussi. La préparation de la distribution Windows existante reste vérifiée par cette CI.
+
+Le catalogue de l’instantané du 26 octobre contient 1 025 espèces nationales, 1 329 entrées avec formes et 97 formes Méga. Les tests C parcourent les formes d’origine admissibles, les deux participants du composant, le refus des mauvais objets/formes, la capacité requise pour Rayquaza et le maintien de la limite après retour à la forme d’origine. Un écart de fins de ligne Windows/Linux détecté pendant la reconstruction a été corrigé dans le générateur.
+
+**Ce composant n’est pas encore lié au jeu distribué.** Ces contrôles ne prouvent pas l’existence de combats Méga graphiques, de captures supplémentaires, d’un nouveau Pokédex en jeu ou de coopération réseau. Le travail à raccorder au moteur est décrit dans [NATIVE-EXPANSION.md](NATIVE-EXPANSION.md). Aucun sprite Infinite Fusion n’est encore importé.
+
+## Limites globales
+
 La reprise de l’équipe après le premier combat est maintenant contrôlée. Le point de test durable actuel est dans la maison du joueur après la scène de la mère, avec Tortipouss niveau 6 ; les points précédents de l’enquête sont aussi conservés. La campagne entière et tous les écrans localisés ne sont pas testés. Aucun essai graphique Windows n’a été effectué. Le son n’a pas été validé (pilote audio factice dans l’environnement de test).
 
 Aucune campagne coopérative, nouvelle région, espèce supplémentaire ni Méga-Évolution n’est livrée par cette étape.
