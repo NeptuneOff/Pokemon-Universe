@@ -105,8 +105,6 @@ Le parcours joueur utilise maintenant `git pull --ff-only`, puis `JOUER.bat`. Le
 
 [Contrôle de la distribution complète depuis Git](https://github.com/NeptuneOff/Pokemon-Universe/actions/runs/40346829188), commit `518eb60` : **42 tests Windows réussis**, puis `JOUER.bat -PrepareOnly` installe **355/355 fichiers** du build `e54911cd93dbf5e82db0`, avec code de sortie 0. Une seconde invocation vérifie les 355 fichiers déjà installés et termine aussi avec le code 0. Un clone Git neuf distinct a également été reconstruit et comparé aux 355 empreintes ; le dépôt ne contient qu’un seul BAT à la racine. Cette préparation valide les données et le parcours d’installation ; elle ne constitue pas une exécution graphique du jeu Windows.
 
-## Limites de cette validation
-
 ## Composant d’extension C — 29 octobre 2026
 
 [CI du registre natif et des règles Méga](https://github.com/NeptuneOff/Pokemon-Universe/actions/runs/40838239914), commit `c75fa69` : **47 tests réussis sous Windows**, dont la compilation/exécution du composant C avec MSVC et la reconstruction du catalogue depuis les instantanés versionnés. Les contrôles Linux et ceux du prototype archivé réussissent aussi. La préparation de la distribution Windows existante reste vérifiée par cette CI.
