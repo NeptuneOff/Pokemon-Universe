@@ -1,0 +1,173 @@
+{
+  "candidate_commit": "39dfe0196f481e5353c1270e2b87272228fd2b55",
+  "build_id": "8dd569f7ec057fdc4853",
+  "compiled_from_commit": "cd453eb0459d04a008c5c515a5218746fabdf9f2",
+  "main_sha256": "b2a64b7384508f29e5d1c21015c779adf84cc0e76dbab568fa9f87ac5c8f3c10",
+  "environment": "Windows x64 executable under Wine on Linux, Xvfb and software Mesa",
+  "native_windows_desktop_tested": false,
+  "audio_tested": false,
+  "graphical_mega_battle_tested": false,
+  "captures": [
+    {
+      "file": "01-boot.png",
+      "width": 512,
+      "height": 768
+    },
+    {
+      "file": "02-start.png",
+      "width": 512,
+      "height": 768
+    },
+    {
+      "file": "03-intro.png",
+      "width": 512,
+      "height": 768
+    },
+    {
+      "file": "04-intro.png",
+      "width": 512,
+      "height": 768
+    },
+    {
+      "file": "05-intro.png",
+      "width": 512,
+      "height": 768
+    },
+    {
+      "file": "06-intro.png",
+      "width": 512,
+      "height": 768
+    },
+    {
+      "file": "07-first-adventure-menu.png",
+      "width": 512,
+      "height": 768
+    },
+    {
+      "file": "08-adventure-choice.png",
+      "width": 512,
+      "height": 768
+    },
+    {
+      "file": "09-pokemon-intro.png",
+      "width": 512,
+      "height": 768
+    },
+    {
+      "file": "10-pokeball.png",
+      "width": 512,
+      "height": 768
+    },
+    {
+      "file": "11-character.png",
+      "width": 512,
+      "height": 768
+    },
+    {
+      "file": "12-name.png",
+      "width": 512,
+      "height": 768
+    },
+    {
+      "file": "13-name.png",
+      "width": 512,
+      "height": 768
+    }
+  ],
+  "steps": [
+    {
+      "wait": 20,
+      "capture": "01-boot"
+    },
+    {
+      "key": "Return",
+      "wait": 5,
+      "capture": "02-start"
+    },
+    {
+      "key": "z",
+      "repeat": 8,
+      "delay_ms": 1200,
+      "wait": 2,
+      "capture": "03-intro"
+    },
+    {
+      "key": "z",
+      "repeat": 8,
+      "delay_ms": 1200,
+      "wait": 2,
+      "capture": "04-intro"
+    },
+    {
+      "key": "z",
+      "repeat": 8,
+      "delay_ms": 1200,
+      "wait": 2,
+      "capture": "05-intro"
+    },
+    {
+      "key": "z",
+      "repeat": 8,
+      "delay_ms": 1200,
+      "wait": 2,
+      "capture": "06-intro"
+    },
+    {
+      "key": "z",
+      "wait": 2,
+      "capture": "07-first-adventure-menu"
+    },
+    {
+      "key": "Down"
+    },
+    {
+      "key": "z",
+      "wait": 2,
+      "capture": "08-adventure-choice"
+    },
+    {
+      "key": "z",
+      "repeat": 6,
+      "delay_ms": 900,
+      "wait": 2,
+      "capture": "09-pokemon-intro"
+    },
+    {
+      "click": [
+        256,
+        576
+      ],
+      "wait": 3,
+      "capture": "10-pokeball"
+    },
+    {
+      "key": "z",
+      "repeat": 8,
+      "delay_ms": 900,
+      "wait": 2,
+      "capture": "11-character"
+    },
+    {
+      "key": "z",
+      "repeat": 8,
+      "delay_ms": 900,
+      "wait": 2,
+      "capture": "12-name"
+    },
+    {
+      "key": "z",
+      "repeat": 8,
+      "delay_ms": 900,
+      "wait": 2,
+      "capture": "13-name"
+    }
+  ],
+  "wine_version": "wine-9.0 (Ubuntu 9.0~repack-4build3)",
+  "glxinfo": "name of display: :99\ndisplay: :99  screen: 0\ndirect rendering: Yes\nExtended renderer info (GLX_MESA_query_renderer):\n    Vendor: Mesa (0xffffffff)\n    Device: llvmpipe (LLVM 20.1.2, 256 bits) (0xffffffff)\n    Version: 25.2.8\n    Accelerated: no\n    Video memory: 15983MB\n    Unified memory: yes\n    Preferred profile: core (0x1)\n    Max core profile version: 4.5\n    Max compat profile version: 4.5\n    Max GLES1 profile version: 1.1\n    Max GLES[23] profile version: 3.2\nMemory info (GL_ATI_meminfo):\n    VBO free memory - total: 0 MB, largest block: 0 MB\n    VBO free aux. memory - total: 14566 MB, largest block: 14566 MB\n    Texture free memory - total: 0 MB, largest block: 0 MB\n    Texture free aux. memory - total: 14566 MB, largest block: 14566 MB\n    Renderbuffer free memory - total: 0 MB, largest block: 0 MB\n    Renderbuffer free aux. memory - total: 14566 MB, largest block: 14566 MB\nMemory info (GL_NVX_gpu_memory_info):\n    Dedicated video memory: 0 MB\n    Total available memory: 15983 MB\n    Currently available dedicated video memory: 0 MB\nOpenGL vendor string: Mesa\nOpenGL renderer string: llvmpipe (LLVM 20.1.2, 256 bits)\nOpenGL core profile version string: 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.4\nOpenGL core profile shading language version string: 4.50\nOpenGL core profile context flags: (none)\nOpenGL core profile profile mask: core profile\n\nOpenGL version string: 4.5 (Compatibility Profile) Mesa 25.2.8-0ubuntu0.24.04.4\nOpenGL shading language version string: 4.50\nOpenGL context flags: (none)\nOpenGL profile mask: compatibility profile\n\nOpenGL ES profile version string: OpenGL ES 3.2 Mesa 25.2.8-0ubuntu0.24.04.4\nOpenGL ES profile shading language version string: OpenGL ES GLSL ES 3.20\n\n",
+  "window_title": "POKEMON PL [CPUE01]",
+  "actual_startup_hook_observed": true,
+  "battle_begin_observed": false,
+  "battle_end_observed": false,
+  "completed": true,
+  "process_exit": 0
+}
