@@ -40,7 +40,7 @@ def pack_bytes(distribution, package):
     return bytes(result)
 
 
-def publish(source_root, candidate, output, source_sha, run_id):
+def publish(source_root, candidate, output, source_sha, run_id, self_test):
     source_root, candidate, output = Path(source_root), Path(candidate), Path(output)
     if output.exists():
         raise ValueError('Output already exists')
@@ -49,6 +49,9 @@ def publish(source_root, candidate, output, source_sha, run_id):
     distribution = source_root / 'distribution/windows'
     release = json.loads((distribution / 'release.json').read_text(encoding='utf-8'))
     provenance = json.loads(data_at(candidate, 'universe-port-build.json'))
+    expected_forms = json.loads(data_at(source_root, 'content/native/expansion/catalog.json'))['counts']['forms']
+    if self_test.get('universe_native_linked') is not True or self_test.get('mega_rules') != 'passed' or self_test.get('registry_forms') != expected_forms:
+        raise ValueError('The executable diagnostic did not verify the linked component')
     identity = json.loads(data_at(candidate, 'universe-install.json'))
     lock = json.loads(data_at(source_root, 'native/universe/port-lock.json'))
     if release['schema'] != 1 or release['platform'] != 'windows-x64':
@@ -84,6 +87,7 @@ def publish(source_root, candidate, output, source_sha, run_id):
         records.append({'path': name, 'package': group, 'bytes': len(data), 'sha256': digest(data)})
     provenance['source_commit'] = source_sha
     provenance['ci_run_id'] = int(run_id)
+    provenance['native_self_test'] = self_test
     for name, data in {
         'universe-port-build.json': (json.dumps(provenance, indent=2) + '\n').encode(),
         'licenses/showdown.txt': data_at(source_root, 'data/SHOWDOWN-LICENSE'),
@@ -136,5 +140,7 @@ if __name__ == '__main__':
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--source-sha', required=True)
     parser.add_argument('--run-id', type=int, required=True)
+    parser.add_argument('--self-test', type=Path, required=True)
     args = parser.parse_args()
-    print(publish(args.source_root, args.candidate, args.output, args.source_sha, args.run_id))
+    print(publish(args.source_root, args.candidate, args.output, args.source_sha, args.run_id,
+                  json.loads(args.self_test.read_text(encoding='utf-8-sig'))))

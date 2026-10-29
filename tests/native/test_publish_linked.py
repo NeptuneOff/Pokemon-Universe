@@ -10,6 +10,7 @@ from tools.native.publish_linked_candidate import publish, pack_bytes
 
 
 class PublishLinkedTests(unittest.TestCase):
+    proof = {'universe_native_linked': True, 'registry_forms': 1329, 'mega_rules': 'passed', 'graphical_battle_tested': False}
     def fixture(self, root):
         source, candidate = root / 'source', root / 'candidate'
         distribution = source / 'distribution/windows'
@@ -22,6 +23,9 @@ class PublishLinkedTests(unittest.TestCase):
         (core / 'port-lock.json').write_text(json.dumps(lock))
         (source / 'data').mkdir()
         (source / 'data/SHOWDOWN-LICENSE').write_bytes(b'MIT notice')
+        catalog = source / 'content/native/expansion/catalog.json'
+        catalog.parent.mkdir(parents=True)
+        catalog.write_text(json.dumps({'counts': {'forms': 1329}}))
         identity = {'platform': 'windows', 'upstream_release': 'v0.1.12', 'resources_sha256': {'world.narc': digest(b'French pixels')}}
         names = ['main.exe', 'SDL2.dll', 'libenet-7.dll', 'libgcc_s_seh-1.dll',
                  'libstdc++-6.dll', 'libwinpthread-1.dll', 'header.bin', 'firmware.bin']
@@ -62,7 +66,7 @@ class PublishLinkedTests(unittest.TestCase):
             root = Path(folder)
             source, candidate, original = self.fixture(root)
             output = root / 'published'
-            build_id = publish(source, candidate, output, 'a' * 40, 123)
+            build_id = publish(source, candidate, output, 'a' * 40, 123, self.proof)
             release = json.loads((output / 'release.json').read_text())
             self.assertEqual(build_id, release['build_id'])
             self.assertFalse((output / 'unlisted.nds').exists())
@@ -90,5 +94,15 @@ class PublishLinkedTests(unittest.TestCase):
                 source, candidate, _ = self.fixture(root)
                 ((candidate if where == 'candidate' else source) / relative).write_bytes(b'changed')
                 with self.assertRaises(ValueError):
-                    publish(source, candidate, root / 'output', 'a' * 40, 123)
+                    publish(source, candidate, root / 'output', 'a' * 40, 123, self.proof)
                 self.assertFalse((root / 'output').exists())
+
+    def test_missing_or_failed_executable_diagnostic_is_refused(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            source, candidate, _ = self.fixture(root)
+            for invalid in [{}, {**self.proof, 'universe_native_linked': False},
+                            {**self.proof, 'registry_forms': 0}, {**self.proof, 'mega_rules': 'failed'}]:
+                with self.assertRaisesRegex(ValueError, 'diagnostic'):
+                    publish(source, candidate, root / 'output', 'a' * 40, 123, invalid)
+            self.assertFalse((root / 'output').exists())
