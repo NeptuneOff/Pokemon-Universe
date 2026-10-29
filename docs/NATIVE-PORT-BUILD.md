@@ -16,7 +16,7 @@ Le candidat relie le registre C au programme et ajoute trois appels dans la copi
 
 Ces appels préparent le raccordement des mécanismes de combat. **Ils n’activent pas encore une transformation, une nouvelle espèce ou une commande Méga.** Les statistiques effectives, talents, objets, sprites et choix d’action restent à raccorder.
 
-Le mode `main.exe --universe-self-test` s’exécute avant l’initialisation graphique et le chargement des ressources du SDK. Il appelle les règles depuis l’exécutable complet relié, vérifie le registre et un changement de forme de test, puis renvoie un code de sortie. Sans cet argument, l’entrée originale du port reste utilisée. Ce contrôle ne constitue pas un combat graphique ni un parcours de l’histoire.
+Le mode `main.exe --universe-self-test` s’exécute avant l’initialisation graphique et le chargement des ressources du SDK. Il appelle les règles depuis l’exécutable complet relié, vérifie le registre, un changement de forme de test et les statistiques d'un Méga-Dracaufeu X niveau 50 Jovial, puis renvoie un code de sortie. La publication exige aussi le résultat `stats_rules: passed`. Sans cet argument, l’entrée originale du port reste utilisée. Ce contrôle ne constitue pas un combat graphique ni un parcours de l’histoire.
 
 ## Chaîne Windows
 

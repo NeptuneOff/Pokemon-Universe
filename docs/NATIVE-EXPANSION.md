@@ -12,8 +12,10 @@
 - Les règles de sélection : bonne forme d’origine, pierre ou capacité requise, Gemme Sésame, Pokémon vivant, une Méga par dresseur pour les deux participants du composant. Une tentative refusée ne consomme pas le droit à la Méga ; revenir à la forme initiale ne rend pas ce droit pour le même combat.
 - Les variantes X, Y, Z et celles liées aux formes sont conservées. Une forme nommée « Mega-Z » n’est pas une capacité Z. Gigamax, Primo-Résurgence, Ultra et Totem sont exclus de ce registre d’extension.
 - Des instantanés de sources compressés et leurs empreintes, versionnés dans Git pour permettre une reconstruction hors connexion.
+- Le calcul des six statistiques à partir des bases, du niveau, des IV, des EV et de la nature, dans l'ordre du catalogue. La conversion de l'axe Vitesse des natures suit l'ordre de Platine. Les anciens EV de valeur 255 restent acceptés avec leur contribution entière ; un total supérieur à 510 ou des entrées invalides est refusé sans changer la sortie. Munja conserve son PV unique.
+- Une règle d'adaptation des PV lors des changements de maximum : conserver les dégâts déjà reçus, maintenir un Pokémon K.O. à zéro et limiter un Pokémon vivant à au moins un PV lors du retour à une forme plus petite. C'est la règle Universe prévue pour les changements de forme, y compris Zygarde ; ce n'est pas une validation du combat en temps réel de Z-A.
 
-Le module applique un modèle de sélection au tour par tour destiné à Universe. Il ne reproduit pas le système de combat en temps réel de Z-A. Il ne calcule pas encore les changements effectifs de PV/statistiques, les effets de talents, les animations, les actions de combat ou les capacités supplémentaires.
+Le module applique un modèle de sélection au tour par tour destiné à Universe. Il ne reproduit pas le système de combat en temps réel de Z-A. Les calculs de statistiques et de PV sont disponibles dans le composant ; **ils ne sont pas encore appliqués aux `BattleMon` du moteur**. Les effets de talents, les animations, les actions de combat et les capacités supplémentaires restent à raccorder.
 
 ## Source des données
 

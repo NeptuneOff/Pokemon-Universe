@@ -50,7 +50,8 @@ def publish(source_root, candidate, output, source_sha, run_id, self_test):
     release = json.loads((distribution / 'release.json').read_text(encoding='utf-8'))
     provenance = json.loads(data_at(candidate, 'universe-port-build.json'))
     expected_forms = json.loads(data_at(source_root, 'content/native/expansion/catalog.json'))['counts']['forms']
-    if self_test.get('universe_native_linked') is not True or self_test.get('mega_rules') != 'passed' or self_test.get('registry_forms') != expected_forms:
+    if (self_test.get('universe_native_linked') is not True or self_test.get('mega_rules') != 'passed'
+            or self_test.get('stats_rules') != 'passed' or self_test.get('registry_forms') != expected_forms):
         raise ValueError('The executable diagnostic did not verify the linked component')
     identity = json.loads(data_at(candidate, 'universe-install.json'))
     lock = json.loads(data_at(source_root, 'native/universe/port-lock.json'))

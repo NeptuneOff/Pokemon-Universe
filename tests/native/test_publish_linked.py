@@ -11,7 +11,7 @@ from tools.native.publish_linked_candidate import publish, pack_bytes
 
 
 class PublishLinkedTests(unittest.TestCase):
-    proof = {'universe_native_linked': True, 'registry_forms': 1329, 'mega_rules': 'passed', 'graphical_battle_tested': False}
+    proof = {'universe_native_linked': True, 'registry_forms': 1329, 'mega_rules': 'passed', 'stats_rules': 'passed', 'graphical_battle_tested': False}
     def fixture(self, root):
         source, candidate = root / 'source', root / 'candidate'
         distribution = source / 'distribution/windows'
@@ -137,7 +137,8 @@ class PublishLinkedTests(unittest.TestCase):
             root = Path(folder)
             source, candidate, _ = self.fixture(root)
             for invalid in [{}, {**self.proof, 'universe_native_linked': False},
-                            {**self.proof, 'registry_forms': 0}, {**self.proof, 'mega_rules': 'failed'}]:
+                            {**self.proof, 'registry_forms': 0}, {**self.proof, 'mega_rules': 'failed'},
+                            {**self.proof, 'stats_rules': 'failed'}]:
                 with self.assertRaisesRegex(ValueError, 'diagnostic'):
                     publish(source, candidate, root / 'output', 'a' * 40, 123, invalid)
             self.assertFalse((root / 'output').exists())
