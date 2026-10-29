@@ -9,6 +9,8 @@ on:
       - '.github/workflows/build-native-port.yml'
 permissions:
   contents: read
+env:
+  PYTHONUTF8: '1'
 jobs:
   windows-port:
     runs-on: windows-latest
@@ -39,11 +41,36 @@ jobs:
           cd native-runtime/universe-port
           make win64 2>&1 | tee ../universe-port-build.log
       - name: Run diagnostics from the actual linked game executable
+        timeout-minutes: 2
         shell: msys2 {0}
         run: |
           set -o pipefail
           cd native-runtime/universe-port/build_win64/pokeplatinum
           ./main.exe --universe-self-test | tee ../../../universe-port-selftest.json
+      - name: Assemble a verified French candidate without a ROM
+        shell: powershell
+        run: |
+          & powershell.exe -NoLogo -NoProfile -NonInteractive -ExecutionPolicy Bypass -File tools/native/start_windows.ps1 -PrepareOnly
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $release = Get-Content distribution/windows/release.json -Raw | ConvertFrom-Json
+          python tools/native/stage_linked_runtime.py --base-runtime "native-runtime/windows-builds/$($release.build_id)" --built-engine native-runtime/universe-port/build_win64/pokeplatinum --build-manifest native-runtime/universe-port/universe-port-build.json --output native-runtime/universe-linked-fr
+          exit $LASTEXITCODE
+      - name: Verify the portable candidate without the compiler DLL path
+        timeout-minutes: 2
+        shell: powershell
+        run: |
+          $candidate = (Resolve-Path native-runtime/universe-linked-fr).Path
+          $originalPath = $env:PATH
+          try {
+            Add-Type -TypeDefinition 'using System.Runtime.InteropServices; public static class ErrorMode { [DllImport("kernel32.dll")] public static extern uint SetErrorMode(uint mode); }'
+            [ErrorMode]::SetErrorMode(0x8003) | Out-Null
+            $env:PATH = "$candidate;$env:SystemRoot\System32;$env:SystemRoot"
+            Push-Location $candidate
+            & .\main.exe --universe-self-test
+            $code = $LASTEXITCODE
+            Pop-Location
+            exit $code
+          } finally { $env:PATH = $originalPath }
       - name: Keep build logs and source provenance
         if: always()
         uses: actions/upload-artifact@v4
@@ -52,12 +79,11 @@ jobs:
           path: |
             native-runtime/universe-port-build.log
             native-runtime/universe-port-selftest.json
+            native-runtime/universe-linked-fr/universe-port-build.json
             native-runtime/universe-port/universe-port-build.json
             native-runtime/universe-port/build_win64/meson-logs/meson-log.txt
       - name: Keep the development executable
         uses: actions/upload-artifact@v4
         with:
           name: universe-linked-windows-development
-          path: |
-            native-runtime/universe-port/build_win64/pokeplatinum/main.exe
-            native-runtime/universe-port/build_win64/pokeplatinum/*.dll
+          path: native-runtime/universe-linked-fr/
