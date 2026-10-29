@@ -1,0 +1,174 @@
+"""Compile and execute the C component. These tests do not run the PC game."""
+import gzip
+import json
+import os
+from pathlib import Path
+import shutil
+import subprocess
+import tempfile
+import unittest
+
+from tools.native.build_expansion_catalog import compile_catalog, c_catalog
+from tools.native.rebuild_expansion import ROOT, rebuild
+
+
+class ExpansionTests(unittest.TestCase):
+    def test_generated_catalog_is_reproducible_from_pinned_sources(self):
+        with tempfile.TemporaryDirectory() as folder:
+            counts = rebuild(ROOT / 'content/native/expansion/sources', folder)
+            self.assertEqual(counts, {'national_species': 1025, 'forms': 1329, 'mega_forms': 97})
+            for name, target in [('catalog.json', 'content/native/expansion/catalog.json'),
+                                 ('catalog.inc', 'native/universe/generated/catalog.inc')]:
+                self.assertEqual((Path(folder) / name).read_bytes(), (ROOT / target).read_bytes().replace(b'\r\n', b'\n'))
+
+    def test_corrupt_source_is_refused_before_generation(self):
+        with tempfile.TemporaryDirectory() as folder:
+            source = Path(folder) / 'sources'
+            shutil.copytree(ROOT / 'content/native/expansion/sources', source)
+            (source / 'pokedex.ts.gz').write_bytes(gzip.compress(b'changed data'))
+            output = Path(folder) / 'output'
+            with self.assertRaisesRegex(ValueError, 'hash mismatch'):
+                rebuild(source, output)
+            self.assertFalse(output.exists())
+
+    def test_all_species_french_names_and_special_mega_forms_are_present(self):
+        catalog = json.loads((ROOT / 'content/native/expansion/catalog.json').read_text(encoding='utf-8'))
+        self.assertEqual(c_catalog(catalog), (ROOT / 'native/universe/generated/catalog.inc').read_text(encoding='utf-8'))
+        entries = {e['id']: e for e in catalog['entries']}
+        bases = {e['national_dex']: e for e in entries.values() if e['id'] == e['base_id']}
+        self.assertEqual(set(bases), set(range(1, 1026)))
+        self.assertEqual(sum(e['mega'] for e in entries.values()), 97)
+        self.assertIsNone(entries['victini']['legacy_native_species_id'])
+        self.assertEqual(entries['arceus']['legacy_native_species_id'], 493)
+        for name in ('meowsticfmega', 'magearnaoriginalmega', 'tatsugiridroopymega', 'garchompmegaz'):
+            self.assertTrue(entries[name]['mega'])
+        for name in ('charizardgmax', 'kyogreprimal', 'necrozmaultra'):
+            self.assertNotIn(name, entries)
+        for e in entries.values():
+            self.assertTrue(e['name_fr'])
+            if e['mega']:
+                for before in e['requirements']['from']:
+                    self.assertIn(before, entries)
+                    self.assertEqual(entries[before]['national_dex'], e['national_dex'])
+
+    def test_compiler_refuses_incomplete_or_inconsistent_data(self):
+        base = {'num': 1, 'name': 'Bulbasaur', 'types': ['Grass', 'Poison'],
+                'baseStats': dict.fromkeys(('hp', 'atk', 'def', 'spa', 'spd', 'spe'), 45),
+                'abilities': {'0': 'Overgrow'}}
+        source = {'bulbasaur': base}
+        self.assertEqual(compile_catalog(source, {1: 'Bulbizarre'}, {})['counts']['national_species'], 1)
+        with self.assertRaisesRegex(ValueError, 'French'):
+            compile_catalog(source, {}, {})
+        base['num'] = 2
+        with self.assertRaisesRegex(ValueError, 'gaps'):
+            compile_catalog(source, {2: 'Herbizarre'}, {})
+        base['num'] = 1
+        base['baseStats']['hp'] = -1
+        with self.assertRaisesRegex(ValueError, 'stats'):
+            compile_catalog(source, {1: 'Bulbizarre'}, {})
+        base['baseStats']['hp'] = 45
+        source['bulbasaurmega'] = {**base, 'name': 'Bulbasaur-Mega', 'baseSpecies': 'Bulbasaur',
+                                 'forme': 'Mega', 'requiredItem': 'Testite', 'battleOnly': 'Missing'}
+        with self.assertRaisesRegex(ValueError, 'source form'):
+            compile_catalog(source, {1: 'Bulbizarre'}, {})
+        source['bulbasaurmega']['battleOnly'] = 'Bulbasaur'
+        del source['bulbasaurmega']['requiredItem']
+        with self.assertRaisesRegex(ValueError, 'requirements'):
+            compile_catalog(source, {1: 'Bulbizarre'}, {})
+
+    def test_c_rules_all_mega_variants_failure_atomicity_and_two_trainers(self):
+        catalog = json.loads((ROOT / 'content/native/expansion/catalog.json').read_text(encoding='utf-8'))
+        cases = []
+        for e in catalog['entries']:
+            if e['mega']:
+                for before in e['requirements']['from']:
+                    cases.append([before, e['id'], e['requirements']['item'] or '', e['requirements']['move'] or ''])
+        rows = ',\n'.join('{' + ','.join(json.dumps(x) for x in row) + '}' for row in cases)
+        source = r'''
+#include "universe.h"
+#include <stdio.h>
+#include <string.h>
+#define CHECK(x) do { if (!(x)) { fprintf(stderr, "line %d: %s\n", __LINE__, #x); return 1; } } while (0)
+static const char *cases[][4] = { ROWS };
+int main(void) {
+    size_t i;
+    UnivBattle battle;
+    UnivBattleMon left, right;
+    const char *dragon_ascent[] = {"dragonascent"};
+    CHECK(univ_species_count() == 1329);
+    CHECK(univ_species_find(NULL) == NULL && univ_species_find("missing") == NULL);
+    CHECK(univ_species_find("victini")->national_dex == 494);
+    CHECK(univ_species_find("charizardmegax")->base_stats[1] == 130);
+    CHECK(univ_species_find("gardevoirmega")->types[1] == 18);
+    for (i = 0; i < sizeof(cases) / sizeof(cases[0]); ++i) {
+        const char *moves[] = {cases[i][3]};
+        univ_battle_init(&battle);
+        CHECK(univ_mon_init(&left, cases[i][0], 0) == UNIV_OK);
+        CHECK(univ_mon_init(&right, cases[i][0], 1) == UNIV_OK);
+        CHECK(univ_mega_try(&battle, &left, cases[i][1], 1, 1, cases[i][2], moves, 1) == UNIV_OK);
+        CHECK(left.current->mega && left.original && battle.mega_used[0] && !battle.mega_used[1]);
+        CHECK(univ_mega_try(&battle, &right, cases[i][1], 1, 1, cases[i][2], moves, 1) == UNIV_OK);
+        CHECK(battle.mega_used[0] && battle.mega_used[1]);
+        univ_mega_end(&left);
+        CHECK(!strcmp(left.current->id, cases[i][0]) && !left.original);
+        CHECK(univ_mega_try(&battle, &left, cases[i][1], 1, 1, cases[i][2], moves, 1) == UNIV_ALREADY_USED);
+        univ_mega_end(&right);
+        CHECK(!strcmp(right.current->id, cases[i][0]));
+    }
+    univ_battle_init(&battle);
+    CHECK(univ_mon_init(&left, "charizard", 0) == UNIV_OK);
+    CHECK(univ_mon_init(&right, "venusaur", 1) == UNIV_OK);
+    CHECK(univ_mega_try(&battle, &left, "charizardmegax", 1, 1, "wrong", NULL, 0) == UNIV_MISSING_ITEM);
+    CHECK(!battle.mega_used[0] && !left.original && !strcmp(left.current->id, "charizard"));
+    CHECK(univ_mega_try(&battle, &left, "charizardmegax", 0, 1, "charizarditex", NULL, 0) == UNIV_FAINTED);
+    CHECK(univ_mega_try(&battle, &left, "charizardmegax", 1, 0, "charizarditex", NULL, 0) == UNIV_NO_KEYSTONE);
+    CHECK(univ_mega_try(&battle, &left, "venusaurmega", 1, 1, "venusaurite", NULL, 0) == UNIV_WRONG_FORM);
+    CHECK(univ_mega_try(&battle, &left, "charizard", 1, 1, "", NULL, 0) == UNIV_NOT_MEGA);
+    CHECK(!battle.mega_used[0] && !left.original);
+    CHECK(univ_mon_init(&left, "rayquaza", 0) == UNIV_OK);
+    CHECK(univ_mega_try(&battle, &left, "rayquazamega", 1, 1, "", NULL, 0) == UNIV_MISSING_MOVE);
+    CHECK(univ_mega_try(&battle, &left, "rayquazamega", 1, 1, "", dragon_ascent, 1) == UNIV_OK);
+    CHECK(univ_mega_try(&battle, &right, "venusaurmega", 1, 1, "venusaurite", NULL, 0) == UNIV_OK);
+    univ_mega_end(&left);
+    univ_mega_end(&right);
+    univ_battle_init(&battle);
+    CHECK(univ_mon_init(&left, "floette", 0) == UNIV_OK);
+    CHECK(univ_mega_try(&battle, &left, "floettemega", 1, 1, "floettite", NULL, 0) == UNIV_WRONG_FORM);
+    CHECK(univ_mon_init(&left, "floetteeternal", 0) == UNIV_OK);
+    CHECK(univ_mega_try(&battle, &left, "floettemega", 1, 1, "floettite", NULL, 0) == UNIV_OK);
+    CHECK(univ_mon_init(&right, "venusaurmega", 0) == UNIV_INVALID);
+    CHECK(univ_mon_init(&right, "venusaur", 2) == UNIV_INVALID);
+    CHECK(univ_mega_try(NULL, &left, "floettemega", 1, 1, "", NULL, 0) == UNIV_INVALID);
+    CHECK(!strcmp(univ_result_name(UNIV_MISSING_ITEM), "missing_item"));
+    CHECK(!strcmp(univ_result_name((UnivResult)99), "unknown"));
+    puts("native registry and Mega rules passed");
+    return 0;
+}
+'''.replace('ROWS', rows)
+        with tempfile.TemporaryDirectory(prefix='universe-native-') as folder:
+            base = Path(folder)
+            harness = base / 'harness.c'
+            harness.write_text(source, encoding='utf-8')
+            exe = base / ('rules.exe' if os.name == 'nt' else 'rules')
+            engine = ROOT / 'native/universe'
+            if os.name == 'nt':
+                vswhere = Path(os.environ.get('ProgramFiles(x86)', r'C:\Program Files (x86)')) / 'Microsoft Visual Studio/Installer/vswhere.exe'
+                paths = subprocess.check_output([str(vswhere), '-latest', '-products', '*', '-requires',
+                    'Microsoft.VisualStudio.Component.VC.Tools.x86.x64', '-find',
+                    r'VC\Auxiliary\Build\vcvars64.bat'], text=True).splitlines()
+                self.assertTrue(paths, 'A C compiler is required for the native component tests')
+                script = base / 'compile.cmd'
+                script.write_text('@echo off\ncall "' + paths[0] + '" >nul\nif errorlevel 1 exit /b 1\n'
+                    'cl /nologo /std:c11 /utf-8 /W4 /WX /I"' + str(engine / 'include') + '" '
+                    '/Fe:"' + str(exe) + '" "' + str(engine / 'universe.c') + '" "' + str(harness) + '"\nexit /b %errorlevel%\n')
+                command = ['cmd.exe', '/d', '/c', str(script)]
+            else:
+                compiler = shutil.which('gcc') or shutil.which('clang')
+                self.assertTrue(compiler, 'A C compiler is required for the native component tests')
+                command = [compiler, '-std=c11', '-Wall', '-Wextra', '-Werror', '-pedantic',
+                    '-I' + str(engine / 'include'), str(engine / 'universe.c'), str(harness), '-o', str(exe)]
+            built = subprocess.run(command, cwd=base, capture_output=True, text=True, errors='replace', timeout=120)
+            self.assertEqual(built.returncode, 0, built.stdout + built.stderr)
+            run = subprocess.run([str(exe)], cwd=base, capture_output=True, text=True, timeout=30)
+            self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
+            self.assertIn('Mega rules passed', run.stdout)

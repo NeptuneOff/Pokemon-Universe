@@ -1,0 +1,17 @@
+{
+  "snapshot_date": "2026-10-26",
+  "files": {
+    "pokedex.ts.gz": {
+      "repository": "smogon/pokemon-showdown",
+      "commit": "b354a81f11003a03f0dcd1dafd4edc641e6763bd",
+      "url": "https://github.com/smogon/pokemon-showdown/blob/b354a81f11003a03f0dcd1dafd4edc641e6763bd/data/pokedex.ts",
+      "decoded_sha256": "b36aaf543f8698733b68aa2972bd9f8b5607d3c04de5f143d977f5dbbe1acddd"
+    },
+    "species-names.csv.gz": {
+      "repository": "PokeAPI/pokeapi",
+      "commit": "2bf639e5572812a67d2b94903fdcb9d095f5aeb2",
+      "url": "https://github.com/PokeAPI/pokeapi/blob/2bf639e5572812a67d2b94903fdcb9d095f5aeb2/data/v2/csv/pokemon_species_names.csv",
+      "decoded_sha256": "b701adb08f3348c5312edce64270d48ee8b7c57c65af9190afd618157f5f5eb4"
+    }
+  }
+}
