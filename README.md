@@ -37,6 +37,8 @@ Le jeu comprend le prologue Universe, **Les oiseaux de Bonaugure**, puis sa suit
 
 Le [registre natif et les règles de Méga-Évolution](docs/NATIVE-EXPANSION.md) sont en cours de développement : 1 025 espèces et 97 formes Méga dans l’instantané du 26 octobre 2026. **Ce composant C n’est pas encore raccordé aux combats du jeu distribué.**
 
+Un [candidat compilé du port Windows](docs/NATIVE-PORT-BUILD.md), avec le module relié à l’exécutable et des appels au cycle de vie des combats, est maintenant généré sur `builds/windows-linked`. Il conserve les ressources françaises et le lanceur unique. Les diagnostics natifs et de dépendances ont réussi ; les Méga en combat, les espèces supplémentaires jouables et la coopération ne sont pas encore activées.
+
 Les sources Universe, les outils et la distribution préparée sont versionnés ensemble. Le moteur existant est référencé dans `engine/platinum`, au commit `35067868f64f23d25d17ac3e536cfdd9a7f40523`, sans modification de sa source. Ses notices et celles de ses bibliothèques sont conservées dans [content/native/portable/licenses](content/native/portable/licenses) et installées avec le jeu.
 
 Pour consulter les sources du moteur uniquement :

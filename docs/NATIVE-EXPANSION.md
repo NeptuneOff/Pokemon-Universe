@@ -2,6 +2,8 @@
 
 **Statut : composant C de développement, pas encore raccordé à l’exécutable de Platine.** Le contenu jouable lancé par `JOUER.bat` reste celui décrit dans le README. Cette étape n’ajoute pas encore d’espèces capturables, de région ou de coopération réseau.
 
+**Mise à jour du 29 octobre :** le [candidat du port Windows](NATIVE-PORT-BUILD.md) compile maintenant ce module dans l’exécutable complet, avec des appels au démarrage et au cycle de vie des combats. Les diagnostics de l’exécutable et du candidat français portable ont réussi. Ce raccordement ne déclenche pas encore une Méga-Évolution dans un combat du jeu. La branche générée `builds/windows-linked` contient le moteur de développement prêt à lancer par Git ; `main` conserve sa distribution principale.
+
 ## Ce qui est implémenté
 
 - Un registre de **1 025 espèces nationales**, **1 329 entrées avec les formes retenues** et **97 formes Méga**, issu de l’instantané des sources du 26 octobre 2026. Ce nombre de Méga compte les variantes de forme, pas seulement les espèces capables de méga-évoluer.

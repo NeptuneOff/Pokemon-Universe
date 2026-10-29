@@ -113,7 +113,17 @@ Le catalogue de l’instantané du 26 octobre contient 1 025 espèces nationales
 
 **Ce composant n’est pas encore lié au jeu distribué.** Ces contrôles ne prouvent pas l’existence de combats Méga graphiques, de captures supplémentaires, d’un nouveau Pokédex en jeu ou de coopération réseau. Le travail à raccorder au moteur est décrit dans [NATIVE-EXPANSION.md](NATIVE-EXPANSION.md). Aucun sprite Infinite Fusion n’est encore importé.
 
-## Limites globales
+## Port Windows recompilé avec Universe — 29 octobre 2026
+
+[Compilation et contrôles du port complet](https://github.com/NeptuneOff/Pokemon-Universe/actions/runs/40846749588), source `cd453eb` : le moteur PC de Platine est compilé avec le registre et les règles Universe, les appels de démarrage et ceux de création/libération des contextes de combat. Le sous-module d’origine reste intact ; la préparation modifie une copie isolée, en vérifiant ses empreintes et cinq révisions de bibliothèques.
+
+Le véritable `main.exe` a renvoyé `universe_native_linked: true`, `registry_forms: 1329` et `mega_rules: passed`, avec code de sortie 0. Après assemblage avec les ressources françaises vérifiées depuis Git, un second appel du candidat a réussi avec un `PATH` limité au dossier du jeu et à Windows. Les DLL de la chaîne de compilation ne masquent donc pas une dépendance du candidat lors de ce diagnostic.
+
+[Publication Git du candidat](https://github.com/NeptuneOff/Pokemon-Universe/actions/runs/40849930357) : les empreintes des binaires, du composant source et des ressources françaises ainsi que le diagnostic de l’exécutable sont contrôlés avant génération de `builds/windows-linked`. Cette branche utilise le lanceur unique et ses fragments de données Git. Les données personnelles et fichiers non déclarés sont exclus ; la version principale n’est pas automatiquement remplacée.
+
+Le diagnostic s’exécute avant le démarrage graphique du SDK. **Il ne constitue pas une scène graphique de combat Méga ni une nouvelle campagne jouable.** Les appels de cycle de vie sont en place dans la source compilée ; leur exécution pendant un vrai combat reste à observer. Voir [le fonctionnement du build](NATIVE-PORT-BUILD.md).
+
+## Limites générales du jeu
 
 La reprise de l’équipe après le premier combat est maintenant contrôlée. Le point de test durable actuel est dans la maison du joueur après la scène de la mère, avec Tortipouss niveau 6 ; les points précédents de l’enquête sont aussi conservés. La campagne entière et tous les écrans localisés ne sont pas testés. Aucun essai graphique Windows n’a été effectué. Le son n’a pas été validé (pilote audio factice dans l’environnement de test).
 
