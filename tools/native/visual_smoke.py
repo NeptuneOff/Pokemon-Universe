@@ -114,7 +114,7 @@ def main():
                     raise RuntimeError('The game exited during the visual test')
                 if 'key' in step:
                     for _ in range(step.get('repeat', 1)):
-                        xdo('key', '--clearmodifiers', step['key'])
+                        xdo('key', '--clearmodifiers', '--delay', 100, step['key'])
                         time.sleep(step.get('delay_ms', 650) / 1000)
                 if 'hold' in step:
                     xdo('keydown', step['hold'])
@@ -122,7 +122,11 @@ def main():
                     xdo('keyup', step['hold'])
                 if 'click' in step:
                     xdo('mousemove', '--window', window, *step['click'])
-                    xdo('click', 1)
+                    # Hold through several game frames; a zero-duration click
+                    # can disappear between SDL's mouse-state samples.
+                    xdo('mousedown', 1)
+                    time.sleep(0.2)
+                    xdo('mouseup', 1)
                 if 'wait' in step:
                     time.sleep(min(float(step['wait']), 45))
                 if 'capture' in step:
