@@ -1,0 +1,322 @@
+{
+  "candidate_commit": "05d2636e638a6703ae73fe0ceadbcf5272913887",
+  "build_id": "470ee0957a354a38f9bd",
+  "compiled_from_commit": "66ea559790e7ea0c573fcd2cad9696585ce4600a",
+  "main_sha256": "850ea0956fab7eb950caa6aad135e4016329532e95aeb0787b95dffe0f71570d",
+  "environment": "Windows x64 executable under Wine on Linux, Xvfb and software Mesa",
+  "native_windows_desktop_tested": false,
+  "audio_tested": false,
+  "graphical_mega_battle_tested": false,
+  "captures": [
+    {
+      "file": "01-boot.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "PoKEMey \u2018Moy\n\nrom\n\n\u2014e muna\n\nho\n\n4\n\ni\n\na\n\n+\n\nBSc Sa Sh cal\n\n4\n\neh. Teer etree"
+    },
+    {
+      "file": "02-start.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "EVES Noy\n\nVERSION\n\n."
+    },
+    {
+      "file": "03-intro.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "_\n\ninnoh, une\n\nry\n\na\n\nnquate\n\noMmmenc\n\nTon \u00a5\n\ntout relier."
+    },
+    {
+      "file": "04-intro.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "Si tu as besoin de conseils, je suis tout\n\n4 fait apte A t\"en donner."
+    },
+    {
+      "file": "05-intro.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "Touche un bouton de 1\"\u00e9cr\n\ntactile ci-dessous."
+    },
+    {
+      "file": "06-intro.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "Touche un bouton de 1\"\u00e9cr\n\ntactile ci-dessous."
+    },
+    {
+      "file": "07-first-adventure-menu.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "Touche un bouton de 1\"\u00e9cr\n\ntactile ci-dessous."
+    },
+    {
+      "file": "08-adventure-choice.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "Touche un bouton de 1\"\u00e9cr\n\ntactile ci-dessous."
+    },
+    {
+      "file": "09-pokemon-intro.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "Touche un bouton de 1\"\u00e9cr\n\ntactile ci-dessous."
+    },
+    {
+      "file": "10-touch-confirmation.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "Souhaites-tu savoir autre chose?"
+    },
+    {
+      "file": "11-info-menu.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "\u00bb INFOS COMMANDES\n\nINFOS AVENTURE\n\nNON MERCT"
+    },
+    {
+      "file": "12-pokeball.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": ""
+    },
+    {
+      "file": "13-open-pokeball.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "=\n\nNous, les humains, vivons avec les"
+    },
+    {
+      "file": "14-player-name.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "recherches, pour que nous en\n\nsachions plus sur les Pok\u00e9mon."
+    },
+    {
+      "file": "15-rival-name.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "fairs. fl] os\n\nABCOEFGHI J\n\n:\n\n:\n\nRKLMNOPQRST\n\nUYVURY 2\n\n& \u00a2\n\no12aa5 6789"
+    },
+    {
+      "file": "16-after-names.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "St\n\nAAA\n\nfairs. fl] os\n\n@Geac\n\nOE&EFGHI J\n\n:\n\nKLM\n\n:\n\nNOPQRST\n\nu\u00a5vVu\n\nRY?\n\n& \u00a2\n\nao12\n\n$4567 89"
+    },
+    {
+      "file": "17-new-game.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "=\n\nTu vas d\u00e9couvrir un tas de choses,\n\ntu apprendras aussi certainement"
+    },
+    {
+      "file": "18-after-tv.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "ae By\n\nms\n\n=\n\nL\u2014\n\nVoila qui conclut notre \u00e9mission\n\nsp\u00e9ciale, \u201cQuestions au Professeur"
+    },
+    {
+      "file": "19-bedroom.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "ee\n\nig?"
+    },
+    {
+      "file": "20-field-menu.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "oe Pe\n\nig?"
+    },
+    {
+      "file": "21-save-prompt.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "co\n\n2 \u2014 eeelTTs\n\nee\n\n\u2014o \u2014\n\n\u2014 \u2014\u2014\u2014\u2014\u2014\n\nee"
+    },
+    {
+      "file": "22-save-result.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "oe Pe\n\nig?"
+    }
+  ],
+  "steps": [
+    {
+      "wait": 20,
+      "capture": "01-boot"
+    },
+    {
+      "key": "Return",
+      "wait": 5,
+      "capture": "02-start"
+    },
+    {
+      "key": "z",
+      "repeat": 8,
+      "delay_ms": 1200,
+      "wait": 2,
+      "capture": "03-intro"
+    },
+    {
+      "key": "z",
+      "repeat": 8,
+      "delay_ms": 1200,
+      "wait": 2,
+      "capture": "04-intro"
+    },
+    {
+      "key": "z",
+      "repeat": 8,
+      "delay_ms": 1200,
+      "wait": 2,
+      "capture": "05-intro"
+    },
+    {
+      "key": "z",
+      "repeat": 8,
+      "delay_ms": 1200,
+      "wait": 2,
+      "capture": "06-intro"
+    },
+    {
+      "key": "z",
+      "wait": 2,
+      "capture": "07-first-adventure-menu"
+    },
+    {
+      "key": "Down"
+    },
+    {
+      "key": "z",
+      "wait": 2,
+      "capture": "08-adventure-choice"
+    },
+    {
+      "key": "z",
+      "repeat": 6,
+      "delay_ms": 900,
+      "wait": 2,
+      "capture": "09-pokemon-intro"
+    },
+    {
+      "click": [
+        240,
+        544
+      ],
+      "wait": 3,
+      "capture": "10-touch-confirmation"
+    },
+    {
+      "key": "z",
+      "wait": 2,
+      "capture": "11-info-menu"
+    },
+    {
+      "key": "Down",
+      "repeat": 2,
+      "delay_ms": 650
+    },
+    {
+      "key": "z",
+      "repeat": 8,
+      "delay_ms": 900,
+      "wait": 2,
+      "capture": "12-pokeball"
+    },
+    {
+      "click": [
+        256,
+        584
+      ],
+      "wait": 3,
+      "capture": "13-open-pokeball"
+    },
+    {
+      "key": "z",
+      "repeat": 12,
+      "delay_ms": 900,
+      "wait": 2,
+      "capture": "14-player-name"
+    },
+    {
+      "key": "Return"
+    },
+    {
+      "key": "z",
+      "repeat": 12,
+      "delay_ms": 900,
+      "wait": 2,
+      "capture": "15-rival-name"
+    },
+    {
+      "key": "Return"
+    },
+    {
+      "key": "z",
+      "repeat": 16,
+      "delay_ms": 900,
+      "wait": 2,
+      "capture": "16-after-names"
+    },
+    {
+      "key": "Return"
+    },
+    {
+      "key": "z",
+      "repeat": 16,
+      "delay_ms": 900,
+      "wait": 3,
+      "capture": "17-new-game"
+    },
+    {
+      "key": "z",
+      "repeat": 20,
+      "delay_ms": 650,
+      "wait": 10,
+      "capture": "18-after-tv"
+    },
+    {
+      "key": "z",
+      "repeat": 20,
+      "delay_ms": 650,
+      "wait": 2,
+      "capture": "19-bedroom"
+    },
+    {
+      "key": "c",
+      "wait": 2,
+      "capture": "20-field-menu"
+    },
+    {
+      "key": "Down",
+      "repeat": 2
+    },
+    {
+      "key": "z",
+      "wait": 2,
+      "capture": "21-save-prompt"
+    },
+    {
+      "key": "z",
+      "repeat": 8,
+      "delay_ms": 900,
+      "wait": 4,
+      "capture": "22-save-result"
+    },
+    {
+      "key": "x",
+      "wait": 1
+    }
+  ],
+  "resumed_disposable_flash": false,
+  "wine_version": "wine-9.0 (Ubuntu 9.0~repack-4build3)",
+  "glxinfo": "name of display: :99\ndisplay: :99  screen: 0\ndirect rendering: Yes\nExtended renderer info (GLX_MESA_query_renderer):\n    Vendor: Mesa (0xffffffff)\n    Device: llvmpipe (LLVM 20.1.2, 256 bits) (0xffffffff)\n    Version: 25.2.8\n    Accelerated: no\n    Video memory: 15983MB\n    Unified memory: yes\n    Preferred profile: core (0x1)\n    Max core profile version: 4.5\n    Max compat profile version: 4.5\n    Max GLES1 profile version: 1.1\n    Max GLES[23] profile version: 3.2\nMemory info (GL_ATI_meminfo):\n    VBO free memory - total: 1069136 MB, largest block: 1069136 MB\n    VBO free aux. memory - total: 14276 MB, largest block: 14276 MB\n    Texture free memory - total: 1069136 MB, largest block: 1069136 MB\n    Texture free aux. memory - total: 14276 MB, largest block: 14276 MB\n    Renderbuffer free memory - total: 1069136 MB, largest block: 1069136 MB\n    Renderbuffer free aux. memory - total: 14276 MB, largest block: 14276 MB\nMemory info (GL_NVX_gpu_memory_info):\n    Dedicated video memory: 1069136 MB\n    Total available memory: 1085120 MB\n    Currently available dedicated video memory: 1069136 MB\nOpenGL vendor string: Mesa\nOpenGL renderer string: llvmpipe (LLVM 20.1.2, 256 bits)\nOpenGL core profile version string: 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.4\nOpenGL core profile shading language version string: 4.50\nOpenGL core profile context flags: (none)\nOpenGL core profile profile mask: core profile\n\nOpenGL version string: 4.5 (Compatibility Profile) Mesa 25.2.8-0ubuntu0.24.04.4\nOpenGL shading language version string: 4.50\nOpenGL context flags: (none)\nOpenGL profile mask: compatibility profile\n\nOpenGL ES profile version string: OpenGL ES 3.2 Mesa 25.2.8-0ubuntu0.24.04.4\nOpenGL ES profile shading language version string: OpenGL ES GLSL ES 3.20\n\n",
+  "window_title": "POKEMON PL [CPUE01]",
+  "actual_startup_hook_observed": true,
+  "battle_begin_observed": false,
+  "battle_end_observed": false,
+  "completed": true,
+  "process_exit": 0,
+  "disposable_flash_retained": true
+}
