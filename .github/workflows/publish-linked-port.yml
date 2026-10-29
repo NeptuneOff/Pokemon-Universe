@@ -1,0 +1,74 @@
+name: Publish a verified development engine through Git
+on:
+  workflow_run:
+    workflows: ['Build the linked Universe Windows port']
+    types: [completed]
+permissions:
+  contents: write
+  actions: read
+concurrency:
+  group: publish-universe-linked-windows
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_repository.full_name == github.repository &&
+      (github.event.workflow_run.head_branch == 'main' ||
+       startsWith(github.event.workflow_run.head_branch, 'codex/linked-port-'))
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: publisher
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          path: source
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/download-artifact@v4
+        with:
+          name: universe-linked-windows-development
+          path: candidate
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+      - uses: actions/download-artifact@v4
+        with:
+          name: universe-native-build-diagnostics
+          path: diagnostics
+          run-id: ${{ github.event.workflow_run.id }}
+          github-token: ${{ github.token }}
+      - name: Verify and repack the candidate for JOUER.bat
+        env:
+          SOURCE_SHA: ${{ github.event.workflow_run.head_sha }}
+          SOURCE_RUN: ${{ github.event.workflow_run.id }}
+        run: |
+          python publisher/tools/native/publish_linked_candidate.py --source-root source --candidate candidate --output prepared-release --source-sha "$SOURCE_SHA" --run-id "$SOURCE_RUN" --self-test diagnostics/universe-port-selftest.json
+      - name: Update the generated development branch without rewriting its history
+        env:
+          SOURCE_SHA: ${{ github.event.workflow_run.head_sha }}
+          SOURCE_RUN: ${{ github.event.workflow_run.id }}
+        run: |
+          cd source
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          branch=builds/windows-linked
+          previous=$(git ls-remote origin "refs/heads/$branch" | cut -f1)
+          if [ -n "$previous" ]; then
+            git fetch origin "$previous"
+            previous_run=$(git show "$previous:distribution/windows/release.json" | python -c 'import sys,json; print(json.load(sys.stdin).get("ci_run_id",0))')
+            if [ "$previous_run" -ge "$SOURCE_RUN" ]; then exit 0; fi
+          fi
+          rm -rf distribution/windows
+          cp -R ../prepared-release distribution/windows
+          git add distribution/windows
+          tree=$(git write-tree)
+          if [ -n "$previous" ]; then
+            commit=$(git commit-tree "$tree" -p "$previous" -p "$SOURCE_SHA" -m "Publish verified native development engine from CI $SOURCE_RUN")
+          else
+            commit=$(git commit-tree "$tree" -p "$SOURCE_SHA" -m "Publish verified native development engine from CI $SOURCE_RUN")
+          fi
+          git push origin "$commit:refs/heads/$branch"
