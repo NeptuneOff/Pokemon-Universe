@@ -1,49 +1,12 @@
 {
   "run_id": 41052088811,
-  "sequence": 4,
+  "sequence": 5,
   "steps": [
     {
-      "key": "Right",
-      "repeat": 8,
-      "delay_ms": 400
-    },
-    {
-      "key": "Up",
-      "repeat": 11,
-      "delay_ms": 400
-    },
-    {
-      "key": "Left",
-      "repeat": 8,
-      "delay_ms": 400,
-      "wait": 2,
-      "capture": "rival-door-scene"
-    },
-    {
-      "until_text": "QUITTER",
-      "advance_keys": [
-        "z",
-        "c"
-      ],
-      "ocr_box": [
-        310,
-        0,
-        512,
-        310
-      ],
-      "ocr_psm": 6,
-      "attempts": 60,
-      "delay_ms": 800
-    },
-    {
-      "key": "x"
-    },
-    {
-      "key": "Up",
-      "repeat": 3,
-      "delay_ms": 500,
+      "hold": "Up",
+      "seconds": 0.65,
       "wait": 3,
-      "capture": "rival-house-entry"
+      "capture": "rival-house-step-in"
     }
   ],
   "finish": false
