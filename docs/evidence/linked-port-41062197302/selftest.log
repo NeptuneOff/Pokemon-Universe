@@ -1,0 +1,4 @@
+{"universe_native_linked":true,"registry_forms":1329,"mega_rules":"passed","stats_rules":"passed","graphical_battle_tested":false}
+wine: created the configuration directory '/home/runner/work/Pokemon-Universe/Pokemon-Universe/native-runtime/visual-check/wine-prefix'
+wine: failed to open L"C:\\windows\\syswow64\\rundll32.exe": c0000135
+wine: configuration in L"/home/runner/work/Pokemon-Universe/Pokemon-Universe/native-runtime/visual-check/wine-prefix" has been updated.
