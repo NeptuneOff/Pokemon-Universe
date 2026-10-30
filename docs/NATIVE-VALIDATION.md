@@ -1,5 +1,22 @@
 # Validation de la base native française
 
+## État courant — 30 octobre 2026
+
+La distribution Git courante est **`47cbbf0e8630133f0426`**, moteur compilé depuis **`55f930ab529a74f2c461bb7703c393cea831a5d3`**. Les sections suivantes conservent l'historique des contrôles précédents ; leurs anciennes limites de raccordement ne décrivent pas toutes le moteur courant.
+
+- [Tests Windows et Linux](https://github.com/NeptuneOff/Pokemon-Universe/actions/runs/41062831820) : 70 tests natifs réussis sous Windows ; sous Linux, les neuf tests réservés à Windows sont ignorés. La préparation Windows depuis Git réussit. Les tests du prototype archivé restent distincts du jeu natif.
+- Le lanceur unique propose Campagne, Admin et Copie de campagne. Les tests PowerShell réels vérifient que le profil admin ne modifie ni la sauvegarde, ni la configuration, ni le pointeur de la campagne ; une copie explicite est protégée et la reprise normale reste séparée. Ces tests utilisent un petit exécutable de contrôle pour vérifier précisément les fichiers.
+- [Compilation du véritable moteur](https://github.com/NeptuneOff/Pokemon-Universe/actions/runs/41061718786) : succès, diagnostics de règles Méga, statistiques et tirages du nouveau départ réussis, puis diagnostic portable avec PATH réduit réussi. Les 53 parcours de compagnon, les 48 familles, l'absence de doublons parmi les six offres, les contraintes de sexe et l'association des pierres sont vérifiés séparément par les tests C et les données évolutives épinglées.
+- Reconstruction locale complète de la distribution : **357 fichiers et 340 ressources** vérifiés par empreinte, aucune ROM ni sauvegarde personnelle dans les paquets. Les 18 messages modifiés du prologue et des deux enquêtes sont repaquetés en conservant les autres ressources.
+- [Parcours graphique du moteur livré](https://github.com/NeptuneOff/Pokemon-Universe/actions/runs/41062831832) : succès sous Wine 9/Xvfb/Mesa logiciel. Le titre français, les nouveaux dialogues, l'ouverture de F10 et le sous-menu Application avec Gen Pokemon et Gen Items ont été capturés dans la fenêtre réelle 512 × 768. Le chargement du registre est observé et la fermeture renvoie 0. Exécutable SHA-256 : `f64ed50ef254c700cc3bb7c128667b90ce7f455e8ad7f4cc60a621fdd8748837`.
+
+[Captures et rapport immuables du parcours](https://github.com/NeptuneOff/Pokemon-Universe/tree/builds/windows-visual-qa/docs/evidence/linked-port-41062831832). L'OCR des polices pixelisées est imparfait ; les PNG restent les preuves visuelles à examiner. Le test attend la fin des fondus et conserve aussi les captures en cas d'échec.
+
+Cette exécution n'a pas créé de Pokémon ou d'objet dans une véritable équipe et n'a pas utilisé une téléportation. Ces commandes et leurs effets sur une partie native restent à parcourir après arrivée sur la carte. Le test sous Wine ne valide ni le son ni un bureau Windows natif.
+
+Le tirage élargi et le format de conservation sont liés au moteur mais restent **sans menu natif ni remise de compagnon**. Les nouvelles espèces, les Méga en combat, les autres régions et le duo réseau ne sont pas activés par cette livraison. Le premier lot de dessins de Fakemon reste une ressource préparatoire avec crédits et audit, hors runtime.
+
+
 ## Contrôles réalisés les 19 et 20 octobre 2026
 
 - ROM USA CPUE Rev 1 et France CPUF contrôlées par SHA-1 ; paquets Linux et Windows v0.1.12 contrôlés par SHA-256.

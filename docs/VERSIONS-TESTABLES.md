@@ -12,3 +12,5 @@ Distribution Windows : `47cbbf0e8630133f0426`. Moteur Universe compilé depuis `
 Validation technique : 70 tests natifs sous Windows, tests Linux et diagnostic du nouvel exécutable portable réussis. Le diagnostic inclut les tirages et le format de conservation du nouveau départ ; le menu de sélection et le don ne sont pas encore raccordés.
 
 Les vérifications automatisées de Windows et les captures du jeu sont visibles dans l'onglet Actions du dépôt. Une capture du jeu sous Wine ne vaut pas un test audio ou un test sur le bureau Windows du joueur.
+
+Preuves de cette livraison : [70 tests Windows et contrôles Linux](https://github.com/NeptuneOff/Pokemon-Universe/actions/runs/41062831820) ; [captures réelles du prologue et de F10 > Application](https://github.com/NeptuneOff/Pokemon-Universe/actions/runs/41062831832). La création effective d'un Pokémon ou d'un objet et la téléportation restent à essayer sur une carte native ; l'ouverture des menus seule ne valide pas ces actions. Voir [le bilan détaillé](NATIVE-VALIDATION.md).
