@@ -65,6 +65,11 @@ jobs:
           rm -rf distribution/windows
           cp -R ../prepared-release distribution/windows
           git add distribution/windows
+          # Generated engine commits do not publish workflow changes. Keep the
+          # target branch's workflows; source provenance points to main's SHA.
+          if [ -n "$previous" ]; then
+            git restore --source="$previous" --staged --worktree -- .github/workflows
+          fi
           tree=$(git write-tree)
           if [ -n "$previous" ]; then
             commit=$(git commit-tree "$tree" -p "$previous" -p "$SOURCE_SHA" -m "Publish verified native development engine from CI $SOURCE_RUN")
