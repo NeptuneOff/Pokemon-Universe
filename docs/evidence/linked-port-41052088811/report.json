@@ -37,6 +37,18 @@
       "width": 512,
       "height": 768,
       "observed_ocr_text": "(3"
+    },
+    {
+      "file": "live-ready.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "(3"
+    },
+    {
+      "file": "live-001.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "(3"
     }
   ],
   "steps": [
@@ -87,6 +99,14 @@
       "key": "x",
       "wait": 1,
       "capture": "00-ready"
+    },
+    {
+      "wait": 1,
+      "capture": "live-ready"
+    },
+    {
+      "wait": 1,
+      "capture": "live-001"
     }
   ],
   "resumed_disposable_flash": true,
@@ -97,5 +117,5 @@
   "battle_begin_observed": false,
   "battle_end_observed": false,
   "live_state": "waiting",
-  "interactive_sequence": 0
+  "interactive_sequence": 1
 }
