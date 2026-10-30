@@ -31,7 +31,7 @@ class PortSourceTests(unittest.TestCase):
         lock = {'engine_commit': revision, 'dependency_commits': {'example': '1' * 40},
             'source_sha256': {n: hashlib.sha256(t.encode()).hexdigest() for n, t in files.items() if n.endswith(('.build', '.c'))}}
         (component / 'port-lock.json').write_text(json.dumps(lock))
-        for name in ['universe.c', 'port_bridge.c', 'port_bridge.h', 'entry_wrap.c', 'include/universe.h', 'generated/catalog.inc']:
+        for name in ['universe.c', 'journey.c', 'port_bridge.c', 'port_bridge.h', 'entry_wrap.c', 'include/universe.h', 'generated/catalog.inc', 'generated/journey.inc']:
             path = component / name
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_bytes(b'fixture\n')

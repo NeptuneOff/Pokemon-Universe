@@ -119,7 +119,8 @@ void univ_mega_end(UnivBattleMon *mon)
 const char *univ_result_name(UnivResult result)
 {
     static const char *names[] = {"ok", "invalid", "not_mega", "wrong_form", "fainted",
-        "no_keystone", "already_used", "missing_item", "missing_move"};
+        "no_keystone", "already_used", "missing_item", "missing_move", "wrong_stage",
+        "already_chosen", "delivery_failed"};
     if ((unsigned)result >= sizeof(names) / sizeof(names[0])) return "unknown";
     return names[result];
 }

@@ -25,8 +25,27 @@ typedef struct {
 typedef enum {
     UNIV_OK = 0, UNIV_INVALID, UNIV_NOT_MEGA, UNIV_WRONG_FORM,
     UNIV_FAINTED, UNIV_NO_KEYSTONE, UNIV_ALREADY_USED,
-    UNIV_MISSING_ITEM, UNIV_MISSING_MOVE
+    UNIV_MISSING_ITEM, UNIV_MISSING_MOVE, UNIV_WRONG_STAGE,
+    UNIV_ALREADY_CHOSEN, UNIV_DELIVERY_FAILED
 } UnivResult;
+
+#define UNIV_JOURNEY_BYTES 32
+#define UNIV_STARTER_FAMILIES 9
+#define UNIV_PARTNER_OPTIONS 3
+#define UNIV_NO_CHOICE 255
+typedef struct {
+    uint8_t version, player, options[3], primary, partner, partner_received;
+    uint32_t partner_options[UNIV_PARTNER_OPTIONS]; /* Stable keys, not pool indices. */
+} UnivJourney;
+typedef struct {
+    const UnivSpecies *pokemon, *final_form, *mega;
+    const char *stone_id;
+    uint32_t key;
+    char required_gender; /* M, F, N (genderless), or - (unrestricted). */
+} UnivPartnerGift;
+/* The host callback must add the Pokemon and its stone atomically, or fail
+ * without changing the party/bag. The journey is committed only on success. */
+typedef int (*UnivGiftApply)(void *context, const UnivPartnerGift *gift);
 
 /* Catalog order: HP, Attack, Defense, SpA, SpD, Speed. Nature IDs retain the
  * native Platinum order (Hardy=0 ... Quirky=24), whose Speed axis differs. */
@@ -52,4 +71,15 @@ UnivResult univ_mega_try(UnivBattle *battle, UnivBattleMon *mon, const char *tar
                         const char *const *known_moves, size_t move_count);
 void univ_mega_end(UnivBattleMon *mon);
 const char *univ_result_name(UnivResult result);
+/* Catalog IDs below are independent of Platinum's legacy species numbers. */
+UnivResult univ_journey_begin(UnivJourney *journey, uint32_t campaign_seed, unsigned player);
+const UnivSpecies *univ_journey_option(const UnivJourney *journey, unsigned type_slot);
+UnivResult univ_journey_choose_primary(UnivJourney *journey, unsigned type_slot);
+size_t univ_partner_count(void);
+UnivResult univ_partner_option(unsigned option, UnivPartnerGift *gift);
+UnivResult univ_journey_partner_option(const UnivJourney *journey, unsigned slot, UnivPartnerGift *gift);
+UnivResult univ_journey_choose_partner(UnivJourney *journey, unsigned option);
+UnivResult univ_journey_receive_partner(UnivJourney *journey, UnivGiftApply apply, void *context);
+UnivResult univ_journey_encode(const UnivJourney *journey, uint8_t *output, size_t capacity);
+UnivResult univ_journey_decode(UnivJourney *journey, const uint8_t *input, size_t size);
 #endif
