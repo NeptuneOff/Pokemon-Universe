@@ -10,72 +10,72 @@
   },
   {
     "key": "z",
-    "wait": 1.5,
+    "wait": 3,
     "capture": "03-opening-01"
   },
   {
     "key": "z",
-    "wait": 1.5,
+    "wait": 3,
     "capture": "03-opening-02"
   },
   {
     "key": "z",
-    "wait": 1.5,
+    "wait": 3,
     "capture": "03-opening-03"
   },
   {
     "key": "z",
-    "wait": 1.5,
+    "wait": 3,
     "capture": "03-opening-04"
   },
   {
     "key": "z",
-    "wait": 1.5,
+    "wait": 3,
     "capture": "03-opening-05"
   },
   {
     "key": "z",
-    "wait": 1.5,
+    "wait": 3,
     "capture": "03-opening-06"
   },
   {
     "key": "z",
-    "wait": 1.5,
+    "wait": 3,
     "capture": "03-opening-07"
   },
   {
     "key": "z",
-    "wait": 1.5,
+    "wait": 3,
     "capture": "03-opening-08"
   },
   {
     "key": "z",
-    "wait": 1.5,
+    "wait": 3,
     "capture": "03-opening-09"
   },
   {
     "key": "z",
-    "wait": 1.5,
+    "wait": 3,
     "capture": "03-opening-10"
   },
   {
     "key": "z",
-    "wait": 1.5,
+    "wait": 3,
     "capture": "03-opening-11"
   },
   {
     "key": "z",
-    "wait": 1.5,
+    "wait": 3,
     "capture": "03-opening-12"
   },
   {
     "key": "z",
-    "wait": 1.5,
+    "wait": 3,
     "capture": "03-opening-13"
   },
   {
     "key": "z",
-    "wait": 1.5,
+    "wait": 3,
     "capture": "03-opening-14"
   },
   {
@@ -84,8 +84,11 @@
     "capture": "04-admin-panel"
   },
   {
-    "click_text": "Application",
     "wait": 2,
-    "capture": "05-admin-application"
+    "capture": "05-admin-application",
+    "click": [
+      116,
+      244
+    ]
   }
 ]
