@@ -85,6 +85,24 @@
       "width": 512,
       "height": 768,
       "observed_ocr_text": "\u2018*\n\n\u2018af\n\na\n\nwe\n\n\u2018i"
+    },
+    {
+      "file": "rival-door-scene.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "aw:\n\nbt\n\nSCE\n\nfat\n\nft\n\na cof\n\nhd\n\nmee\n\nes I"
+    },
+    {
+      "file": "rival-house-entry.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "Ce\n\nan aS\n\nos |\n\nhabe\n\nSLs\n\nae\n\n\u2018an\n\na coh\n\nee aM\n\nEe"
+    },
+    {
+      "file": "live-004.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "Ce\n\nan aS\n\nos |\n\nhabe\n\nSLs\n\nae\n\n\u2018an\n\na coh\n\nee aM\n\nEe"
     }
   ],
   "steps": [
@@ -232,6 +250,53 @@
     {
       "wait": 1,
       "capture": "live-003"
+    },
+    {
+      "key": "Right",
+      "repeat": 8,
+      "delay_ms": 400
+    },
+    {
+      "key": "Up",
+      "repeat": 11,
+      "delay_ms": 400
+    },
+    {
+      "key": "Left",
+      "repeat": 8,
+      "delay_ms": 400,
+      "wait": 2,
+      "capture": "rival-door-scene"
+    },
+    {
+      "until_text": "QUITTER",
+      "advance_keys": [
+        "z",
+        "c"
+      ],
+      "ocr_box": [
+        310,
+        0,
+        512,
+        310
+      ],
+      "ocr_psm": 6,
+      "attempts": 60,
+      "delay_ms": 800
+    },
+    {
+      "key": "x"
+    },
+    {
+      "key": "Up",
+      "repeat": 3,
+      "delay_ms": 500,
+      "wait": 3,
+      "capture": "rival-house-entry"
+    },
+    {
+      "wait": 1,
+      "capture": "live-004"
     }
   ],
   "resumed_disposable_flash": true,
@@ -242,5 +307,5 @@
   "battle_begin_observed": false,
   "battle_end_observed": false,
   "live_state": "waiting",
-  "interactive_sequence": 3
+  "interactive_sequence": 4
 }
