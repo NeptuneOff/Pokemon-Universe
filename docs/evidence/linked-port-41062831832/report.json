@@ -1,0 +1,225 @@
+{
+  "candidate_commit": "e7f0963d2ed8fb5cea38cd87bff6f710bf85de12",
+  "build_id": "47cbbf0e8630133f0426",
+  "compiled_from_commit": "55f930ab529a74f2c461bb7703c393cea831a5d3",
+  "main_sha256": "f64ed50ef254c700cc3bb7c128667b90ce7f455e8ad7f4cc60a621fdd8748837",
+  "environment": "Windows x64 executable under Wine on Linux, Xvfb and software Mesa",
+  "native_windows_desktop_tested": false,
+  "audio_tested": false,
+  "graphical_mega_battle_tested": false,
+  "captures": [
+    {
+      "file": "01-boot.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "PEKENGY"
+    },
+    {
+      "file": "02-start.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "Vv\n\nVERSION\n\nMoy,\n\nPUATINE\n\nAPPUYEZ SUR START\n\nA,\n\nDeveloped by GAME FREAK inc."
+    },
+    {
+      "file": "03-opening-01.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "|"
+    },
+    {
+      "file": "03-opening-02.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "B\n\non) our\n\ner\n\nnue ce\n\nrn:\n\nP\n\namon Uni\n\ner"
+    },
+    {
+      "file": "03-opening-03.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "Oo\n\nM\n\nemm\n\nbrent\n\nwicair\n\nLeur\n\noO traver\n\nal\n\nregio"
+    },
+    {
+      "file": "03-opening-04.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "Oo"
+    },
+    {
+      "file": "03-opening-05.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "innah\n\nrua\n\nui\n\nwn\n\n12:\n\nette etrary\n\ner\n\nUi\n\nar"
+    },
+    {
+      "file": "03-opening-06.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "ut\n\nmp\n\ni]"
+    },
+    {
+      "file": "03-opening-07.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "Ton \u2018\n\nImmer\n\n2 par un lien.\n\nLe\n\nvite reste & d\u00e9x\n\nvt)\n\nily"
+    },
+    {
+      "file": "03-opening-08.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": ""
+    },
+    {
+      "file": "03-opening-09.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": ""
+    },
+    {
+      "file": "03-opening-10.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "=\n\nAvant de commencer, est-ce ta premiare\n\naventure?"
+    },
+    {
+      "file": "03-opening-11.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "Si tu as besoin de conseils, je suis tout\n\n4 fait apte A t\"en donner."
+    },
+    {
+      "file": "03-opening-12.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "\u00bb INFOS COMMANDES\n\nINFOS AVENTURE\n\nNON MERCT\n\nSi tu as besoin de conseils, je suis tout\n\n4 fait apte A t\"en donner."
+    },
+    {
+      "file": "03-opening-13.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "D\u00e9placer le personnage.\n\nFaire une s\u00e9lection.\n\nConfirmer un cholx, examiner,\n\nparler et faire d\u00e9filer le texte.\n\nQuitter, annuler un choix ou\n\nun moda."
+    },
+    {
+      "file": "03-opening-14.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "Appuyer pour ouvrir le menu.\n\nAppuyer pour utiliser un objet,\n\ntel que la Bicycletta, ayant \u00e9t\u00e9\n\nenregistr\u00e9."
+    },
+    {
+      "file": "04-admin-panel.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "ouvrir le manu.\n\nutiliser un objet,\n\nBicyclette, ayant \u00e9t\u00e9\n\n5"
+    },
+    {
+      "file": "05-admin-application.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "ouvrir le manu.\n\nutiliser un objet,\n\nBicyclette, ayant \u00e9t\u00e9\n\n5"
+    }
+  ],
+  "steps": [
+    {
+      "wait": 20,
+      "capture": "01-boot"
+    },
+    {
+      "key": "Return",
+      "wait": 5,
+      "capture": "02-start"
+    },
+    {
+      "key": "z",
+      "wait": 3,
+      "capture": "03-opening-01"
+    },
+    {
+      "key": "z",
+      "wait": 3,
+      "capture": "03-opening-02"
+    },
+    {
+      "key": "z",
+      "wait": 3,
+      "capture": "03-opening-03"
+    },
+    {
+      "key": "z",
+      "wait": 3,
+      "capture": "03-opening-04"
+    },
+    {
+      "key": "z",
+      "wait": 3,
+      "capture": "03-opening-05"
+    },
+    {
+      "key": "z",
+      "wait": 3,
+      "capture": "03-opening-06"
+    },
+    {
+      "key": "z",
+      "wait": 3,
+      "capture": "03-opening-07"
+    },
+    {
+      "key": "z",
+      "wait": 3,
+      "capture": "03-opening-08"
+    },
+    {
+      "key": "z",
+      "wait": 3,
+      "capture": "03-opening-09"
+    },
+    {
+      "key": "z",
+      "wait": 3,
+      "capture": "03-opening-10"
+    },
+    {
+      "key": "z",
+      "wait": 3,
+      "capture": "03-opening-11"
+    },
+    {
+      "key": "z",
+      "wait": 3,
+      "capture": "03-opening-12"
+    },
+    {
+      "key": "z",
+      "wait": 3,
+      "capture": "03-opening-13"
+    },
+    {
+      "key": "z",
+      "wait": 3,
+      "capture": "03-opening-14"
+    },
+    {
+      "key": "F10",
+      "wait": 2,
+      "capture": "04-admin-panel"
+    },
+    {
+      "wait": 2,
+      "capture": "05-admin-application",
+      "click": [
+        116,
+        244
+      ]
+    }
+  ],
+  "resumed_disposable_flash": false,
+  "admin_tools_enabled": true,
+  "wine_version": "wine-9.0 (Ubuntu 9.0~repack-4build3)",
+  "glxinfo": "name of display: :99\ndisplay: :99  screen: 0\ndirect rendering: Yes\nExtended renderer info (GLX_MESA_query_renderer):\n    Vendor: Mesa (0xffffffff)\n    Device: llvmpipe (LLVM 20.1.2, 256 bits) (0xffffffff)\n    Version: 25.2.8\n    Accelerated: no\n    Video memory: 15983MB\n    Unified memory: yes\n    Preferred profile: core (0x1)\n    Max core profile version: 4.5\n    Max compat profile version: 4.5\n    Max GLES1 profile version: 1.1\n    Max GLES[23] profile version: 3.2\nMemory info (GL_ATI_meminfo):\n    VBO free memory - total: 31 MB, largest block: 31 MB\n    VBO free aux. memory - total: 14443 MB, largest block: 14443 MB\n    Texture free memory - total: 31 MB, largest block: 31 MB\n    Texture free aux. memory - total: 14443 MB, largest block: 14443 MB\n    Renderbuffer free memory - total: 31 MB, largest block: 31 MB\n    Renderbuffer free aux. memory - total: 14443 MB, largest block: 14443 MB\nMemory info (GL_NVX_gpu_memory_info):\n    Dedicated video memory: 4294080308 MB\n    Total available memory: 4294096292 MB\n    Currently available dedicated video memory: 31 MB\nOpenGL vendor string: Mesa\nOpenGL renderer string: llvmpipe (LLVM 20.1.2, 256 bits)\nOpenGL core profile version string: 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.4\nOpenGL core profile shading language version string: 4.50\nOpenGL core profile context flags: (none)\nOpenGL core profile profile mask: core profile\n\nOpenGL version string: 4.5 (Compatibility Profile) Mesa 25.2.8-0ubuntu0.24.04.4\nOpenGL shading language version string: 4.50\nOpenGL context flags: (none)\nOpenGL profile mask: compatibility profile\n\nOpenGL ES profile version string: OpenGL ES 3.2 Mesa 25.2.8-0ubuntu0.24.04.4\nOpenGL ES profile shading language version string: OpenGL ES GLSL ES 3.20\n\n",
+  "window_title": "POKEMON PL [CPUE01]",
+  "actual_startup_hook_observed": true,
+  "battle_begin_observed": false,
+  "battle_end_observed": false,
+  "completed": true,
+  "process_exit": 0,
+  "disposable_flash_retained": true
+}
