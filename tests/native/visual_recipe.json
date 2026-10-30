@@ -19,39 +19,58 @@
     "capture": "02-bedroom-resumed"
   },
   {
-    "key": "Down",
-    "wait": 1
+    "key": "Up",
+    "wait": 3,
+    "capture": "03-rival-entry"
   },
   {
-    "key": "z",
-    "repeat": 20,
-    "delay_ms": 700,
-    "wait": 2,
-    "capture": "03-rival-visit"
+    "until_text": "QUITTER",
+    "advance_keys": [
+      "z",
+      "c"
+    ],
+    "ocr_box": [
+      310,
+      0,
+      512,
+      310
+    ],
+    "ocr_psm": 6,
+    "attempts": 60,
+    "delay_ms": 900,
+    "capture": "04-rival-scene-finished"
+  },
+  {
+    "key": "x"
   },
   {
     "key": "Right",
-    "repeat": 4,
-    "delay_ms": 450,
-    "wait": 2,
-    "capture": "04-stairs"
+    "repeat": 5,
+    "delay_ms": 450
   },
   {
     "key": "Up",
+    "repeat": 2,
+    "delay_ms": 450,
     "wait": 3,
-    "capture": "04b-stairs-warp"
+    "capture": "05-stairs"
   },
   {
-    "key": "z",
-    "repeat": 10,
-    "delay_ms": 650,
-    "wait": 2,
-    "capture": "05-first-floor"
-  },
-  {
-    "key": "c",
-    "wait": 2,
-    "capture": "06-menu"
+    "until_text": "QUITTER",
+    "advance_keys": [
+      "z",
+      "c"
+    ],
+    "ocr_box": [
+      310,
+      0,
+      512,
+      310
+    ],
+    "ocr_psm": 6,
+    "attempts": 60,
+    "delay_ms": 900,
+    "capture": "06-mother-scene-finished"
   },
   {
     "key": "Down",

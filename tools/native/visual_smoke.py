@@ -99,10 +99,13 @@ def main():
         x, y, w, h = [int(geometry[k]) for k in ('X', 'Y', 'WIDTH', 'HEIGHT')]
         return ImageGrab.grab(bbox=(x, y, x + w, y + h), xdisplay=env['DISPLAY'])
 
-    def read_window_text(window):
+    def read_window_text(window, box=None, psm=11):
         buffer = io.BytesIO()
-        grab_window(window).save(buffer, format='PNG')
-        result = subprocess.run(['tesseract', 'stdin', 'stdout', '--psm', '11'],
+        screenshot = grab_window(window)
+        if box:
+            screenshot = screenshot.crop(tuple(box))
+        screenshot.save(buffer, format='PNG')
+        result = subprocess.run(['tesseract', 'stdin', 'stdout', '--psm', str(psm)],
                                 input=buffer.getvalue(), env=env, capture_output=True, timeout=15, check=True)
         return result.stdout.decode('utf-8', errors='replace').strip()
 
@@ -133,10 +136,12 @@ def main():
                     raise RuntimeError('The game exited during the visual test')
                 if 'until_text' in step:
                     for attempt in range(min(step.get('attempts', 30), 60)):
-                        observed = read_window_text(window)
+                        observed = read_window_text(window, step.get('ocr_box'), step.get('ocr_psm', 11))
                         if re.search(step['until_text'], observed, re.IGNORECASE):
                             break
-                        xdo('key', '--clearmodifiers', '--delay', 100, step.get('advance_key', 'z'))
+                        for key in step.get('advance_keys', [step.get('advance_key', 'z')]):
+                            xdo('key', '--clearmodifiers', '--delay', 100, key)
+                            time.sleep(0.2)
                         time.sleep(step.get('delay_ms', 700) / 1000)
                     else:
                         raise RuntimeError('Required screen text was not observed: ' + step['until_text'])
