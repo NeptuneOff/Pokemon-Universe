@@ -1,52 +1,91 @@
 [
   {
     "wait": 20,
-    "capture": "01-title"
+    "capture": "01-boot"
   },
   {
     "key": "Return",
-    "wait": 5
-  },
-  {
-    "until_text": "Universe",
-    "advance_key": "z",
-    "attempts": 30,
-    "delay_ms": 900,
-    "capture": "02-universe-welcome"
+    "wait": 5,
+    "capture": "02-start"
   },
   {
     "key": "z",
-    "wait": 2,
-    "capture": "03-resonance-1"
+    "wait": 1.5,
+    "capture": "03-opening-01"
   },
   {
     "key": "z",
-    "wait": 2,
-    "capture": "03-resonance-2"
+    "wait": 1.5,
+    "capture": "03-opening-02"
   },
   {
     "key": "z",
-    "wait": 2,
-    "capture": "03-resonance-3"
+    "wait": 1.5,
+    "capture": "03-opening-03"
   },
   {
     "key": "z",
-    "wait": 2,
-    "capture": "03-resonance-4"
+    "wait": 1.5,
+    "capture": "03-opening-04"
   },
   {
     "key": "z",
-    "wait": 2,
-    "capture": "03-resonance-5"
+    "wait": 1.5,
+    "capture": "03-opening-05"
+  },
+  {
+    "key": "z",
+    "wait": 1.5,
+    "capture": "03-opening-06"
+  },
+  {
+    "key": "z",
+    "wait": 1.5,
+    "capture": "03-opening-07"
+  },
+  {
+    "key": "z",
+    "wait": 1.5,
+    "capture": "03-opening-08"
+  },
+  {
+    "key": "z",
+    "wait": 1.5,
+    "capture": "03-opening-09"
+  },
+  {
+    "key": "z",
+    "wait": 1.5,
+    "capture": "03-opening-10"
+  },
+  {
+    "key": "z",
+    "wait": 1.5,
+    "capture": "03-opening-11"
+  },
+  {
+    "key": "z",
+    "wait": 1.5,
+    "capture": "03-opening-12"
+  },
+  {
+    "key": "z",
+    "wait": 1.5,
+    "capture": "03-opening-13"
+  },
+  {
+    "key": "z",
+    "wait": 1.5,
+    "capture": "03-opening-14"
   },
   {
     "key": "F10",
     "wait": 2,
-    "capture": "04-native-debug-tools"
+    "capture": "04-admin-panel"
   },
   {
     "click_text": "Application",
     "wait": 2,
-    "capture": "05-application-admin"
+    "capture": "05-admin-application"
   }
 ]

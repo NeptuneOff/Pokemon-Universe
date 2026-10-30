@@ -70,6 +70,7 @@ jobs:
           path: native-runtime/visual-check/checkpoint/
           if-no-files-found: ignore
       - name: Record visual evidence in Git
+        if: always() && steps.render.outcome != 'skipped'
         env:
           RUN_ID: ${{ github.run_id }}
         run: |

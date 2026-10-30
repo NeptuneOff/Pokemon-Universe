@@ -241,6 +241,14 @@ def main():
                 else:
                     report['live_state'] = 'deadline'
             report['completed'] = True
+    except Exception as exc:
+        report['failure'] = str(exc)
+        if process and process.poll() is None and window:
+            try:
+                execute_steps([{'capture': 'failure-screen'}])
+            except Exception as capture_error:
+                report['failure_capture_error'] = str(capture_error)
+        raise
     finally:
         if process and process.poll() is None:
             xdo('windowfocus', window, check=False)
