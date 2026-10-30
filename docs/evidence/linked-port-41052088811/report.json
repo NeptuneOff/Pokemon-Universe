@@ -49,6 +49,24 @@
       "width": 512,
       "height": 768,
       "observed_ocr_text": "(3"
+    },
+    {
+      "file": "door-warning.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": ""
+    },
+    {
+      "file": "town-exit.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "\u201c&\n\n{aoe ene ty\n\n=e\n\nae"
+    },
+    {
+      "file": "live-002.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "\u201c&\n\n{aoe ene ty\n\n=e\n\nae"
     }
   ],
   "steps": [
@@ -107,6 +125,53 @@
     {
       "wait": 1,
       "capture": "live-001"
+    },
+    {
+      "key": "Down",
+      "repeat": 6,
+      "delay_ms": 450
+    },
+    {
+      "key": "Left",
+      "repeat": 5,
+      "delay_ms": 450
+    },
+    {
+      "key": "Down",
+      "repeat": 2,
+      "delay_ms": 450,
+      "wait": 2,
+      "capture": "door-warning"
+    },
+    {
+      "until_text": "QUITTER",
+      "advance_keys": [
+        "z",
+        "c"
+      ],
+      "ocr_box": [
+        310,
+        0,
+        512,
+        310
+      ],
+      "ocr_psm": 6,
+      "attempts": 60,
+      "delay_ms": 900
+    },
+    {
+      "key": "x"
+    },
+    {
+      "key": "Down",
+      "repeat": 2,
+      "delay_ms": 500,
+      "wait": 4,
+      "capture": "town-exit"
+    },
+    {
+      "wait": 1,
+      "capture": "live-002"
     }
   ],
   "resumed_disposable_flash": true,
@@ -117,5 +182,5 @@
   "battle_begin_observed": false,
   "battle_end_observed": false,
   "live_state": "waiting",
-  "interactive_sequence": 1
+  "interactive_sequence": 2
 }
