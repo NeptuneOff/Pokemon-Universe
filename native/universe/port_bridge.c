@@ -9,6 +9,9 @@ static unsigned long sBattleNumber;
 
 void Universe_PortStartup(void)
 {
+    univ_battle_init(&sBattle);
+    sActiveContext = NULL;
+    sBattleNumber = 0;
     printf("[Universe] Native registry linked: %lu forms; battle hooks installed.\n",
            (unsigned long)univ_species_count());
     fflush(stdout);

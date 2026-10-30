@@ -1,7 +1,25 @@
 """Integrity-checked checkpoints of disposable CI game sessions only."""
 import hashlib
 import json
+import re
 from pathlib import Path
+
+
+def read_plan(path):
+    plan = json.loads(Path(path).read_text(encoding='utf-8'))
+    run_id = plan['run_id']
+    candidate = plan.get('candidate_ref', 'builds/windows-linked')
+    live_seconds = plan.get('live_seconds', 0)
+    if type(run_id) is not int or run_id < 0:
+        raise ValueError('Invalid disposable checkpoint run')
+    pinned = isinstance(candidate, str) and re.fullmatch('[0-9a-f]{40}', candidate)
+    if run_id and not pinned:
+        raise ValueError('A resumed checkpoint requires an immutable candidate commit')
+    if not pinned and candidate != 'builds/windows-linked':
+        raise ValueError('Invalid candidate reference')
+    if type(live_seconds) is not int or not 0 <= live_seconds <= 1200:
+        raise ValueError('Invalid bounded live duration')
+    return {'run_id': run_id, 'candidate_ref': candidate, 'live_seconds': live_seconds}
 
 
 def write_checkpoint(runtime, output, build_id):

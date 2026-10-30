@@ -9,6 +9,7 @@ on:
       - 'tests/native/visual_recipe.json'
       - 'tests/native/visual_checkpoint.json'
       - 'tools/native/visual_checkpoint.py'
+      - 'tools/native/visual_live.py'
 permissions:
   contents: write
   actions: read
@@ -18,33 +19,32 @@ concurrency:
 jobs:
   graphical-check:
     runs-on: ubuntu-24.04
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/checkout@v4
-        with:
-          ref: builds/windows-linked
-          path: candidate
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Select a disposable CI checkpoint
+        id: checkpoint
+        run: |
+          python - <<'PY'
+          import os
+          from tools.native.visual_checkpoint import read_plan
+          plan = read_plan('tests/native/visual_checkpoint.json')
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
+              for key, value in plan.items():
+                  print(key + '=' + str(value), file=out)
+          PY
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.checkpoint.outputs.candidate_ref }}
+          path: candidate
       - name: Install the isolated graphical test dependencies
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y --no-install-recommends wine64 xvfb xdotool xauth mesa-utils libgl1-mesa-dri tesseract-ocr
           python -m pip install Pillow
-      - name: Select a disposable CI checkpoint
-        id: checkpoint
-        run: |
-          python - <<'PY'
-          import json, os
-          from pathlib import Path
-          run_id = json.loads(Path('tests/native/visual_checkpoint.json').read_text())['run_id']
-          if type(run_id) is not int or run_id < 0:
-              raise ValueError('Invalid disposable checkpoint run')
-          with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
-              print('run_id=' + str(run_id), file=out)
-          PY
       - uses: actions/download-artifact@v4
         if: steps.checkpoint.outputs.run_id != '0'
         with:
@@ -56,7 +56,7 @@ jobs:
         id: render
         run: |
           candidate_sha=$(git -C candidate rev-parse HEAD)
-          xvfb-run -a -s '-screen 0 1024x900x24 -ac' python tools/native/visual_smoke.py --distribution candidate/distribution/windows --output native-runtime/visual-check --candidate-commit "$candidate_sha" --recipe tests/native/visual_recipe.json --checkpoint-dir native-runtime/qa-resume
+          xvfb-run -a -s '-screen 0 1024x900x24 -ac' python tools/native/visual_smoke.py --distribution candidate/distribution/windows --output native-runtime/visual-check --candidate-commit "$candidate_sha" --recipe tests/native/visual_recipe.json --checkpoint-dir native-runtime/qa-resume --live-seconds "${{ steps.checkpoint.outputs.live_seconds }}"
       - uses: actions/upload-artifact@v4
         if: always()
         with:
