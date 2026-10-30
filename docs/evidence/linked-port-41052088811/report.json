@@ -370,6 +370,9 @@
   "actual_startup_hook_observed": true,
   "battle_begin_observed": false,
   "battle_end_observed": false,
-  "live_state": "waiting",
-  "interactive_sequence": 6
+  "live_state": "deadline",
+  "interactive_sequence": 6,
+  "completed": true,
+  "process_exit": 0,
+  "disposable_flash_retained": true
 }
