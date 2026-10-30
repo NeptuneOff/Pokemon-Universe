@@ -1,0 +1,11 @@
+{
+  "run_id": 41052088811,
+  "sequence": 1,
+  "steps": [
+    {
+      "wait": 1,
+      "capture": "live-ready"
+    }
+  ],
+  "finish": false
+}
