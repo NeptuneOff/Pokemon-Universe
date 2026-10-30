@@ -3,10 +3,24 @@ from pathlib import Path
 import tempfile
 import unittest
 
-from tools.native.visual_checkpoint import write_checkpoint, restore_checkpoint
+from tools.native.visual_checkpoint import write_checkpoint, restore_checkpoint, read_plan
 
 
 class VisualCheckpointTests(unittest.TestCase):
+    def test_resume_plan_requires_a_fixed_candidate_and_a_valid_run(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            config = Path(tmp) / 'plan.json'
+            config.write_text(json.dumps({'run_id': 0}))
+            self.assertEqual(read_plan(config), {'run_id': 0, 'candidate_ref': 'builds/windows-linked'})
+            config.write_text(json.dumps({'run_id': 123, 'candidate_ref': 'a' * 40}))
+            self.assertEqual(read_plan(config)['candidate_ref'], 'a' * 40)
+            for invalid in ({'run_id': True}, {'run_id': -1}, {'run_id': 123},
+                            {'run_id': 123, 'candidate_ref': 'main'},
+                            {'run_id': 0, 'candidate_ref': 'untrusted-ref'}):
+                config.write_text(json.dumps(invalid))
+                with self.assertRaises(ValueError):
+                    read_plan(config)
+
     def test_only_disposable_flash_is_retained_and_can_resume_the_same_build(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)

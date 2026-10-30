@@ -8,6 +8,7 @@ import hashlib
 import io
 import json
 import os
+import re
 from pathlib import Path
 import shutil
 import subprocess
@@ -93,6 +94,18 @@ def main():
         return subprocess.run(['xdotool', *map(str, cmd)], env=env, capture_output=True,
                               text=True, timeout=10, check=check).stdout.strip()
 
+    def grab_window(window):
+        geometry = dict(line.split('=', 1) for line in xdo('getwindowgeometry', '--shell', window).splitlines() if '=' in line)
+        x, y, w, h = [int(geometry[k]) for k in ('X', 'Y', 'WIDTH', 'HEIGHT')]
+        return ImageGrab.grab(bbox=(x, y, x + w, y + h), xdisplay=env['DISPLAY'])
+
+    def read_window_text(window):
+        buffer = io.BytesIO()
+        grab_window(window).save(buffer, format='PNG')
+        result = subprocess.run(['tesseract', 'stdin', 'stdout', '--psm', '11'],
+                                input=buffer.getvalue(), env=env, capture_output=True, timeout=15, check=True)
+        return result.stdout.decode('utf-8', errors='replace').strip()
+
     process = None
     try:
         with log.open('w') as output:
@@ -118,6 +131,15 @@ def main():
             for step in json.loads(args.recipe.read_text(encoding='utf-8')):
                 if process.poll() is not None:
                     raise RuntimeError('The game exited during the visual test')
+                if 'until_text' in step:
+                    for attempt in range(min(step.get('attempts', 30), 60)):
+                        observed = read_window_text(window)
+                        if re.search(step['until_text'], observed, re.IGNORECASE):
+                            break
+                        xdo('key', '--clearmodifiers', '--delay', 100, step.get('advance_key', 'z'))
+                        time.sleep(step.get('delay_ms', 700) / 1000)
+                    else:
+                        raise RuntimeError('Required screen text was not observed: ' + step['until_text'])
                 if 'key' in step:
                     for _ in range(step.get('repeat', 1)):
                         xdo('key', '--clearmodifiers', '--delay', 100, step['key'])
@@ -139,9 +161,8 @@ def main():
                     name = step['capture']
                     if not name.replace('-', '').replace('_', '').isalnum():
                         raise ValueError('Invalid capture name')
-                    geometry = dict(line.split('=', 1) for line in xdo('getwindowgeometry', '--shell', window).splitlines() if '=' in line)
-                    x, y, w, h = [int(geometry[k]) for k in ('X', 'Y', 'WIDTH', 'HEIGHT')]
-                    shot = ImageGrab.grab(bbox=(x, y, x + w, y + h), xdisplay=env['DISPLAY'])
+                    shot = grab_window(window)
+                    w, h = shot.size
                     if max(ImageStat.Stat(shot).stddev) < 2:
                         raise RuntimeError('The captured game window is blank')
                     screenshot = evidence / (name + '.png')
