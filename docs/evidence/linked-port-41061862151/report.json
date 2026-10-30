@@ -1,0 +1,44 @@
+{
+  "candidate_commit": "b9dd8455a6d5c8fb133f6bd2313a283e851dc8fe",
+  "build_id": "d1b1ca98aae6dc98848d",
+  "compiled_from_commit": "3f2373932060e8796b896d2af4c3cdac5ee7474a",
+  "main_sha256": "73227c56f9ac91d14dce9fd5bd4c04f204560ee491264b5f60d31d5a0e6412b3",
+  "environment": "Windows x64 executable under Wine on Linux, Xvfb and software Mesa",
+  "native_windows_desktop_tested": false,
+  "audio_tested": false,
+  "graphical_mega_battle_tested": false,
+  "captures": [
+    {
+      "file": "01-boot.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "PEKENGY"
+    },
+    {
+      "file": "02-start.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "Vv\n\nVERSION\n\nMoy,\n\nPUATINE\n\nAPPUYEZ SUR START\n\nDeveloped by GAME FREAK inc."
+    }
+  ],
+  "steps": [
+    {
+      "wait": 20,
+      "capture": "01-boot"
+    },
+    {
+      "key": "Return",
+      "wait": 5,
+      "capture": "02-start"
+    }
+  ],
+  "resumed_disposable_flash": false,
+  "admin_tools_enabled": true,
+  "wine_version": "wine-9.0 (Ubuntu 9.0~repack-4build3)",
+  "glxinfo": "name of display: :99\ndisplay: :99  screen: 0\ndirect rendering: Yes\nExtended renderer info (GLX_MESA_query_renderer):\n    Vendor: Mesa (0xffffffff)\n    Device: llvmpipe (LLVM 20.1.2, 256 bits) (0xffffffff)\n    Version: 25.2.8\n    Accelerated: no\n    Video memory: 15983MB\n    Unified memory: yes\n    Preferred profile: core (0x1)\n    Max core profile version: 4.5\n    Max compat profile version: 4.5\n    Max GLES1 profile version: 1.1\n    Max GLES[23] profile version: 3.2\nMemory info (GL_ATI_meminfo):\n    VBO free memory - total: 31 MB, largest block: 31 MB\n    VBO free aux. memory - total: 14554 MB, largest block: 14554 MB\n    Texture free memory - total: 31 MB, largest block: 31 MB\n    Texture free aux. memory - total: 14554 MB, largest block: 14554 MB\n    Renderbuffer free memory - total: 31 MB, largest block: 31 MB\n    Renderbuffer free aux. memory - total: 14554 MB, largest block: 14554 MB\nMemory info (GL_NVX_gpu_memory_info):\n    Dedicated video memory: 4294434613 MB\n    Total available memory: 4294450597 MB\n    Currently available dedicated video memory: 31 MB\nOpenGL vendor string: Mesa\nOpenGL renderer string: llvmpipe (LLVM 20.1.2, 256 bits)\nOpenGL core profile version string: 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.4\nOpenGL core profile shading language version string: 4.50\nOpenGL core profile context flags: (none)\nOpenGL core profile profile mask: core profile\n\nOpenGL version string: 4.5 (Compatibility Profile) Mesa 25.2.8-0ubuntu0.24.04.4\nOpenGL shading language version string: 4.50\nOpenGL context flags: (none)\nOpenGL profile mask: compatibility profile\n\nOpenGL ES profile version string: OpenGL ES 3.2 Mesa 25.2.8-0ubuntu0.24.04.4\nOpenGL ES profile shading language version string: OpenGL ES GLSL ES 3.20\n\n",
+  "window_title": "POKEMON PL [CPUE01]",
+  "failure": "The captured game window is blank",
+  "failure_capture_error": "The captured game window is blank",
+  "process_exit": 0,
+  "disposable_flash_retained": true
+}
