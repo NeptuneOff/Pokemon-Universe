@@ -1,18 +1,23 @@
 {
   "run_id": 41052088811,
-  "sequence": 3,
+  "sequence": 4,
   "steps": [
     {
-      "key": "Left",
-      "repeat": 12,
-      "delay_ms": 450
+      "key": "Right",
+      "repeat": 8,
+      "delay_ms": 400
     },
     {
       "key": "Up",
       "repeat": 11,
-      "delay_ms": 450,
+      "delay_ms": 400
+    },
+    {
+      "key": "Left",
+      "repeat": 8,
+      "delay_ms": 400,
       "wait": 2,
-      "capture": "rival-thud"
+      "capture": "rival-door-scene"
     },
     {
       "until_text": "QUITTER",
@@ -28,7 +33,7 @@
       ],
       "ocr_psm": 6,
       "attempts": 60,
-      "delay_ms": 900
+      "delay_ms": 800
     },
     {
       "key": "x"
@@ -37,8 +42,8 @@
       "key": "Up",
       "repeat": 3,
       "delay_ms": 500,
-      "wait": 4,
-      "capture": "rival-house"
+      "wait": 3,
+      "capture": "rival-house-entry"
     }
   ],
   "finish": false
