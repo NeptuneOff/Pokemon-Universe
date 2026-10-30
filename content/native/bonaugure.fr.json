@@ -18,7 +18,7 @@
     "6": "sensor"
   },
   "messages": {
-    "offer": "Les Étourmi migrent trop tôt.\nAide-moi à suivre leur trajet.\rUn analyste étudie les relevés.\nUn éclaireur écoute les témoins.\rQuel rôle veux-tu essayer ?",
+    "offer": "Les Méga-Gemmes résonnent.\nLes Étourmi migrent trop tôt.\rAide-moi à comparer ces signes.\nUn analyste étudie les relevés.\rUn éclaireur écoute les témoins.\nQuel rôle veux-tu essayer ?",
     "role_analyst": "Analyste",
     "role_scout": "Éclaireur",
     "later": "Plus tard",
@@ -36,12 +36,12 @@
     "startled": "Les oiseaux fuient en désordre.\nLeur trajet devient illisible.\rLaisse-les revenir et réessaie.",
     "evidence_east": "La piste mène vers Littorella.\nLe groupe s’éloigne du lac.\rRapporte cette observation\nau chercheur, au sud du village.",
     "evidence_west": "La piste mène vers le lac.\nLe groupe revient de Littorella.\rRapporte cette observation\nau chercheur, au sud du village.",
-    "report_east": "Ils quittent donc le lac...\nJe vais prévenir Sorbier.\rCe trajet ne nous dit pas encore\nce qui les a fait partir.",
-    "report_west": "Ils reviennent vers le lac...\nJe vais prévenir Sorbier.\rCela ressemble à un refuge.\nMais pourquoi venir ici ?",
+    "report_east": "Ils quittent donc le lac...\nJ’avertirai Sorbier.\rUne Méga-Gemme y a vibré.\nMais un lien reste à démontrer.",
+    "report_west": "Ils reviennent vers le lac...\nJ’avertirai Sorbier.\rUne pierre y réagit aussi.\nRefuge ou simple coïncidence ?",
     "reward": "Merci ! Tu reçois une Potion.\nElle est rangée dans ton Sac.",
     "bag_full": "Ton Sac ne peut pas la contenir.\nFais de la place pour une Potion\rpuis reviens la chercher.",
-    "done_east": "Rapport : les Étourmi volent\nvers Littorella.\rRetrouve Sorbier pour la suite\nde ton voyage.",
-    "done_west": "Rapport : les Étourmi volent\nvers le lac.\rRetrouve Sorbier pour la suite\nde ton voyage."
+    "done_east": "Les Étourmi gagnent Littorella.\nUne pierre a réagi près du lac.\rSorbier pourra comparer\nces observations au laboratoire.",
+    "done_west": "Les Étourmi reviennent au lac.\nUne pierre y réagit aussi.\rSorbier pourra comparer\nces observations au laboratoire."
   },
   "instructions": [
     ["label", "researcher"],

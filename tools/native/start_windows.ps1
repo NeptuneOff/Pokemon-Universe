@@ -1,6 +1,24 @@
 # Windows PowerShell 5.1. All game packages come from this Git checkout.
 [CmdletBinding()]
-param([switch]$PrepareOnly)
+param([switch]$PrepareOnly, [switch]$Admin, [switch]$CopyCampaign, [switch]$Menu)
+
+# JOUER.bat presents one entry point; direct/CI invocations remain non-interactive.
+if ($Menu -and -not $PrepareOnly) {
+    Write-Host 'Pokemon Universe'
+    Write-Host '1 - Jouer / continuer la campagne'
+    Write-Host '2 - Mode admin / continuer les tests'
+    Write-Host '3 - Mode admin / copier ma campagne pour tester'
+    Write-Host '0 - Quitter'
+    $selection = Read-Host 'Choix'
+    switch ($selection) {
+        '1' { }
+        '2' { $Admin = $true }
+        '3' { $Admin = $true; $CopyCampaign = $true }
+        '0' { exit 0 }
+        default { Write-Host 'Choix inconnu. Relancer JOUER.bat.'; exit 1 }
+    }
+}
+if ($CopyCampaign -and -not $Admin) { Write-Host '-CopyCampaign exige -Admin.'; exit 1 }
 
 Set-StrictMode -Version 2.0
 $ErrorActionPreference = 'Stop'
@@ -10,6 +28,11 @@ $storage = Join-Path $repository 'native-runtime'
 $builds = Join-Path $storage 'windows-builds'
 $backupFolder = Join-Path $storage 'universe-backups'
 $statePath = Join-Path $storage 'windows-current.json'
+if ($Admin) {
+    $builds = Join-Path $storage 'windows-admin-builds'
+    $backupFolder = Join-Path $storage 'universe-admin-backups'
+    $statePath = Join-Path $storage 'windows-admin-current.json'
+}
 $logFolder = Join-Path $repository 'logs'
 $runId = (Get-Date -Format 'yyyyMMdd-HHmmss-fff') + '-' + $PID
 $runLog = Join-Path $logFolder ('universe-' + $runId + '.log')
@@ -226,6 +249,7 @@ function Select-SaveSource($Release, [string]$Runtime) {
         return $source
     }
     if (Test-Path -LiteralPath (Join-Path $Runtime 'save.bin')) { return $Runtime }
+    if ($Admin) { return $Runtime }
     $legacy = Join-Path $script:storage 'windows-fr'
     if (Test-Path -LiteralPath (Join-Path $legacy 'save.bin')) { return $legacy }
     return $Runtime
@@ -257,6 +281,35 @@ function Import-Progress($Release, [string]$Source, [string]$Runtime) {
     }
 }
 
+function Copy-CampaignToAdmin($Release, [string]$Runtime) {
+    $campaignState = Join-Path $script:storage 'windows-current.json'
+    if (Test-Path -LiteralPath $campaignState) {
+        $campaign = [IO.File]::ReadAllText($campaignState, $script:utf8) | ConvertFrom-Json
+        if ($campaign.build_id -cnotmatch '^[0-9a-f]{20}$') { throw 'Identification de campagne invalide.' }
+        $source = Join-Path (Join-Path $script:storage 'windows-builds') $campaign.build_id
+    } else { $source = Join-Path $script:storage 'windows-fr' }
+    if (-not (Test-Path -LiteralPath (Join-Path $source 'save.bin') -PathType Leaf)) {
+        throw 'Aucune sauvegarde de campagne a copier. Choisir 2 pour commencer une nouvelle partie admin.'
+    }
+    # Import-Progress locks the source, validates compatibility and backs up both copies.
+    Import-Progress $Release $source $Runtime
+    Write-Log 'Copie de campagne dans le profil ADMIN. La campagne originale reste conservee.'
+}
+
+function Enable-AdminTools([string]$Runtime) {
+    $config = Join-Path $Runtime 'sim_config.ini'
+    Assert-NoLink $config
+    $text = [IO.File]::ReadAllText($config, $script:utf8)
+    # SDL2 SDLK_F10, supported by the pinned libntr PAD/GUIKey parser.
+    $text = [regex]::Replace($text, '(?im)^GUIKey=.*(?:\r?\n|$)', '')
+    if ($text -match '(?im)^\[PAD\]\s*$') {
+        $text = [regex]::Replace($text, '(?im)^\[PAD\]\s*$', "[PAD]`r`nGUIKey=1073741891")
+    } else { $text += "`r`n[PAD]`r`nGUIKey=1073741891`r`n" }
+    Atomic-Write $config ($script:utf8.GetBytes($text))
+    Write-Log 'ADMIN : F10 > Application > Gen Pokemon / Gen Items / Jump to Map / Cheats.'
+    Write-Log 'Attendre la carte, fermer les dialogues et menus avant de modifier la partie. Outils limites au contenu natif installe.'
+}
+
 function Include-NativeLog([string]$Path, [string]$Name) {
     if (Test-Path -LiteralPath $Path -PathType Leaf) {
         Write-Log ('--- ' + $Name + ' : ' + $Path + ' (dernieres 2000 lignes) ---')
@@ -281,6 +334,7 @@ try {
             if ($LASTEXITCODE -eq 0) { Write-Log ('Revision Git : ' + $revision) }
         } catch { Write-Log 'Revision Git indisponible ; poursuite avec le manifeste verifie.' 'WARN' }
     }
+    if ($Admin) { Write-Log 'Profil : ADMIN (sauvegarde et reglages separes)' } else { Write-Log 'Profil : CAMPAGNE' }
     $phase = 'distribution'
     $release = Read-Release
     Write-Log ('Version : ' + $release.build_id + '; moteur ' + $release.upstream_release + '; ressources ' + $release.resource_count)
@@ -293,11 +347,15 @@ try {
         $exitStatus = 0
     } else {
         $phase = 'sauvegarde'
-        $source = Select-SaveSource $release $runtime
-        Import-Progress $release $source $runtime
+        if ($Admin -and $CopyCampaign) { Copy-CampaignToAdmin $release $runtime }
+        else {
+            $source = Select-SaveSource $release $runtime
+            Import-Progress $release $source $runtime
+        }
         Backup-Save $runtime
         $config = Join-Path $runtime 'sim_config.ini'
         if (-not (Test-Path -LiteralPath $config)) { [IO.File]::WriteAllText($config, $release.default_config, $utf8) }
+        if ($Admin) { Enable-AdminTools $runtime }
         $current = @{schema = 1; build_id = $release.build_id; upstream_release = $release.upstream_release} | ConvertTo-Json
         Atomic-Write $statePath ($utf8.GetBytes($current))
         $phase = 'jeu'
