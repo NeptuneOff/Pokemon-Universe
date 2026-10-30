@@ -1,23 +1,18 @@
 {
   "run_id": 41052088811,
-  "sequence": 2,
+  "sequence": 3,
   "steps": [
     {
-      "key": "Down",
-      "repeat": 6,
-      "delay_ms": 450
-    },
-    {
       "key": "Left",
-      "repeat": 5,
+      "repeat": 12,
       "delay_ms": 450
     },
     {
-      "key": "Down",
-      "repeat": 2,
+      "key": "Up",
+      "repeat": 11,
       "delay_ms": 450,
       "wait": 2,
-      "capture": "door-warning"
+      "capture": "rival-thud"
     },
     {
       "until_text": "QUITTER",
@@ -39,11 +34,11 @@
       "key": "x"
     },
     {
-      "key": "Down",
-      "repeat": 2,
+      "key": "Up",
+      "repeat": 3,
       "delay_ms": 500,
       "wait": 4,
-      "capture": "town-exit"
+      "capture": "rival-house"
     }
   ],
   "finish": false
