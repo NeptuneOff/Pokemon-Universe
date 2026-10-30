@@ -4,6 +4,7 @@ Uses a fresh, verified installation and a fresh Wine prefix. Never reads a
 player's installation or saves. Images are captures, without redrawing.
 """
 import argparse
+import csv
 import hashlib
 import io
 import json
@@ -61,6 +62,7 @@ def main():
     parser.add_argument('--recipe', type=Path, required=True)
     parser.add_argument('--checkpoint-dir', type=Path)
     parser.add_argument('--live-seconds', type=int, default=0)
+    parser.add_argument('--admin-tools', action='store_true', help='Enable F10 in this disposable runtime only')
     args = parser.parse_args()
     root = args.output.resolve()
     root.mkdir(parents=True, exist_ok=False)
@@ -68,6 +70,9 @@ def main():
     evidence.mkdir()
     runtime = root / 'runtime'
     release = install(args.distribution.resolve(), runtime)
+    if args.admin_tools:
+        config = runtime / 'sim_config.ini'
+        config.write_text(config.read_text(encoding='utf-8') + '\n[PAD]\nGUIKey=1073741891\n', encoding='utf-8')
     resumed = args.checkpoint_dir is not None and args.checkpoint_dir.exists()
     if resumed:
         restore_checkpoint(args.checkpoint_dir, runtime, release['build_id'])
@@ -83,6 +88,7 @@ def main():
               'native_windows_desktop_tested': False, 'audio_tested': False,
               'graphical_mega_battle_tested': False, 'captures': [], 'steps': []}
     report['resumed_disposable_flash'] = resumed
+    report['admin_tools_enabled'] = args.admin_tools
     report['wine_version'] = subprocess.check_output([wine, '--version'], env=env, text=True).strip()
     report['glxinfo'] = subprocess.check_output(['glxinfo', '-B'], env=env, text=True)
     (evidence / 'report.json').write_text(json.dumps(report, indent=2) + '\n')
@@ -134,6 +140,22 @@ def main():
                 xdo('keydown', step['hold'])
                 time.sleep(min(float(step['seconds']), 20))
                 xdo('keyup', step['hold'])
+            if 'click_text' in step:
+                buffer = io.BytesIO()
+                grab_window(window).save(buffer, format='PNG')
+                result = subprocess.run(['tesseract', 'stdin', 'stdout', '--psm', '11', 'tsv'],
+                    input=buffer.getvalue(), env=env, capture_output=True, timeout=15, check=True)
+                matches = [row for row in csv.DictReader(io.StringIO(result.stdout.decode()), delimiter='\t')
+                    if row.get('text', '').strip().casefold() == step['click_text'].casefold()]
+                if len(matches) != 1:
+                    raise RuntimeError('Required unique clickable text was not observed: ' + step['click_text'])
+                row = matches[0]
+                x = int(row['left']) + int(row['width']) // 2
+                y = int(row['top']) + int(row['height']) // 2
+                xdo('mousemove', '--window', window, x, y)
+                xdo('mousedown', 1)
+                time.sleep(0.2)
+                xdo('mouseup', 1)
             if 'click' in step:
                 xdo('mousemove', '--window', window, *step['click'])
                 # Hold through several game frames; a zero-duration click

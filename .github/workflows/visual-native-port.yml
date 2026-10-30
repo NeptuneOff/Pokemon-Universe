@@ -56,7 +56,7 @@ jobs:
         id: render
         run: |
           candidate_sha=$(git -C candidate rev-parse HEAD)
-          xvfb-run -a -s '-screen 0 1024x900x24 -ac' python tools/native/visual_smoke.py --distribution candidate/distribution/windows --output native-runtime/visual-check --candidate-commit "$candidate_sha" --recipe tests/native/visual_recipe.json --checkpoint-dir native-runtime/qa-resume --live-seconds "${{ steps.checkpoint.outputs.live_seconds }}"
+          xvfb-run -a -s '-screen 0 1024x900x24 -ac' python tools/native/visual_smoke.py --distribution candidate/distribution/windows --output native-runtime/visual-check --candidate-commit "$candidate_sha" --recipe tests/native/visual_recipe.json --checkpoint-dir native-runtime/qa-resume --live-seconds "${{ steps.checkpoint.outputs.live_seconds }}" --admin-tools
       - uses: actions/upload-artifact@v4
         if: always()
         with:
