@@ -1,0 +1,151 @@
+{
+  "candidate_commit": "05d2636e638a6703ae73fe0ceadbcf5272913887",
+  "build_id": "470ee0957a354a38f9bd",
+  "compiled_from_commit": "66ea559790e7ea0c573fcd2cad9696585ce4600a",
+  "main_sha256": "850ea0956fab7eb950caa6aad135e4016329532e95aeb0787b95dffe0f71570d",
+  "environment": "Windows x64 executable under Wine on Linux, Xvfb and software Mesa",
+  "native_windows_desktop_tested": false,
+  "audio_tested": false,
+  "graphical_mega_battle_tested": false,
+  "captures": [
+    {
+      "file": "01-continue.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "CONTINUER\n\nJOUEUR\n\nDaniel\n\nDUREE DE JEU\n\n0300\n\nBADGES\n\nPAI\n\nMETR\n\nNINTENDO\n\n=\n\nETR\n\nHI"
+    },
+    {
+      "file": "02-bedroom-resumed.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "oe Pe\n\nig?"
+    },
+    {
+      "file": "03-rival-visit.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "ee\n\nSak"
+    },
+    {
+      "file": "04-stairs.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "=\n\nce Pe\n\n>\n\n| oy"
+    },
+    {
+      "file": "04b-stairs-warp.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "=\n\nce Pe\n\n>\n\n| oy"
+    },
+    {
+      "file": "05-first-floor.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "ae By\n\nms\n\n=\n\n7\n\nL\u2014\n\nCa veut dire qu'il doit avoir des tonnes\n\net des tonnes de Pok\u00e9mon."
+    },
+    {
+      "file": "06-menu.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "ae By\n\nms\n\n=\n\n7\n\nL\u2014\n\nCa veut dire qu'il doit avoir des tonnes\n\net des tonnes de Pok\u00e9mon."
+    },
+    {
+      "file": "07-save-prompt.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "ae By\n\nms\n\nHI\n\n=\n\n7\n\n=\n\nL\u2014"
+    },
+    {
+      "file": "08-save-result.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "ae By\n\nms\n\n=\n\naid\n\n="
+    }
+  ],
+  "steps": [
+    {
+      "wait": 20
+    },
+    {
+      "key": "Return",
+      "wait": 5
+    },
+    {
+      "until_text": "CONTINUER",
+      "advance_key": "z",
+      "attempts": 30,
+      "delay_ms": 850,
+      "capture": "01-continue"
+    },
+    {
+      "key": "z",
+      "wait": 6,
+      "capture": "02-bedroom-resumed"
+    },
+    {
+      "key": "Down",
+      "wait": 1
+    },
+    {
+      "key": "z",
+      "repeat": 20,
+      "delay_ms": 700,
+      "wait": 2,
+      "capture": "03-rival-visit"
+    },
+    {
+      "key": "Right",
+      "repeat": 4,
+      "delay_ms": 450,
+      "wait": 2,
+      "capture": "04-stairs"
+    },
+    {
+      "key": "Up",
+      "wait": 3,
+      "capture": "04b-stairs-warp"
+    },
+    {
+      "key": "z",
+      "repeat": 10,
+      "delay_ms": 650,
+      "wait": 2,
+      "capture": "05-first-floor"
+    },
+    {
+      "key": "c",
+      "wait": 2,
+      "capture": "06-menu"
+    },
+    {
+      "key": "Down",
+      "repeat": 2
+    },
+    {
+      "key": "z",
+      "wait": 2,
+      "capture": "07-save-prompt"
+    },
+    {
+      "key": "z",
+      "repeat": 8,
+      "delay_ms": 900,
+      "wait": 3,
+      "capture": "08-save-result"
+    },
+    {
+      "key": "x"
+    }
+  ],
+  "resumed_disposable_flash": true,
+  "wine_version": "wine-9.0 (Ubuntu 9.0~repack-4build3)",
+  "glxinfo": "name of display: :99\ndisplay: :99  screen: 0\ndirect rendering: Yes\nExtended renderer info (GLX_MESA_query_renderer):\n    Vendor: Mesa (0xffffffff)\n    Device: llvmpipe (LLVM 20.1.2, 256 bits) (0xffffffff)\n    Version: 25.2.8\n    Accelerated: no\n    Video memory: 15983MB\n    Unified memory: yes\n    Preferred profile: core (0x1)\n    Max core profile version: 4.5\n    Max compat profile version: 4.5\n    Max GLES1 profile version: 1.1\n    Max GLES[23] profile version: 3.2\nMemory info (GL_ATI_meminfo):\n    VBO free memory - total: 31 MB, largest block: 31 MB\n    VBO free aux. memory - total: 14397 MB, largest block: 14397 MB\n    Texture free memory - total: 31 MB, largest block: 31 MB\n    Texture free aux. memory - total: 14397 MB, largest block: 14397 MB\n    Renderbuffer free memory - total: 31 MB, largest block: 31 MB\n    Renderbuffer free aux. memory - total: 14397 MB, largest block: 14397 MB\nMemory info (GL_NVX_gpu_memory_info):\n    Dedicated video memory: 4293556020 MB\n    Total available memory: 4293572004 MB\n    Currently available dedicated video memory: 31 MB\nOpenGL vendor string: Mesa\nOpenGL renderer string: llvmpipe (LLVM 20.1.2, 256 bits)\nOpenGL core profile version string: 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.4\nOpenGL core profile shading language version string: 4.50\nOpenGL core profile context flags: (none)\nOpenGL core profile profile mask: core profile\n\nOpenGL version string: 4.5 (Compatibility Profile) Mesa 25.2.8-0ubuntu0.24.04.4\nOpenGL shading language version string: 4.50\nOpenGL context flags: (none)\nOpenGL profile mask: compatibility profile\n\nOpenGL ES profile version string: OpenGL ES 3.2 Mesa 25.2.8-0ubuntu0.24.04.4\nOpenGL ES profile shading language version string: OpenGL ES GLSL ES 3.20\n\n",
+  "window_title": "POKEMON PL [CPUE01]",
+  "actual_startup_hook_observed": true,
+  "battle_begin_observed": false,
+  "battle_end_observed": false,
+  "completed": true,
+  "process_exit": 0,
+  "disposable_flash_retained": true
+}
