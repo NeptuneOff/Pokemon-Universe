@@ -86,6 +86,7 @@ class ExpansionTests(unittest.TestCase):
         rows = ',\n'.join('{' + ','.join(json.dumps(x) for x in row) + '}' for row in cases)
         source = r'''
 #include "universe.h"
+#include "port_bridge.h"
 #include <stdio.h>
 #include <string.h>
 #define CHECK(x) do { if (!(x)) { fprintf(stderr, "line %d: %s\n", __LINE__, #x); return 1; } } while (0)
@@ -155,6 +156,7 @@ static int test_stats(void) {
 }
 int main(void) {
     size_t i;
+    int first_context = 0, next_context = 0;
     UnivBattle battle;
     UnivBattleMon left, right;
     const char *dragon_ascent[] = {"dragonascent"};
@@ -205,6 +207,10 @@ int main(void) {
     CHECK(univ_mega_try(NULL, &left, "floettemega", 1, 1, "", NULL, 0) == UNIV_INVALID);
     CHECK(!strcmp(univ_result_name(UNIV_MISSING_ITEM), "missing_item"));
     CHECK(!strcmp(univ_result_name((UnivResult)99), "unknown"));
+    Universe_BattleBegin(&first_context);
+    Universe_PortStartup();
+    Universe_BattleBegin(&next_context);
+    Universe_BattleEnd(&next_context);
     puts("native registry and Mega rules passed");
     return 0;
 }
@@ -223,17 +229,21 @@ int main(void) {
                 self.assertTrue(paths, 'A C compiler is required for the native component tests')
                 script = base / 'compile.cmd'
                 script.write_text('@echo off\ncall "' + paths[0] + '" >nul\nif errorlevel 1 exit /b 1\n'
-                    'cl /nologo /std:c11 /utf-8 /W4 /WX /I"' + str(engine / 'include') + '" '
-                    '/Fe:"' + str(exe) + '" "' + str(engine / 'universe.c') + '" "' + str(harness) + '"\nexit /b %errorlevel%\n')
+                    'cl /nologo /std:c11 /utf-8 /W4 /WX /I"' + str(engine / 'include') + '" /I"' + str(engine) + '" '
+                    '/Fe:"' + str(exe) + '" "' + str(engine / 'universe.c') + '" "' + str(engine / 'port_bridge.c') + '" "' + str(harness) + '"\nexit /b %errorlevel%\n')
                 command = ['cmd.exe', '/d', '/c', str(script)]
             else:
                 compiler = shutil.which('gcc') or shutil.which('clang')
                 self.assertTrue(compiler, 'A C compiler is required for the native component tests')
                 command = [compiler, '-std=c11', '-Wall', '-Wextra', '-Werror', '-pedantic',
-                    '-I' + str(engine / 'include'), str(engine / 'universe.c'), str(harness), '-o', str(exe)]
+                    '-I' + str(engine / 'include'), '-I' + str(engine), str(engine / 'universe.c'),
+                    str(engine / 'port_bridge.c'), str(harness), '-o', str(exe)]
             built = subprocess.run(command, cwd=base, capture_output=True, text=True, errors='replace', timeout=120)
             self.assertEqual(built.returncode, 0, built.stdout + built.stderr)
             run = subprocess.run([str(exe)], cwd=base, capture_output=True, text=True, timeout=30)
             self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
             self.assertIn('Mega rules passed', run.stdout)
             self.assertIn('battle stat calculations passed', run.stdout)
+            self.assertEqual(run.stdout.count('native extension state initialized.'), 2)
+            self.assertEqual(run.stdout.count('native extension state released.'), 1)
+            self.assertNotIn('overlap', run.stderr)
