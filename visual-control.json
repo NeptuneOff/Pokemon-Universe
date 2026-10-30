@@ -1,6 +1,6 @@
 {
   "run_id": 41052088811,
-  "sequence": 6,
+  "sequence": 7,
   "steps": [
     {
       "until_text": "QUITTER",
@@ -19,15 +19,24 @@
       "delay_ms": 700
     },
     {
-      "key": "x",
-      "wait": 0.7
+      "key": "Down",
+      "repeat": 2
     },
     {
-      "hold": "Up",
-      "seconds": 0.65,
+      "key": "z",
+      "wait": 2,
+      "capture": "checkpoint-save-prompt"
+    },
+    {
+      "key": "z",
+      "repeat": 8,
+      "delay_ms": 850,
       "wait": 3,
-      "capture": "rival-house-interior"
+      "capture": "checkpoint-saved"
+    },
+    {
+      "key": "x"
     }
   ],
-  "finish": false
+  "finish": true
 }
