@@ -11,12 +11,13 @@ class VisualCheckpointTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as tmp:
             config = Path(tmp) / 'plan.json'
             config.write_text(json.dumps({'run_id': 0}))
-            self.assertEqual(read_plan(config), {'run_id': 0, 'candidate_ref': 'builds/windows-linked'})
+            self.assertEqual(read_plan(config), {'run_id': 0, 'candidate_ref': 'builds/windows-linked', 'live_seconds': 0})
             config.write_text(json.dumps({'run_id': 123, 'candidate_ref': 'a' * 40}))
             self.assertEqual(read_plan(config)['candidate_ref'], 'a' * 40)
             for invalid in ({'run_id': True}, {'run_id': -1}, {'run_id': 123},
                             {'run_id': 123, 'candidate_ref': 'main'},
-                            {'run_id': 0, 'candidate_ref': 'untrusted-ref'}):
+                            {'run_id': 0, 'candidate_ref': 'untrusted-ref'},
+                            {'run_id': 0, 'live_seconds': 1201}, {'run_id': 0, 'live_seconds': True}):
                 config.write_text(json.dumps(invalid))
                 with self.assertRaises(ValueError):
                     read_plan(config)

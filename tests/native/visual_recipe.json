@@ -16,44 +16,14 @@
   {
     "key": "z",
     "wait": 6,
-    "capture": "02-bedroom-resumed"
-  },
-  {
-    "key": "Up",
-    "wait": 3,
-    "capture": "03-rival-entry"
-  },
-  {
-    "until_text": "QUITTER",
-    "advance_keys": [
-      "z",
-      "c"
-    ],
-    "ocr_box": [
-      310,
-      0,
-      512,
-      310
-    ],
-    "ocr_psm": 6,
-    "attempts": 60,
-    "delay_ms": 900,
-    "capture": "04-rival-scene-finished"
-  },
-  {
-    "key": "x"
+    "capture": "02-resumed"
   },
   {
     "key": "Right",
-    "repeat": 5,
-    "delay_ms": 450
-  },
-  {
-    "key": "Up",
     "repeat": 2,
-    "delay_ms": 450,
+    "delay_ms": 500,
     "wait": 3,
-    "capture": "05-stairs"
+    "capture": "03-stairs-exit"
   },
   {
     "until_text": "QUITTER",
@@ -70,25 +40,11 @@
     "ocr_psm": 6,
     "attempts": 60,
     "delay_ms": 900,
-    "capture": "06-mother-scene-finished"
+    "capture": "04-scene-finished"
   },
   {
-    "key": "Down",
-    "repeat": 2
-  },
-  {
-    "key": "z",
-    "wait": 2,
-    "capture": "07-save-prompt"
-  },
-  {
-    "key": "z",
-    "repeat": 8,
-    "delay_ms": 900,
-    "wait": 3,
-    "capture": "08-save-result"
-  },
-  {
-    "key": "x"
+    "key": "x",
+    "wait": 1,
+    "capture": "00-ready"
   }
 ]

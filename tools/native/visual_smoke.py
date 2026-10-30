@@ -18,6 +18,7 @@ import zipfile
 from publish_linked_candidate import pack_bytes
 from prepare_platinum import safe_path
 from visual_checkpoint import write_checkpoint, restore_checkpoint
+from visual_live import poll_batch, publish_evidence
 
 
 def install(distribution, output):
@@ -59,6 +60,7 @@ def main():
     parser.add_argument('--candidate-commit', required=True)
     parser.add_argument('--recipe', type=Path, required=True)
     parser.add_argument('--checkpoint-dir', type=Path)
+    parser.add_argument('--live-seconds', type=int, default=0)
     args = parser.parse_args()
     root = args.output.resolve()
     root.mkdir(parents=True, exist_ok=False)
@@ -109,6 +111,57 @@ def main():
                                 input=buffer.getvalue(), env=env, capture_output=True, timeout=15, check=True)
         return result.stdout.decode('utf-8', errors='replace').strip()
 
+    def execute_steps(steps):
+        for step in steps:
+            if process.poll() is not None:
+                raise RuntimeError('The game exited during the visual test')
+            if 'until_text' in step:
+                for attempt in range(min(step.get('attempts', 30), 60)):
+                    observed = read_window_text(window, step.get('ocr_box'), step.get('ocr_psm', 11))
+                    if re.search(step['until_text'], observed, re.IGNORECASE):
+                        break
+                    for key in step.get('advance_keys', [step.get('advance_key', 'z')]):
+                        xdo('key', '--clearmodifiers', '--delay', 100, key)
+                        time.sleep(0.2)
+                    time.sleep(step.get('delay_ms', 700) / 1000)
+                else:
+                    raise RuntimeError('Required screen text was not observed: ' + step['until_text'])
+            if 'key' in step:
+                for _ in range(step.get('repeat', 1)):
+                    xdo('key', '--clearmodifiers', '--delay', 100, step['key'])
+                    time.sleep(step.get('delay_ms', 650) / 1000)
+            if 'hold' in step:
+                xdo('keydown', step['hold'])
+                time.sleep(min(float(step['seconds']), 20))
+                xdo('keyup', step['hold'])
+            if 'click' in step:
+                xdo('mousemove', '--window', window, *step['click'])
+                # Hold through several game frames; a zero-duration click
+                # can disappear between SDL's mouse-state samples.
+                xdo('mousedown', 1)
+                time.sleep(0.2)
+                xdo('mouseup', 1)
+            if 'wait' in step:
+                time.sleep(min(float(step['wait']), 45))
+            if 'capture' in step:
+                name = step['capture']
+                if not name.replace('-', '').replace('_', '').isalnum():
+                    raise ValueError('Invalid capture name')
+                shot = grab_window(window)
+                w, h = shot.size
+                if max(ImageStat.Stat(shot).stddev) < 2:
+                    raise RuntimeError('The captured game window is blank')
+                screenshot = evidence / (name + '.png')
+                shot.save(screenshot)
+                capture = {'file': name + '.png', 'width': w, 'height': h}
+                if shutil.which('tesseract'):
+                    ocr = subprocess.run(['tesseract', str(screenshot), 'stdout', '--psm', '11'],
+                                         env=env, text=True, capture_output=True, timeout=15)
+                    capture['observed_ocr_text'] = ocr.stdout.strip()
+                report['captures'].append(capture)
+            report['steps'].append(step)
+            (evidence / 'report.json').write_text(json.dumps(report, indent=2) + '\n')
+
     process = None
     try:
         with log.open('w') as output:
@@ -131,60 +184,40 @@ def main():
                 raise RuntimeError('The game window was not found')
             report['window_title'] = xdo('getwindowname', window)
             xdo('windowfocus', '--sync', window)
-            for step in json.loads(args.recipe.read_text(encoding='utf-8')):
-                if process.poll() is not None:
-                    raise RuntimeError('The game exited during the visual test')
-                if 'until_text' in step:
-                    for attempt in range(min(step.get('attempts', 30), 60)):
-                        observed = read_window_text(window, step.get('ocr_box'), step.get('ocr_psm', 11))
-                        if re.search(step['until_text'], observed, re.IGNORECASE):
-                            break
-                        for key in step.get('advance_keys', [step.get('advance_key', 'z')]):
-                            xdo('key', '--clearmodifiers', '--delay', 100, key)
-                            time.sleep(0.2)
-                        time.sleep(step.get('delay_ms', 700) / 1000)
-                    else:
-                        raise RuntimeError('Required screen text was not observed: ' + step['until_text'])
-                if 'key' in step:
-                    for _ in range(step.get('repeat', 1)):
-                        xdo('key', '--clearmodifiers', '--delay', 100, step['key'])
-                        time.sleep(step.get('delay_ms', 650) / 1000)
-                if 'hold' in step:
-                    xdo('keydown', step['hold'])
-                    time.sleep(min(float(step['seconds']), 20))
-                    xdo('keyup', step['hold'])
-                if 'click' in step:
-                    xdo('mousemove', '--window', window, *step['click'])
-                    # Hold through several game frames; a zero-duration click
-                    # can disappear between SDL's mouse-state samples.
-                    xdo('mousedown', 1)
-                    time.sleep(0.2)
-                    xdo('mouseup', 1)
-                if 'wait' in step:
-                    time.sleep(min(float(step['wait']), 45))
-                if 'capture' in step:
-                    name = step['capture']
-                    if not name.replace('-', '').replace('_', '').isalnum():
-                        raise ValueError('Invalid capture name')
-                    shot = grab_window(window)
-                    w, h = shot.size
-                    if max(ImageStat.Stat(shot).stddev) < 2:
-                        raise RuntimeError('The captured game window is blank')
-                    screenshot = evidence / (name + '.png')
-                    shot.save(screenshot)
-                    capture = {'file': name + '.png', 'width': w, 'height': h}
-                    if shutil.which('tesseract'):
-                        ocr = subprocess.run(['tesseract', str(screenshot), 'stdout', '--psm', '11'],
-                                             env=env, text=True, capture_output=True, timeout=15)
-                        capture['observed_ocr_text'] = ocr.stdout.strip()
-                    report['captures'].append(capture)
-                report['steps'].append(step)
-                (evidence / 'report.json').write_text(json.dumps(report, indent=2) + '\n')
+            execute_steps(json.loads(args.recipe.read_text(encoding='utf-8')))
             report['actual_startup_hook_observed'] = '[Universe] Native registry linked:' in log.read_text(errors='replace')
             if not report['actual_startup_hook_observed']:
                 raise RuntimeError('The actual graphical startup did not reach Universe')
             report['battle_begin_observed'] = 'native extension state initialized.' in log.read_text(errors='replace')
             report['battle_end_observed'] = 'native extension state released.' in log.read_text(errors='replace')
+            if args.live_seconds:
+                run_id = os.environ['GITHUB_RUN_ID']
+                repo = Path(__file__).resolve().parents[2]
+                sequence, seen_sha = 0, None
+                deadline = time.monotonic() + min(max(args.live_seconds, 0), 1200)
+                report['live_state'] = 'waiting'
+                report['interactive_sequence'] = sequence
+                (evidence / 'report.json').write_text(json.dumps(report, indent=2) + '\n')
+                publish_evidence(repo, evidence, run_id, sequence)
+                while time.monotonic() < deadline:
+                    if process.poll() is not None:
+                        raise RuntimeError('The game exited during live control')
+                    batch, seen_sha = poll_batch(repo, run_id, sequence, seen_sha)
+                    if batch:
+                        execute_steps(batch['steps'])
+                        sequence = batch['sequence']
+                        execute_steps([{'wait': 1, 'capture': 'live-' + str(sequence).zfill(3)}])
+                        report['interactive_sequence'] = sequence
+                        report['live_state'] = 'finished' if batch['finish'] else 'waiting'
+                        report['battle_begin_observed'] = 'native extension state initialized.' in log.read_text(errors='replace')
+                        report['battle_end_observed'] = 'native extension state released.' in log.read_text(errors='replace')
+                        (evidence / 'report.json').write_text(json.dumps(report, indent=2) + '\n')
+                        publish_evidence(repo, evidence, run_id, sequence)
+                        if batch['finish']:
+                            break
+                    time.sleep(2)
+                else:
+                    report['live_state'] = 'deadline'
             report['completed'] = True
     finally:
         if process and process.poll() is None:
