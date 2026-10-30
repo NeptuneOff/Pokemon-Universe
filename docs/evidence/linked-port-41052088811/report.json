@@ -67,6 +67,24 @@
       "width": 512,
       "height": 768,
       "observed_ocr_text": "\u201c&\n\n{aoe ene ty\n\n=e\n\nae"
+    },
+    {
+      "file": "rival-thud.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "\u2018*\n\n\u2018af\n\na\n\nwe\n\n\u2018i"
+    },
+    {
+      "file": "rival-house.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "\u2018*\n\n\u2018af\n\na\n\nwe\n\n\u2018i"
+    },
+    {
+      "file": "live-003.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "\u2018*\n\n\u2018af\n\na\n\nwe\n\n\u2018i"
     }
   ],
   "steps": [
@@ -172,6 +190,48 @@
     {
       "wait": 1,
       "capture": "live-002"
+    },
+    {
+      "key": "Left",
+      "repeat": 12,
+      "delay_ms": 450
+    },
+    {
+      "key": "Up",
+      "repeat": 11,
+      "delay_ms": 450,
+      "wait": 2,
+      "capture": "rival-thud"
+    },
+    {
+      "until_text": "QUITTER",
+      "advance_keys": [
+        "z",
+        "c"
+      ],
+      "ocr_box": [
+        310,
+        0,
+        512,
+        310
+      ],
+      "ocr_psm": 6,
+      "attempts": 60,
+      "delay_ms": 900
+    },
+    {
+      "key": "x"
+    },
+    {
+      "key": "Up",
+      "repeat": 3,
+      "delay_ms": 500,
+      "wait": 4,
+      "capture": "rival-house"
+    },
+    {
+      "wait": 1,
+      "capture": "live-003"
     }
   ],
   "resumed_disposable_flash": true,
@@ -182,5 +242,5 @@
   "battle_begin_observed": false,
   "battle_end_observed": false,
   "live_state": "waiting",
-  "interactive_sequence": 2
+  "interactive_sequence": 3
 }
