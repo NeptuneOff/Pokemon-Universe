@@ -47,6 +47,10 @@ int Universe_PortSelfTest(void)
     const UnivTraining training = {50, 13, {31, 31, 31, 31, 31, 31}, {0, 252, 0, 0, 4, 252}};
     const uint16_t expected[6] = {153, 182, 131, 135, 106, 167};
     uint16_t stats[6], hp;
+    UnivJourney first, second, restored;
+    UnivPartnerGift gift;
+    uint8_t journey_bytes[UNIV_JOURNEY_BYTES];
+    unsigned i;
     const UnivSpecies *victini = univ_species_find("victini");
     const UnivSpecies *za = univ_species_find("garchompmegaz");
     if (univ_species_count() != 1329 || !victini || victini->national_dex != 494 || !za || !za->mega)
@@ -60,7 +64,18 @@ int Universe_PortSelfTest(void)
     if (univ_adjust_hp(120, 153, stats[0], &hp) != UNIV_OK || hp != 120) return 15;
     univ_mega_end(&mon);
     if (strcmp(mon.current->id, "charizard") || !battle.mega_used[0]) return 13;
-    puts("{\"universe_native_linked\":true,\"registry_forms\":1329,\"mega_rules\":\"passed\",\"stats_rules\":\"passed\",\"graphical_battle_tested\":false}");
+    if (univ_journey_begin(&first, 1234567, 0) != UNIV_OK ||
+        univ_journey_begin(&second, 1234567, 1) != UNIV_OK) return 16;
+    for (i = 0; i < 3; ++i)
+        if (!univ_journey_option(&first, i) || first.options[i] == second.options[i]) return 17;
+    if (univ_journey_choose_primary(&first, 0) != UNIV_OK ||
+        univ_journey_choose_partner(&first, 1) != UNIV_OK ||
+        univ_journey_encode(&first, journey_bytes, sizeof(journey_bytes)) != UNIV_OK ||
+        univ_journey_decode(&restored, journey_bytes, sizeof(journey_bytes)) != UNIV_OK ||
+        memcmp(&first, &restored, sizeof(first))) return 18;
+    if (univ_journey_partner_option(&restored, restored.partner, &gift) != UNIV_OK ||
+        !gift.mega->mega || !gift.stone_id[0] || univ_partner_count() < 4) return 19;
+    puts("{\"universe_native_linked\":true,\"registry_forms\":1329,\"mega_rules\":\"passed\",\"stats_rules\":\"passed\",\"journey_rules\":\"passed\",\"graphical_battle_tested\":false,\"new_starter_ui_tested\":false}");
     fflush(stdout);
     return 0;
 }

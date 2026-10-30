@@ -221,6 +221,39 @@ public class Program {
         self.launch()
         self.assertEqual((original_runtime / 'save.bin').read_bytes(), b'|played|played|played')
 
+    def test_admin_isolated_then_explicit_campaign_copy_and_return_to_normal(self):
+        self.launch()
+        campaign = self.runtime()
+        campaign_save = (campaign / 'save.bin').read_bytes()
+        normal_config = (campaign / 'sim_config.ini').read_bytes()
+        normal_state = (self.storage / 'windows-current.json').read_bytes()
+        admin = self.storage / 'windows-admin-builds' / self.release['build_id']
+        self.launch('-Admin')
+        self.assertEqual((admin / 'save.bin').read_bytes(), b'|played')
+        self.assertIn('GUIKey=1073741891', (admin / 'sim_config.ini').read_text())
+        self.assertIn('Profil : ADMIN', self.diagnostic())
+        self.assertEqual((campaign / 'save.bin').read_bytes(), campaign_save)
+        self.assertEqual((campaign / 'sim_config.ini').read_bytes(), normal_config)
+        self.assertEqual((self.storage / 'windows-current.json').read_bytes(), normal_state)
+        self.launch('-Admin', '-CopyCampaign')
+        self.assertEqual((admin / 'save.bin').read_bytes(), campaign_save + b'|played')
+        self.assertEqual((campaign / 'save.bin').read_bytes(), campaign_save)
+        self.assertTrue((self.storage / 'universe-admin-backups' / (digest(campaign_save) + '.sav')).exists())
+        self.launch()
+        self.assertEqual((campaign / 'save.bin').read_bytes(), campaign_save + b'|played')
+        self.assertEqual((admin / 'save.bin').read_bytes(), campaign_save + b'|played')
+        self.assertEqual((campaign / 'sim_config.ini').read_bytes(), normal_config)
+
+    def test_admin_copy_without_a_campaign_fails_and_prepare_does_not_create_progress(self):
+        self.launch('-Admin', '-PrepareOnly')
+        admin = self.storage / 'windows-admin-builds' / self.release['build_id']
+        self.assertFalse((admin / 'save.bin').exists())
+        self.assertFalse((self.storage / 'windows-admin-current.json').exists())
+        self.launch('-Admin', '-CopyCampaign', expected=1)
+        self.assertIn('Aucune sauvegarde de campagne', self.diagnostic())
+        self.assertFalse((admin / 'save.bin').exists())
+        self.assertFalse((self.storage / 'windows-current.json').exists())
+
     def test_bad_git_chunk_leaves_legacy_save_untouched(self):
         legacy = self.storage / 'windows-fr'
         legacy.mkdir(parents=True)

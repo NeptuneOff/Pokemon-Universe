@@ -35,6 +35,7 @@ def patch_sources(folder, lock):
 if build_target == 'linux' or build_target == 'win64'
     pokeplatinum_c += files('universe_native/universe.c',
                             'universe_native/port_bridge.c',
+                            'universe_native/journey.c',
                             'universe_native/entry_wrap.c')
     link_args += ['-Wl,--wrap=main']
 endif
@@ -74,8 +75,8 @@ def prepare(engine, output, component=ROOT / 'native/universe'):
         with tarfile.open(fileobj=io.BytesIO(archive)) as source:
             source.extractall(stage, filter='data')
         changed = patch_sources(stage, lock)
-        files = ['universe.c', 'port_bridge.c', 'port_bridge.h', 'entry_wrap.c',
-                 'include/universe.h', 'generated/catalog.inc']
+        files = ['universe.c', 'journey.c', 'port_bridge.c', 'port_bridge.h', 'entry_wrap.c',
+                 'include/universe.h', 'generated/catalog.inc', 'generated/journey.inc']
         component_hashes = {}
         for name in files:
             target = stage / 'universe_native' / name

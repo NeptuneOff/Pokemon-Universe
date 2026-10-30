@@ -1,8 +1,8 @@
 # Extension native : registre et règles de Méga-Évolution
 
-**Statut : composant C relié au candidat de développement Windows, pas encore activé comme mécanique de combat.** La distribution principale conserve son moteur précédent. Le contenu jouable lancé par `JOUER.bat` reste celui décrit dans le README. Cette étape n’ajoute pas encore d’espèces capturables, de région ou de coopération réseau.
+**Statut : composant C relié au port Windows recompilé, pas encore activé comme mécanique de combat.** Le contenu jouable lancé par `JOUER.bat` reste celui décrit dans le README. Cette étape n’ajoute pas encore d’espèces capturables, de région ou de coopération réseau.
 
-**Mise à jour du 29 octobre :** le [candidat du port Windows](NATIVE-PORT-BUILD.md) compile maintenant ce module dans l’exécutable complet, avec des appels au démarrage et au cycle de vie des combats. Les diagnostics de l’exécutable et du candidat français portable ont réussi. Ce raccordement ne déclenche pas encore une Méga-Évolution dans un combat du jeu. La branche générée `builds/windows-linked` contient le moteur de développement prêt à lancer par Git ; `main` conserve sa distribution principale.
+Le [port Windows recompilé](NATIVE-PORT-BUILD.md) contient ce module, avec des appels au démarrage et au cycle de vie des combats. Les diagnostics de l’exécutable et du candidat français portable ont réussi. Ce raccordement ne déclenche pas encore une Méga-Évolution dans un combat du jeu. La branche générée `builds/windows-linked` conserve les nouveaux candidats ; leur promotion dans `main` reste une étape explicite de validation.
 
 ## Ce qui est implémenté
 
@@ -30,11 +30,19 @@ Les sources ne sont pas automatiquement actualisées au lancement du jeu. Un cha
 
 Le [dépôt public Infinite Fusion Hoenn](https://github.com/infinitefusion/infinitefusion-hoenn-public) est retenu comme source candidate conformément à la demande. Aucun sprite de ce dépôt n’est encore importé. Son README présente un projet RPG Maker, pas un paquet directement compatible avec les archives graphiques et animations de Platine.
 
-Pour chaque ressource choisie, conserver le chemin source, la révision, l’auteur/crédit, les conditions de réutilisation et l’empreinte ; vérifier ensuite le cadrage, la palette, les vues avant/arrière et l’animation. Une ressource disponible dans Git ne prouve pas sa compatibilité graphique. Les fusions ne deviennent pas des espèces Universe : elles ne font pas partie du périmètre demandé.
+Pour chaque ressource choisie, conserver le chemin source, la révision, l’auteur/crédit, les conditions de réutilisation et l’empreinte ; vérifier ensuite le cadrage, la palette, les vues avant/arrière et l’animation. Une ressource disponible dans Git ne prouve pas sa compatibilité graphique. Les Fakemon et fusions sont désormais explicitement demandés. Leur intégration doit conserver les crédits, un identifiant propre et le style de Platine ; ils ne reçoivent pas de faux numéro national officiel. Voir [les ressources candidates](RESSOURCES-COMMUNAUTAIRES.md).
+
+## Nouveau départ
+
+`journey.c` ajoute le tirage de trois propositions, Plante/Feu/Eau, parmi 27 starters des générations 1 à 9. Deux personnages d'une même campagne ont des propositions différentes pour chaque type. Un enregistrement versionné de 32 octets conserve le trio, les choix, le personnage et la remise du compagnon ; son contrôle d'intégrité détecte une altération avant chargement.
+
+Le choix du second compagnon est refusé tant que le premier n'est pas confirmé. Trois offres sont tirées dans 48 lignées non starters ayant une évolution réelle et un stade final capable de Méga : 53 parcours possibles dans les données épinglées, y compris les variantes Z-A éligibles. Le tirage se fait par famille, sans doublon entre les six offres du duo, puis par forme Méga cible. Les contraintes de sexe des branches évolutives sont conservées. La pierre correspond à la cible tirée. Les clés sauvegardées sont indépendantes de l'ordre du catalogue ; le décodage de l'ancien format de développement à 16 octets conserve ses offres sans nouveau tirage. La validation du don n'est enregistrée qu'après succès du callback chargé de remettre le Pokémon avec sa gemme ; une reprise ne permet pas de doubler le cadeau. Le moteur hôte doit rendre cette remise atomique dans l'équipe et le Sac.
+
+**Il s'agit encore des règles du composant.** Le menu natif, les Pokémon de l'équipe, les objets du Sac et la sauvegarde de Platine ne chargent pas encore cet enregistrement. Les 15 starters postérieurs à la quatrième génération exigent d'abord leur intégration complète : données, sprites, capacités, évolutions et identifiants compatibles. Les numéros nationaux du registre ne doivent pas être donnés directement à `Pokemon_InitWith`.
 
 ## Raccordement restant à réaliser
 
-Le binaire amont v0.1.12 ne charge pas ce nouveau registre. Une recompilation de développement et des adaptations du moteur seront nécessaires ; le joueur gardera le lanceur unique et n’aura rien à compiler.
+Le registre est relié au port recompilé livré dans Git. Son raccordement aux structures jouables, aux menus et aux visuels demande encore des adaptations du moteur ; le joueur gardera le lanceur unique et n’aura rien à compiler.
 
 1. **Identifiants et sauvegardes.** Ne pas écrire le numéro national directement dans les anciennes tables : le numéro 494 désigne Victini dans le Pokédex national, mais l’Œuf dans Platine. Le catalogue laisse donc `legacy_native_species_id` vide pour les nouvelles espèces et les formes non mappées. Prévoir une sauvegarde versionnée avec migration et refus des retours incompatibles avant de permettre la capture.
 2. **Chargement des données.** Brancher les statistiques, talents et formes sur les structures du moteur ; traiter les limites des champs d’origine, notamment les talents sur 8 bits et les formes sur 5 bits. Adapter le Pokédex, les noms, les équipes et le PC.

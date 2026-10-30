@@ -1,0 +1,798 @@
+{
+  "schema": 2,
+  "id": "universe-opening-options-002",
+  "status": "rules-component-not-yet-active-in-native-selection",
+  "classic_order": [
+    "grass",
+    "fire",
+    "water"
+  ],
+  "classic_pools": {
+    "grass": [
+      {
+        "id": "bulbasaur",
+        "name_fr": "Bulbizarre",
+        "national_dex": 1
+      },
+      {
+        "id": "chikorita",
+        "name_fr": "Germignon",
+        "national_dex": 152
+      },
+      {
+        "id": "treecko",
+        "name_fr": "Arcko",
+        "national_dex": 252
+      },
+      {
+        "id": "turtwig",
+        "name_fr": "Tortipouss",
+        "national_dex": 387
+      },
+      {
+        "id": "snivy",
+        "name_fr": "Vipélierre",
+        "national_dex": 495
+      },
+      {
+        "id": "chespin",
+        "name_fr": "Marisson",
+        "national_dex": 650
+      },
+      {
+        "id": "rowlet",
+        "name_fr": "Brindibou",
+        "national_dex": 722
+      },
+      {
+        "id": "grookey",
+        "name_fr": "Ouistempo",
+        "national_dex": 810
+      },
+      {
+        "id": "sprigatito",
+        "name_fr": "Poussacha",
+        "national_dex": 906
+      }
+    ],
+    "fire": [
+      {
+        "id": "charmander",
+        "name_fr": "Salamèche",
+        "national_dex": 4
+      },
+      {
+        "id": "cyndaquil",
+        "name_fr": "Héricendre",
+        "national_dex": 155
+      },
+      {
+        "id": "torchic",
+        "name_fr": "Poussifeu",
+        "national_dex": 255
+      },
+      {
+        "id": "chimchar",
+        "name_fr": "Ouisticram",
+        "national_dex": 390
+      },
+      {
+        "id": "tepig",
+        "name_fr": "Gruikui",
+        "national_dex": 498
+      },
+      {
+        "id": "fennekin",
+        "name_fr": "Feunnec",
+        "national_dex": 653
+      },
+      {
+        "id": "litten",
+        "name_fr": "Flamiaou",
+        "national_dex": 725
+      },
+      {
+        "id": "scorbunny",
+        "name_fr": "Flambino",
+        "national_dex": 813
+      },
+      {
+        "id": "fuecoco",
+        "name_fr": "Chochodile",
+        "national_dex": 909
+      }
+    ],
+    "water": [
+      {
+        "id": "squirtle",
+        "name_fr": "Carapuce",
+        "national_dex": 7
+      },
+      {
+        "id": "totodile",
+        "name_fr": "Kaiminus",
+        "national_dex": 158
+      },
+      {
+        "id": "mudkip",
+        "name_fr": "Gobou",
+        "national_dex": 258
+      },
+      {
+        "id": "piplup",
+        "name_fr": "Tiplouf",
+        "national_dex": 393
+      },
+      {
+        "id": "oshawott",
+        "name_fr": "Moustillon",
+        "national_dex": 501
+      },
+      {
+        "id": "froakie",
+        "name_fr": "Grenousse",
+        "national_dex": 656
+      },
+      {
+        "id": "popplio",
+        "name_fr": "Otaquin",
+        "national_dex": 728
+      },
+      {
+        "id": "sobble",
+        "name_fr": "Larméléon",
+        "national_dex": 816
+      },
+      {
+        "id": "quaxly",
+        "name_fr": "Coiffeton",
+        "national_dex": 912
+      }
+    ]
+  },
+  "partner_choices": [
+    {
+      "key": 3991077663,
+      "evolution_chain": [
+        "abra",
+        "kadabra",
+        "alakazam"
+      ],
+      "name_fr": "Abra",
+      "mega_id": "alakazammega",
+      "stone_id": "alakazite",
+      "required_gender": null
+    },
+    {
+      "key": 2508085727,
+      "evolution_chain": [
+        "aron",
+        "lairon",
+        "aggron"
+      ],
+      "name_fr": "Galekid",
+      "mega_id": "aggronmega",
+      "stone_id": "aggronite",
+      "required_gender": null
+    },
+    {
+      "key": 942082414,
+      "evolution_chain": [
+        "bagon",
+        "shelgon",
+        "salamence"
+      ],
+      "name_fr": "Draby",
+      "mega_id": "salamencemega",
+      "stone_id": "salamencite",
+      "required_gender": null
+    },
+    {
+      "key": 3685440424,
+      "evolution_chain": [
+        "beldum",
+        "metang",
+        "metagross"
+      ],
+      "name_fr": "Terhal",
+      "mega_id": "metagrossmega",
+      "stone_id": "metagrossite",
+      "required_gender": "N"
+    },
+    {
+      "key": 3754344223,
+      "evolution_chain": [
+        "bellsprout",
+        "weepinbell",
+        "victreebel"
+      ],
+      "name_fr": "Chétiflor",
+      "mega_id": "victreebelmega",
+      "stone_id": "victreebelite",
+      "required_gender": null
+    },
+    {
+      "key": 1151008203,
+      "evolution_chain": [
+        "binacle",
+        "barbaracle"
+      ],
+      "name_fr": "Opermine",
+      "mega_id": "barbaraclemega",
+      "stone_id": "barbaracite",
+      "required_gender": null
+    },
+    {
+      "key": 4146352387,
+      "evolution_chain": [
+        "buneary",
+        "lopunny"
+      ],
+      "name_fr": "Laporeille",
+      "mega_id": "lopunnymega",
+      "stone_id": "lopunnite",
+      "required_gender": null
+    },
+    {
+      "key": 4142532009,
+      "evolution_chain": [
+        "capsakid",
+        "scovillain"
+      ],
+      "name_fr": "Pimito",
+      "mega_id": "scovillainmega",
+      "stone_id": "scovillainite",
+      "required_gender": null
+    },
+    {
+      "key": 394313241,
+      "evolution_chain": [
+        "carvanha",
+        "sharpedo"
+      ],
+      "name_fr": "Carvanha",
+      "mega_id": "sharpedomega",
+      "stone_id": "sharpedonite",
+      "required_gender": null
+    },
+    {
+      "key": 3581506130,
+      "evolution_chain": [
+        "chingling",
+        "chimecho"
+      ],
+      "name_fr": "Korillon",
+      "mega_id": "chimechomega",
+      "stone_id": "chimechite",
+      "required_gender": null
+    },
+    {
+      "key": 799595036,
+      "evolution_chain": [
+        "cleffa",
+        "clefairy",
+        "clefable"
+      ],
+      "name_fr": "Mélo",
+      "mega_id": "clefablemega",
+      "stone_id": "clefablite",
+      "required_gender": null
+    },
+    {
+      "key": 3438527032,
+      "evolution_chain": [
+        "crabrawler",
+        "crabominable"
+      ],
+      "name_fr": "Crabagarre",
+      "mega_id": "crabominablemega",
+      "stone_id": "crabominite",
+      "required_gender": null
+    },
+    {
+      "key": 4279252870,
+      "evolution_chain": [
+        "dratini",
+        "dragonair",
+        "dragonite"
+      ],
+      "name_fr": "Minidraco",
+      "mega_id": "dragonitemega",
+      "stone_id": "dragoninite",
+      "required_gender": null
+    },
+    {
+      "key": 3349308973,
+      "evolution_chain": [
+        "drilbur",
+        "excadrill"
+      ],
+      "name_fr": "Rototaupe",
+      "mega_id": "excadrillmega",
+      "stone_id": "excadrite",
+      "required_gender": null
+    },
+    {
+      "key": 1890032611,
+      "evolution_chain": [
+        "electrike",
+        "manectric"
+      ],
+      "name_fr": "Dynavolt",
+      "mega_id": "manectricmega",
+      "stone_id": "manectite",
+      "required_gender": null
+    },
+    {
+      "key": 1383075944,
+      "evolution_chain": [
+        "espurr",
+        "meowsticf"
+      ],
+      "name_fr": "Psystigri",
+      "mega_id": "meowsticfmega",
+      "stone_id": "meowsticite",
+      "required_gender": "F"
+    },
+    {
+      "key": 3532210427,
+      "evolution_chain": [
+        "espurr",
+        "meowstic"
+      ],
+      "name_fr": "Psystigri",
+      "mega_id": "meowsticmmega",
+      "stone_id": "meowsticite",
+      "required_gender": "M"
+    },
+    {
+      "key": 2504180105,
+      "evolution_chain": [
+        "frigibax",
+        "arctibax",
+        "baxcalibur"
+      ],
+      "name_fr": "Frigodo",
+      "mega_id": "baxcaliburmega",
+      "stone_id": "baxcalibrite",
+      "required_gender": null
+    },
+    {
+      "key": 2318555465,
+      "evolution_chain": [
+        "gastly",
+        "haunter",
+        "gengar"
+      ],
+      "name_fr": "Fantominus",
+      "mega_id": "gengarmega",
+      "stone_id": "gengarite",
+      "required_gender": null
+    },
+    {
+      "key": 3215176312,
+      "evolution_chain": [
+        "gible",
+        "gabite",
+        "garchomp"
+      ],
+      "name_fr": "Griknot",
+      "mega_id": "garchompmega",
+      "stone_id": "garchompite",
+      "required_gender": null
+    },
+    {
+      "key": 2964404518,
+      "evolution_chain": [
+        "gible",
+        "gabite",
+        "garchomp"
+      ],
+      "name_fr": "Griknot",
+      "mega_id": "garchompmegaz",
+      "stone_id": "garchompitez",
+      "required_gender": null
+    },
+    {
+      "key": 1036984086,
+      "evolution_chain": [
+        "glimmet",
+        "glimmora"
+      ],
+      "name_fr": "Germéclat",
+      "mega_id": "glimmoramega",
+      "stone_id": "glimmoranite",
+      "required_gender": null
+    },
+    {
+      "key": 1518088400,
+      "evolution_chain": [
+        "golett",
+        "golurk"
+      ],
+      "name_fr": "Gringolem",
+      "mega_id": "golurkmega",
+      "stone_id": "golurkite",
+      "required_gender": "N"
+    },
+    {
+      "key": 613343143,
+      "evolution_chain": [
+        "houndour",
+        "houndoom"
+      ],
+      "name_fr": "Malosse",
+      "mega_id": "houndoommega",
+      "stone_id": "houndoominite",
+      "required_gender": null
+    },
+    {
+      "key": 2967858319,
+      "evolution_chain": [
+        "inkay",
+        "malamar"
+      ],
+      "name_fr": "Sepiatop",
+      "mega_id": "malamarmega",
+      "stone_id": "malamarite",
+      "required_gender": null
+    },
+    {
+      "key": 3070678670,
+      "evolution_chain": [
+        "larvitar",
+        "pupitar",
+        "tyranitar"
+      ],
+      "name_fr": "Embrylex",
+      "mega_id": "tyranitarmega",
+      "stone_id": "tyranitarite",
+      "required_gender": null
+    },
+    {
+      "key": 3334314116,
+      "evolution_chain": [
+        "litleo",
+        "pyroar"
+      ],
+      "name_fr": "Hélionceau",
+      "mega_id": "pyroarmega",
+      "stone_id": "pyroarite",
+      "required_gender": null
+    },
+    {
+      "key": 3000649706,
+      "evolution_chain": [
+        "litwick",
+        "lampent",
+        "chandelure"
+      ],
+      "name_fr": "Funécire",
+      "mega_id": "chandeluremega",
+      "stone_id": "chandelurite",
+      "required_gender": null
+    },
+    {
+      "key": 3485342117,
+      "evolution_chain": [
+        "magikarp",
+        "gyarados"
+      ],
+      "name_fr": "Magicarpe",
+      "mega_id": "gyaradosmega",
+      "stone_id": "gyaradosite",
+      "required_gender": null
+    },
+    {
+      "key": 1958991025,
+      "evolution_chain": [
+        "mareep",
+        "flaaffy",
+        "ampharos"
+      ],
+      "name_fr": "Wattouat",
+      "mega_id": "ampharosmega",
+      "stone_id": "ampharosite",
+      "required_gender": null
+    },
+    {
+      "key": 3301445372,
+      "evolution_chain": [
+        "meditite",
+        "medicham"
+      ],
+      "name_fr": "Méditikka",
+      "mega_id": "medichammega",
+      "stone_id": "medichamite",
+      "required_gender": null
+    },
+    {
+      "key": 881066928,
+      "evolution_chain": [
+        "numel",
+        "camerupt"
+      ],
+      "name_fr": "Chamallot",
+      "mega_id": "cameruptmega",
+      "stone_id": "cameruptite",
+      "required_gender": null
+    },
+    {
+      "key": 219583339,
+      "evolution_chain": [
+        "onix",
+        "steelix"
+      ],
+      "name_fr": "Onix",
+      "mega_id": "steelixmega",
+      "stone_id": "steelixite",
+      "required_gender": null
+    },
+    {
+      "key": 70018015,
+      "evolution_chain": [
+        "pidgey",
+        "pidgeotto",
+        "pidgeot"
+      ],
+      "name_fr": "Roucool",
+      "mega_id": "pidgeotmega",
+      "stone_id": "pidgeotite",
+      "required_gender": null
+    },
+    {
+      "key": 61177743,
+      "evolution_chain": [
+        "ralts",
+        "kirlia",
+        "gallade"
+      ],
+      "name_fr": "Tarsal",
+      "mega_id": "gallademega",
+      "stone_id": "galladite",
+      "required_gender": "M"
+    },
+    {
+      "key": 1087162055,
+      "evolution_chain": [
+        "ralts",
+        "kirlia",
+        "gardevoir"
+      ],
+      "name_fr": "Tarsal",
+      "mega_id": "gardevoirmega",
+      "stone_id": "gardevoirite",
+      "required_gender": null
+    },
+    {
+      "key": 3560255664,
+      "evolution_chain": [
+        "riolu",
+        "lucario"
+      ],
+      "name_fr": "Riolu",
+      "mega_id": "lucariomega",
+      "stone_id": "lucarionite",
+      "required_gender": null
+    },
+    {
+      "key": 3652963838,
+      "evolution_chain": [
+        "riolu",
+        "lucario"
+      ],
+      "name_fr": "Riolu",
+      "mega_id": "lucariomegaz",
+      "stone_id": "lucarionitez",
+      "required_gender": null
+    },
+    {
+      "key": 2406286357,
+      "evolution_chain": [
+        "scraggy",
+        "scrafty"
+      ],
+      "name_fr": "Baggiguane",
+      "mega_id": "scraftymega",
+      "stone_id": "scraftinite",
+      "required_gender": null
+    },
+    {
+      "key": 3056129397,
+      "evolution_chain": [
+        "scyther",
+        "scizor"
+      ],
+      "name_fr": "Insécateur",
+      "mega_id": "scizormega",
+      "stone_id": "scizorite",
+      "required_gender": null
+    },
+    {
+      "key": 3062644878,
+      "evolution_chain": [
+        "shuppet",
+        "banette"
+      ],
+      "name_fr": "Polichombr",
+      "mega_id": "banettemega",
+      "stone_id": "banettite",
+      "required_gender": null
+    },
+    {
+      "key": 531493696,
+      "evolution_chain": [
+        "skrelp",
+        "dragalge"
+      ],
+      "name_fr": "Venalgue",
+      "mega_id": "dragalgemega",
+      "stone_id": "dragalgite",
+      "required_gender": null
+    },
+    {
+      "key": 4140962207,
+      "evolution_chain": [
+        "slowpoke",
+        "slowbro"
+      ],
+      "name_fr": "Ramoloss",
+      "mega_id": "slowbromega",
+      "stone_id": "slowbronite",
+      "required_gender": null
+    },
+    {
+      "key": 968502996,
+      "evolution_chain": [
+        "snorunt",
+        "froslass"
+      ],
+      "name_fr": "Stalgamin",
+      "mega_id": "froslassmega",
+      "stone_id": "froslassite",
+      "required_gender": "F"
+    },
+    {
+      "key": 3172115586,
+      "evolution_chain": [
+        "snorunt",
+        "glalie"
+      ],
+      "name_fr": "Stalgamin",
+      "mega_id": "glaliemega",
+      "stone_id": "glalitite",
+      "required_gender": null
+    },
+    {
+      "key": 2044810208,
+      "evolution_chain": [
+        "snover",
+        "abomasnow"
+      ],
+      "name_fr": "Blizzi",
+      "mega_id": "abomasnowmega",
+      "stone_id": "abomasite",
+      "required_gender": null
+    },
+    {
+      "key": 3589927960,
+      "evolution_chain": [
+        "starly",
+        "staravia",
+        "staraptor"
+      ],
+      "name_fr": "Étourmi",
+      "mega_id": "staraptormega",
+      "stone_id": "staraptite",
+      "required_gender": null
+    },
+    {
+      "key": 1337299265,
+      "evolution_chain": [
+        "staryu",
+        "starmie"
+      ],
+      "name_fr": "Stari",
+      "mega_id": "starmiemega",
+      "stone_id": "starminite",
+      "required_gender": "N"
+    },
+    {
+      "key": 2900658801,
+      "evolution_chain": [
+        "swablu",
+        "altaria"
+      ],
+      "name_fr": "Tylton",
+      "mega_id": "altariamega",
+      "stone_id": "altarianite",
+      "required_gender": null
+    },
+    {
+      "key": 1127779009,
+      "evolution_chain": [
+        "tynamo",
+        "eelektrik",
+        "eelektross"
+      ],
+      "name_fr": "Anchwatt",
+      "mega_id": "eelektrossmega",
+      "stone_id": "eelektrossite",
+      "required_gender": null
+    },
+    {
+      "key": 2583258359,
+      "evolution_chain": [
+        "venipede",
+        "whirlipede",
+        "scolipede"
+      ],
+      "name_fr": "Venipatte",
+      "mega_id": "scolipedemega",
+      "stone_id": "scolipite",
+      "required_gender": null
+    },
+    {
+      "key": 3282328201,
+      "evolution_chain": [
+        "weedle",
+        "kakuna",
+        "beedrill"
+      ],
+      "name_fr": "Aspicot",
+      "mega_id": "beedrillmega",
+      "stone_id": "beedrillite",
+      "required_gender": null
+    },
+    {
+      "key": 1807741685,
+      "evolution_chain": [
+        "wimpod",
+        "golisopod"
+      ],
+      "name_fr": "Sovkipou",
+      "mega_id": "golisopodmega",
+      "stone_id": "golisopite",
+      "required_gender": null
+    }
+  ],
+  "rules": [
+    "Un tirage Plante, Feu et Eau par personnage et par nouvelle partie.",
+    "Le tirage est enregistré ; charger une partie ne le renouvelle pas.",
+    "En duo, les propositions de même type diffèrent entre les deux personnages.",
+    "Le premier starter doit être choisi avant le compagnon de résonance.",
+    "Le compagnon et sa gemme sont remis ensemble, une seule fois par joueur.",
+    "Le compagnon doit évoluer avant de pouvoir atteindre sa forme Méga."
+  ],
+  "announced_pending": {
+    "source": "https://windswaves.pokemon.com/fr-fr/",
+    "release_year": 2027,
+    "reason": "Statistiques et lignées évolutives complètes non publiées ; ne pas les inventer.",
+    "pokemon": [
+      {
+        "id": "browt",
+        "name_fr": "Broussatif",
+        "type": "Grass"
+      },
+      {
+        "id": "pombon",
+        "name_fr": "Caloulou",
+        "type": "Fire"
+      },
+      {
+        "id": "gecqua",
+        "name_fr": "Ogéko",
+        "type": "Water"
+      }
+    ]
+  },
+  "partner_draw": {
+    "offers_per_player": 3,
+    "distinct_families_across_duo": true,
+    "families": 48,
+    "evolution_mega_paths": 53,
+    "method": "Uniform family draw without replacement, then uniform eligible Mega target within family.",
+    "source_catalog_sha256": "8e49202bbb3294f26f155d5cf910bd58628004fe021fb135220003af5d2f7f03",
+    "source_pokedex_json_sha256": "d0db0260351e251ed3494a0033d2ef9e115a9101dce23fdb8d3ba825a60ee070"
+  }
+}

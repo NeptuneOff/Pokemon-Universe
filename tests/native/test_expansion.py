@@ -1,13 +1,12 @@
 """Compile and execute the C component. These tests do not run the PC game."""
 import gzip
 import json
-import os
 from pathlib import Path
 import shutil
-import subprocess
 import tempfile
 import unittest
 
+from tests.native.native_harness import run_native
 from tools.native.build_expansion_catalog import compile_catalog, c_catalog
 from tools.native.rebuild_expansion import ROOT, rebuild
 
@@ -215,35 +214,9 @@ int main(void) {
     return 0;
 }
 '''.replace('ROWS', rows)
-        with tempfile.TemporaryDirectory(prefix='universe-native-') as folder:
-            base = Path(folder)
-            harness = base / 'harness.c'
-            harness.write_text(source, encoding='utf-8')
-            exe = base / ('rules.exe' if os.name == 'nt' else 'rules')
-            engine = ROOT / 'native/universe'
-            if os.name == 'nt':
-                vswhere = Path(os.environ.get('ProgramFiles(x86)', r'C:\Program Files (x86)')) / 'Microsoft Visual Studio/Installer/vswhere.exe'
-                paths = subprocess.check_output([str(vswhere), '-latest', '-products', '*', '-requires',
-                    'Microsoft.VisualStudio.Component.VC.Tools.x86.x64', '-find',
-                    r'VC\Auxiliary\Build\vcvars64.bat'], text=True).splitlines()
-                self.assertTrue(paths, 'A C compiler is required for the native component tests')
-                script = base / 'compile.cmd'
-                script.write_text('@echo off\ncall "' + paths[0] + '" >nul\nif errorlevel 1 exit /b 1\n'
-                    'cl /nologo /std:c11 /utf-8 /W4 /WX /I"' + str(engine / 'include') + '" /I"' + str(engine) + '" '
-                    '/Fe:"' + str(exe) + '" "' + str(engine / 'universe.c') + '" "' + str(engine / 'port_bridge.c') + '" "' + str(harness) + '"\nexit /b %errorlevel%\n')
-                command = ['cmd.exe', '/d', '/c', str(script)]
-            else:
-                compiler = shutil.which('gcc') or shutil.which('clang')
-                self.assertTrue(compiler, 'A C compiler is required for the native component tests')
-                command = [compiler, '-std=c11', '-Wall', '-Wextra', '-Werror', '-pedantic',
-                    '-I' + str(engine / 'include'), '-I' + str(engine), str(engine / 'universe.c'),
-                    str(engine / 'port_bridge.c'), str(harness), '-o', str(exe)]
-            built = subprocess.run(command, cwd=base, capture_output=True, text=True, errors='replace', timeout=120)
-            self.assertEqual(built.returncode, 0, built.stdout + built.stderr)
-            run = subprocess.run([str(exe)], cwd=base, capture_output=True, text=True, timeout=30)
-            self.assertEqual(run.returncode, 0, run.stdout + run.stderr)
-            self.assertIn('Mega rules passed', run.stdout)
-            self.assertIn('battle stat calculations passed', run.stdout)
-            self.assertEqual(run.stdout.count('native extension state initialized.'), 2)
-            self.assertEqual(run.stdout.count('native extension state released.'), 1)
-            self.assertNotIn('overlap', run.stderr)
+        run = run_native(source)
+        self.assertIn('Mega rules passed', run.stdout)
+        self.assertIn('battle stat calculations passed', run.stdout)
+        self.assertEqual(run.stdout.count('native extension state initialized.'), 2)
+        self.assertEqual(run.stdout.count('native extension state released.'), 1)
+        self.assertNotIn('overlap', run.stderr)

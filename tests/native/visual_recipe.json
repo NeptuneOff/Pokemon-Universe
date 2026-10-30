@@ -1,50 +1,52 @@
 [
   {
-    "wait": 20
+    "wait": 20,
+    "capture": "01-title"
   },
   {
     "key": "Return",
     "wait": 5
   },
   {
-    "until_text": "CONTINUER",
+    "until_text": "Universe",
     "advance_key": "z",
     "attempts": 30,
-    "delay_ms": 850,
-    "capture": "01-continue"
+    "delay_ms": 900,
+    "capture": "02-universe-welcome"
   },
   {
     "key": "z",
-    "wait": 6,
-    "capture": "02-resumed"
+    "wait": 2,
+    "capture": "03-resonance-1"
   },
   {
-    "key": "Right",
-    "repeat": 2,
-    "delay_ms": 500,
-    "wait": 3,
-    "capture": "03-stairs-exit"
+    "key": "z",
+    "wait": 2,
+    "capture": "03-resonance-2"
   },
   {
-    "until_text": "QUITTER",
-    "advance_keys": [
-      "z",
-      "c"
-    ],
-    "ocr_box": [
-      310,
-      0,
-      512,
-      310
-    ],
-    "ocr_psm": 6,
-    "attempts": 60,
-    "delay_ms": 900,
-    "capture": "04-scene-finished"
+    "key": "z",
+    "wait": 2,
+    "capture": "03-resonance-3"
   },
   {
-    "key": "x",
-    "wait": 1,
-    "capture": "00-ready"
+    "key": "z",
+    "wait": 2,
+    "capture": "03-resonance-4"
+  },
+  {
+    "key": "z",
+    "wait": 2,
+    "capture": "03-resonance-5"
+  },
+  {
+    "key": "F10",
+    "wait": 2,
+    "capture": "04-native-debug-tools"
+  },
+  {
+    "click_text": "Application",
+    "wait": 2,
+    "capture": "05-application-admin"
   }
 ]
