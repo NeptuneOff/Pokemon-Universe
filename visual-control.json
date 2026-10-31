@@ -1,1 +1,1 @@
-{"run_id":41229404845,"sequence":1,"steps":[{"wait":1,"capture":"14-checkpoint-final"}],"finish":true}
+{"run_id":41229832497,"sequence":1,"steps":[{"key":"Up","wait":1},{"hold":"Left","seconds":1.2,"wait":3,"capture":"15-rival-downstairs"}],"finish":false}
