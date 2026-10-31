@@ -1,1 +1,1 @@
-{"run_id":41231425244,"sequence":4,"steps":[{"key":"z","wait":8},{"until_log":"Native starter received:","attempts":30,"delay_ms":900,"allow_timeout":true,"capture":"29-starter-received"},{"until_log":"native extension state initialized\\.","attempts":180,"delay_ms":1000,"allow_timeout":true,"wait":8,"capture":"30-first-battle"}],"finish":false}
+{"run_id":41231425244,"sequence":5,"steps":[{"until_log":"native extension state released\\.","attempts":180,"delay_ms":1000,"allow_timeout":true,"wait":3,"capture":"31-first-battle-complete"}],"finish":false}
