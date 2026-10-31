@@ -67,6 +67,24 @@
       "width": 512,
       "height": 768,
       "observed_ocr_text": "\u201c\n\nSSN"
+    },
+    {
+      "file": "23-briefcase-facing.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "o ft\n\nSSN"
+    },
+    {
+      "file": "24-native-starter-menu.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "ol\n\n_~\n\nur\n\nrei\n\nt un Pokem"
+    },
+    {
+      "file": "live-001.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "ol\n\n_~\n\nur\n\nrei\n\nt un Pokem"
     }
   ],
   "steps": [
@@ -188,6 +206,22 @@
       "key": "x",
       "wait": 1,
       "capture": "22-briefcase-field"
+    },
+    {
+      "key": "Left",
+      "repeat": 2,
+      "delay_ms": 900,
+      "wait": 1,
+      "capture": "23-briefcase-facing"
+    },
+    {
+      "key": "z",
+      "wait": 10,
+      "capture": "24-native-starter-menu"
+    },
+    {
+      "wait": 1,
+      "capture": "live-001"
     }
   ],
   "resumed_disposable_flash": true,
@@ -198,10 +232,16 @@
   "actual_startup_hook_observed": true,
   "battle_begin_observed": false,
   "battle_end_observed": false,
-  "native_starter_draws": [],
+  "native_starter_draws": [
+    {
+      "grass": 152,
+      "fire": 4,
+      "water": 258
+    }
+  ],
   "native_starter_confirmed": [],
   "native_starter_received": [],
   "native_npc_starter_mappings": [],
   "live_state": "waiting",
-  "interactive_sequence": 0
+  "interactive_sequence": 1
 }
