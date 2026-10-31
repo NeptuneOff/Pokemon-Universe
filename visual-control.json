@@ -1,1 +1,1 @@
-{"run_id":41229832497,"sequence":4,"steps":[{"key":"Right","repeat":2,"delay_ms":900},{"hold":"Down","seconds":0.7,"wait":3,"capture":"19-town"}],"finish":false}
+{"run_id":41229832497,"sequence":5,"steps":[{"hold":"Right","seconds":2,"wait":0.5},{"hold":"Up","seconds":7,"wait":3,"capture":"20-route-scene"}],"finish":false}
