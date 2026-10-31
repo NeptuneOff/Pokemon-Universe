@@ -1,1 +1,1 @@
-{"run_id":41231425244,"sequence":2,"steps":[{"wait":4,"key":"z","capture":"25-first-starter-preview"}],"finish":false}
+{"run_id":41231425244,"sequence":3,"steps":[{"key":"z","wait":5,"capture":"26-preview-germignon"},{"key":"x","wait":2},{"key":"Right","wait":1},{"key":"z","wait":5,"capture":"27-preview-salameche"},{"key":"x","wait":2},{"key":"Right","wait":1},{"key":"z","wait":5,"capture":"28-preview-gobou"}],"finish":false}
