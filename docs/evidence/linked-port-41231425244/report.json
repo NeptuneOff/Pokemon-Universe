@@ -151,6 +151,24 @@
       "width": 512,
       "height": 768,
       "observed_ocr_text": "a\n\n[= [PElSyaes. E ecateckrcpacks"
+    },
+    {
+      "file": "32-after-mother-menu.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "a By\n\n4\n\n{="
+    },
+    {
+      "file": "33-native-party.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "PFERMER\n\n|BEBESREEEl:\n\nPOCHE\n\ncl F 1"
+    },
+    {
+      "file": "live-006.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "PFERMER\n\n|BEBESREEEl:\n\nPOCHE\n\ncl F 1"
     }
   ],
   "steps": [
@@ -367,6 +385,41 @@
     {
       "wait": 1,
       "capture": "live-005"
+    },
+    {
+      "until_text": "QUITTER",
+      "advance_keys": [
+        "z",
+        "c"
+      ],
+      "ocr_box": [
+        310,
+        0,
+        512,
+        310
+      ],
+      "ocr_psm": 6,
+      "attempts": 180,
+      "delay_ms": 900,
+      "allow_timeout": true,
+      "capture": "32-after-mother-menu"
+    },
+    {
+      "key": "x",
+      "wait": 1
+    },
+    {
+      "key": "c",
+      "wait": 1
+    },
+    {
+      "key": "z",
+      "wait": 5,
+      "capture": "33-native-party"
+    },
+    {
+      "wait": 1,
+      "capture": "live-006"
     }
   ],
   "resumed_disposable_flash": true,
@@ -398,5 +451,5 @@
     }
   ],
   "live_state": "waiting",
-  "interactive_sequence": 5
+  "interactive_sequence": 6
 }
