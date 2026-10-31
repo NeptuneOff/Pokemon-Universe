@@ -1,1 +1,1 @@
-{"run_id":41229832497,"sequence":1,"steps":[{"key":"Up","wait":1},{"hold":"Left","seconds":1.2,"wait":3,"capture":"15-rival-downstairs"}],"finish":false}
+{"run_id":41229832497,"sequence":2,"steps":[{"key":"Down","repeat":7,"delay_ms":1000},{"key":"Right","repeat":5,"delay_ms":1000},{"key":"Down","repeat":2,"delay_ms":1000,"wait":3,"capture":"16-rival-exit"},{"key":"Right","repeat":8,"delay_ms":1000},{"key":"Up","repeat":20,"delay_ms":1000,"wait":3,"capture":"17-route-201"}],"finish":false}
