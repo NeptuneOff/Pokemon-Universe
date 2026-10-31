@@ -85,6 +85,18 @@
       "width": 512,
       "height": 768,
       "observed_ocr_text": "ol\n\n_~\n\nur\n\nrei\n\nt un Pokem"
+    },
+    {
+      "file": "25-first-starter-preview.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "_~"
+    },
+    {
+      "file": "live-002.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "ol\n\n_~"
     }
   ],
   "steps": [
@@ -222,6 +234,15 @@
     {
       "wait": 1,
       "capture": "live-001"
+    },
+    {
+      "wait": 4,
+      "key": "z",
+      "capture": "25-first-starter-preview"
+    },
+    {
+      "wait": 1,
+      "capture": "live-002"
     }
   ],
   "resumed_disposable_flash": true,
@@ -243,5 +264,5 @@
   "native_starter_received": [],
   "native_npc_starter_mappings": [],
   "live_state": "waiting",
-  "interactive_sequence": 1
+  "interactive_sequence": 2
 }
