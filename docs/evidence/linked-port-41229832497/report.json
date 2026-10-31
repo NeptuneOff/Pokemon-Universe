@@ -85,6 +85,12 @@
       "width": 512,
       "height": 768,
       "observed_ocr_text": "he F\n\nms"
+    },
+    {
+      "file": "failure-screen.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "=\n\nSs\n\na\n\nrd\n\nae Pe"
     }
   ],
   "steps": [
@@ -203,6 +209,9 @@
     {
       "wait": 1,
       "capture": "live-005"
+    },
+    {
+      "capture": "failure-screen"
     }
   ],
   "resumed_disposable_flash": true,
@@ -218,5 +227,8 @@
   "native_starter_received": [],
   "native_npc_starter_mappings": [],
   "live_state": "waiting",
-  "interactive_sequence": 5
+  "interactive_sequence": 5,
+  "failure": "Required screen text was not observed: QUITTER",
+  "process_exit": 0,
+  "disposable_flash_retained": true
 }
