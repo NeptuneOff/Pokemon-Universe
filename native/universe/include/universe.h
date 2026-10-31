@@ -73,6 +73,8 @@ void univ_mega_end(UnivBattleMon *mon);
 const char *univ_result_name(UnivResult result);
 /* Catalog IDs below are independent of Platinum's legacy species numbers. */
 UnivResult univ_journey_begin(UnivJourney *journey, uint32_t campaign_seed, unsigned player);
+/* Only draw families fully supported by the caller, in generation order. */
+UnivResult univ_journey_begin_supported(UnivJourney *journey, uint32_t campaign_seed, unsigned player, unsigned families);
 const UnivSpecies *univ_journey_option(const UnivJourney *journey, unsigned type_slot);
 UnivResult univ_journey_choose_primary(UnivJourney *journey, unsigned type_slot);
 size_t univ_partner_count(void);

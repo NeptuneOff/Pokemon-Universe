@@ -13,6 +13,11 @@ import subprocess
 import tarfile
 import tempfile
 
+if __package__:
+    from .starter_patch import patch_starters
+else:
+    from starter_patch import patch_starters
+
 ROOT = Path(__file__).resolve().parents[2]
 INCLUDE = '\n#ifdef SDK_PORT\n#include "universe_native/port_bridge.h"\n#endif\n'
 
@@ -31,11 +36,12 @@ def patch_sources(folder, lock):
         if hashlib.sha256(data).hexdigest() != expected:
             raise ValueError('Pinned engine source changed: ' + name)
         original[name] = data.decode('utf-8')
-    meson = replace_once(original['meson.build'], "subdir('src')\n", "subdir('src')\n\n" + """# Universe downstream PC integration; DS and console targets are unchanged.
+    meson = replace_once(original['meson.build'], "subdir('src')\n", "subdir('src')\n\n" + """# Universe downstream PC integration.
 if build_target == 'linux' or build_target == 'win64'
     pokeplatinum_c += files('universe_native/universe.c',
                             'universe_native/port_bridge.c',
                             'universe_native/journey.c',
+                            'universe_native/starter_port.c',
                             'universe_native/entry_wrap.c')
     link_args += ['-Wl,--wrap=main']
 endif
@@ -49,6 +55,8 @@ endif
         'void BattleContext_Free(BattleContext *battleCtx)\n{\n#ifdef SDK_PORT\n    Universe_BattleEnd(battleCtx);\n#endif')
     patched = {'meson.build': meson, 'src/main.c': main,
                'src/battle/battle_controller_player.c': controller}
+    if lock.get('starter_native_version') == 1:
+        patched.update(patch_starters(original))
     # Validate all dependency declarations before writing any file.
     for name, revision in lock['dependency_commits'].items():
         path = 'subprojects/' + name + '.wrap'
@@ -62,6 +70,13 @@ endif
 def prepare(engine, output, component=ROOT / 'native/universe'):
     engine, output, component = Path(engine).resolve(), Path(output).resolve(), Path(component).resolve()
     lock = json.loads((component / 'port-lock.json').read_text(encoding='utf-8'))
+    feature_lock = component / 'starter-lock.json'
+    if feature_lock.exists():
+        feature = json.loads(feature_lock.read_text(encoding='utf-8'))
+        if feature.get('schema') != 1 or feature.get('engine_commit') != lock['engine_commit'] or feature.get('starter_native_version') != 1:
+            raise ValueError('Incompatible native starter source lock')
+        lock['source_sha256'].update(feature['source_sha256'])
+        lock['starter_native_version'] = 1
     if output.exists():
         raise ValueError('Build folder already exists: ' + str(output))
     revision = subprocess.check_output(['git', '-C', str(engine), 'rev-parse', 'HEAD'], text=True).strip()
@@ -76,7 +91,7 @@ def prepare(engine, output, component=ROOT / 'native/universe'):
             source.extractall(stage, filter='data')
         changed = patch_sources(stage, lock)
         files = ['universe.c', 'journey.c', 'port_bridge.c', 'port_bridge.h', 'entry_wrap.c',
-                 'include/universe.h', 'generated/catalog.inc', 'generated/journey.inc']
+                 'starter_port.c', 'starter_port.h', 'include/universe.h', 'generated/catalog.inc', 'generated/journey.inc']
         component_hashes = {}
         for name in files:
             target = stage / 'universe_native' / name
