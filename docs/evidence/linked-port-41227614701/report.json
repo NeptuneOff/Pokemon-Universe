@@ -157,6 +157,18 @@
       "width": 512,
       "height": 768,
       "observed_ocr_text": "SEF\n\n\u201c7\n\ni\u201c\n\ne\n\nBi\n\n\"he\n\nrd\n\nat\n\ngi~\n\nfal\n\nde"
+    },
+    {
+      "file": "06-rival-home.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "AS\n\nig?"
+    },
+    {
+      "file": "live-006.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "AS\n\nig?"
     }
   ],
   "steps": [
@@ -506,6 +518,41 @@
     {
       "wait": 1,
       "capture": "live-005"
+    },
+    {
+      "hold": "Up",
+      "seconds": 2,
+      "wait": 2
+    },
+    {
+      "until_text": "QUITTER",
+      "advance_keys": [
+        "z",
+        "c"
+      ],
+      "ocr_box": [
+        310,
+        0,
+        512,
+        310
+      ],
+      "ocr_psm": 6,
+      "attempts": 40,
+      "delay_ms": 700
+    },
+    {
+      "key": "x",
+      "wait": 0.5
+    },
+    {
+      "hold": "Up",
+      "seconds": 0.7,
+      "wait": 3,
+      "capture": "06-rival-home"
+    },
+    {
+      "wait": 1,
+      "capture": "live-006"
     }
   ],
   "resumed_disposable_flash": true,
@@ -521,5 +568,5 @@
   "native_starter_received": [],
   "native_npc_starter_mappings": [],
   "live_state": "waiting",
-  "interactive_sequence": 5
+  "interactive_sequence": 6
 }
