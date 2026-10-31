@@ -1,0 +1,431 @@
+{
+  "candidate_commit": "52444e65c2cbf0f5e629fb94cb85e4f70dfb4195",
+  "build_id": "74a08fe19741926b6c30",
+  "compiled_from_commit": "7bd2e2e0f7eae6dcc6177a7c78987e5f7ab094a9",
+  "main_sha256": "b9fa3f6bcde2840a3782719a98cee3172762d67c36f64726ab1dd676e899eb73",
+  "environment": "Windows x64 executable under Wine on Linux, Xvfb and software Mesa",
+  "native_windows_desktop_tested": false,
+  "audio_tested": false,
+  "graphical_mega_battle_tested": false,
+  "captures": [
+    {
+      "file": "01-continue.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "CONTINUER\n\nJOUEUR\n\nDaniel\n\nDUREE DE JEU\n\n0:01\n\nBADGES\n\nPAI\n\nMETR\n\nNINTENDO\n\n=\n\nETR\n\nHI"
+    },
+    {
+      "file": "02-resume.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "sil i\n\noh"
+    },
+    {
+      "file": "01-room-stairs.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "me"
+    },
+    {
+      "file": "02-mother-ended.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "felled\n\ney\n\nrrr\n\nol\n\n\u2018Bo Ee"
+    },
+    {
+      "file": "02-house-floor.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "(3"
+    },
+    {
+      "file": "03-door.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "(3"
+    },
+    {
+      "file": "03-outside.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "(3"
+    },
+    {
+      "file": "04-town.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "ll\n\nst\n\n(Be\n\nSEF\n\ne\n\n*\n\n-_*\n\nid\n\na\n\n_*"
+    },
+    {
+      "file": "05-rival-door.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "SEF\n\n\u201c7\n\ni\u201c\n\ne\n\nBi\n\n\"he\n\nrd\n\nat\n\ngi~\n\nfal\n\nde"
+    },
+    {
+      "file": "06-rival-home.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "AS\n\nig?"
+    },
+    {
+      "file": "07-rival-upper.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "tee\n\nAs"
+    },
+    {
+      "file": "08-rival-scene-ended.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "eh\n\nAS"
+    },
+    {
+      "file": "09-rival-upper-scene.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "AS"
+    },
+    {
+      "file": "10-rival-upper-menu.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "ie}"
+    },
+    {
+      "file": "11-save-prompt.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "ries\n\ner\n\npe"
+    },
+    {
+      "file": "12-saved.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "Lies\n\nie}"
+    },
+    {
+      "file": "13-ready.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "Lies\n\nie}"
+    }
+  ],
+  "steps": [
+    {
+      "wait": 20
+    },
+    {
+      "key": "Return",
+      "wait": 5
+    },
+    {
+      "until_text": "CONTINUER",
+      "advance_key": "z",
+      "attempts": 30,
+      "delay_ms": 850,
+      "capture": "01-continue"
+    },
+    {
+      "key": "z",
+      "wait": 6,
+      "capture": "02-resume"
+    },
+    {
+      "hold": "Right",
+      "seconds": 1.2,
+      "wait": 4,
+      "capture": "01-room-stairs"
+    },
+    {
+      "until_text": "QUITTER",
+      "advance_keys": [
+        "z",
+        "c"
+      ],
+      "ocr_box": [
+        310,
+        0,
+        512,
+        310
+      ],
+      "ocr_psm": 6,
+      "attempts": 40,
+      "delay_ms": 700,
+      "capture": "02-mother-ended"
+    },
+    {
+      "key": "x",
+      "wait": 1,
+      "capture": "02-house-floor"
+    },
+    {
+      "hold": "Down",
+      "seconds": 1.4,
+      "wait": 0.7
+    },
+    {
+      "hold": "Left",
+      "seconds": 0.9,
+      "wait": 0.7
+    },
+    {
+      "hold": "Down",
+      "seconds": 0.6,
+      "wait": 2,
+      "capture": "03-door"
+    },
+    {
+      "until_text": "QUITTER",
+      "advance_keys": [
+        "z",
+        "c"
+      ],
+      "ocr_box": [
+        310,
+        0,
+        512,
+        310
+      ],
+      "ocr_psm": 6,
+      "attempts": 40,
+      "delay_ms": 700
+    },
+    {
+      "key": "x",
+      "wait": 0.5
+    },
+    {
+      "hold": "Down",
+      "seconds": 0.6,
+      "wait": 3,
+      "capture": "03-outside"
+    },
+    {
+      "hold": "Left",
+      "seconds": 0.7,
+      "wait": 0.4
+    },
+    {
+      "hold": "Down",
+      "seconds": 0.7,
+      "wait": 2
+    },
+    {
+      "until_text": "QUITTER",
+      "advance_keys": [
+        "z",
+        "c"
+      ],
+      "ocr_box": [
+        310,
+        0,
+        512,
+        310
+      ],
+      "ocr_psm": 6,
+      "attempts": 40,
+      "delay_ms": 700
+    },
+    {
+      "key": "x",
+      "wait": 0.5
+    },
+    {
+      "hold": "Down",
+      "seconds": 0.7,
+      "wait": 3,
+      "capture": "04-town"
+    },
+    {
+      "key": "Left",
+      "repeat": 5,
+      "delay_ms": 650
+    },
+    {
+      "key": "Up",
+      "repeat": 11,
+      "delay_ms": 650
+    },
+    {
+      "key": "Left",
+      "repeat": 8,
+      "delay_ms": 650,
+      "wait": 2,
+      "capture": "05-rival-door"
+    },
+    {
+      "hold": "Up",
+      "seconds": 2,
+      "wait": 2
+    },
+    {
+      "until_text": "QUITTER",
+      "advance_keys": [
+        "z",
+        "c"
+      ],
+      "ocr_box": [
+        310,
+        0,
+        512,
+        310
+      ],
+      "ocr_psm": 6,
+      "attempts": 40,
+      "delay_ms": 700
+    },
+    {
+      "key": "x",
+      "wait": 0.5
+    },
+    {
+      "hold": "Up",
+      "seconds": 0.7,
+      "wait": 3,
+      "capture": "06-rival-home"
+    },
+    {
+      "key": "Left",
+      "repeat": 5,
+      "delay_ms": 900
+    },
+    {
+      "key": "Up",
+      "repeat": 7,
+      "delay_ms": 900,
+      "wait": 3
+    },
+    {
+      "until_text": "QUITTER",
+      "advance_keys": [
+        "z",
+        "c"
+      ],
+      "ocr_box": [
+        310,
+        0,
+        512,
+        310
+      ],
+      "ocr_psm": 6,
+      "attempts": 40,
+      "delay_ms": 700
+    },
+    {
+      "key": "x",
+      "wait": 1,
+      "capture": "07-rival-upper"
+    },
+    {
+      "hold": "Up",
+      "seconds": 0.7,
+      "wait": 3
+    },
+    {
+      "until_text": "QUITTER",
+      "advance_keys": [
+        "z",
+        "c"
+      ],
+      "ocr_box": [
+        310,
+        0,
+        512,
+        310
+      ],
+      "ocr_psm": 6,
+      "attempts": 40,
+      "delay_ms": 700
+    },
+    {
+      "key": "x",
+      "wait": 0.5,
+      "capture": "08-rival-scene-ended"
+    },
+    {
+      "hold": "Left",
+      "seconds": 0.6,
+      "wait": 3
+    },
+    {
+      "until_text": "QUITTER",
+      "advance_keys": [
+        "z",
+        "c"
+      ],
+      "ocr_box": [
+        310,
+        0,
+        512,
+        310
+      ],
+      "ocr_psm": 6,
+      "attempts": 40,
+      "delay_ms": 700
+    },
+    {
+      "key": "x",
+      "wait": 0.5,
+      "capture": "09-rival-upper-scene"
+    },
+    {
+      "hold": "Right",
+      "seconds": 1.5,
+      "wait": 3
+    },
+    {
+      "until_text": "QUITTER",
+      "advance_keys": [
+        "z",
+        "c"
+      ],
+      "ocr_box": [
+        310,
+        0,
+        512,
+        310
+      ],
+      "ocr_psm": 6,
+      "attempts": 40,
+      "delay_ms": 700,
+      "capture": "10-rival-upper-menu"
+    },
+    {
+      "key": "Down",
+      "repeat": 2,
+      "delay_ms": 600
+    },
+    {
+      "key": "z",
+      "wait": 2,
+      "capture": "11-save-prompt"
+    },
+    {
+      "key": "z",
+      "repeat": 8,
+      "delay_ms": 900,
+      "wait": 3,
+      "capture": "12-saved"
+    },
+    {
+      "key": "x",
+      "wait": 1,
+      "capture": "13-ready"
+    }
+  ],
+  "resumed_disposable_flash": true,
+  "admin_tools_enabled": true,
+  "wine_version": "wine-9.0 (Ubuntu 9.0~repack-4build3)",
+  "glxinfo": "name of display: :99\ndisplay: :99  screen: 0\ndirect rendering: Yes\nExtended renderer info (GLX_MESA_query_renderer):\n    Vendor: Mesa (0xffffffff)\n    Device: llvmpipe (LLVM 20.1.2, 256 bits) (0xffffffff)\n    Version: 25.2.8\n    Accelerated: no\n    Video memory: 15983MB\n    Unified memory: yes\n    Preferred profile: core (0x1)\n    Max core profile version: 4.5\n    Max compat profile version: 4.5\n    Max GLES1 profile version: 1.1\n    Max GLES[23] profile version: 3.2\nMemory info (GL_ATI_meminfo):\n    VBO free memory - total: 0 MB, largest block: 0 MB\n    VBO free aux. memory - total: 14462 MB, largest block: 14462 MB\n    Texture free memory - total: 0 MB, largest block: 0 MB\n    Texture free aux. memory - total: 14462 MB, largest block: 14462 MB\n    Renderbuffer free memory - total: 0 MB, largest block: 0 MB\n    Renderbuffer free aux. memory - total: 14462 MB, largest block: 14462 MB\nMemory info (GL_NVX_gpu_memory_info):\n    Dedicated video memory: 0 MB\n    Total available memory: 15983 MB\n    Currently available dedicated video memory: 0 MB\nOpenGL vendor string: Mesa\nOpenGL renderer string: llvmpipe (LLVM 20.1.2, 256 bits)\nOpenGL core profile version string: 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.4\nOpenGL core profile shading language version string: 4.50\nOpenGL core profile context flags: (none)\nOpenGL core profile profile mask: core profile\n\nOpenGL version string: 4.5 (Compatibility Profile) Mesa 25.2.8-0ubuntu0.24.04.4\nOpenGL shading language version string: 4.50\nOpenGL context flags: (none)\nOpenGL profile mask: compatibility profile\n\nOpenGL ES profile version string: OpenGL ES 3.2 Mesa 25.2.8-0ubuntu0.24.04.4\nOpenGL ES profile shading language version string: OpenGL ES GLSL ES 3.20\n\n",
+  "window_title": "POKEMON PL [CPUE01]",
+  "actual_startup_hook_observed": true,
+  "battle_begin_observed": false,
+  "battle_end_observed": false,
+  "native_starter_draws": [],
+  "native_starter_confirmed": [],
+  "native_starter_received": [],
+  "native_npc_starter_mappings": [],
+  "live_state": "waiting",
+  "interactive_sequence": 0
+}
