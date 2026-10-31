@@ -61,20 +61,20 @@ static unsigned bounded(uint32_t *state, unsigned count)
     return (unsigned)(value % count);
 }
 
-UnivResult univ_journey_begin(UnivJourney *journey, uint32_t seed, unsigned player)
+UnivResult univ_journey_begin_supported(UnivJourney *journey, uint32_t seed, unsigned player, unsigned families)
 {
     UnivJourney result;
     unsigned i, groups[PARTNER_ROOT_COUNT];
     uint32_t state = seed ? seed : UINT32_C(0x9e3779b9);
-    if (!journey || player > 1) return UNIV_INVALID;
+    if (!journey || player > 1 || families < 2 || families > UNIV_STARTER_FAMILIES) return UNIV_INVALID;
     memset(&result, 0, sizeof(result));
     result.version = 2;
     result.player = (uint8_t)player;
     result.primary = result.partner = UNIV_NO_CHOICE;
     for (i = 0; i < 3; ++i) {
-        unsigned first = bounded(&state, UNIV_STARTER_FAMILIES);
-        unsigned offset = 1 + bounded(&state, UNIV_STARTER_FAMILIES - 1);
-        result.options[i] = (uint8_t)(player ? (first + offset) % UNIV_STARTER_FAMILIES : first);
+        unsigned first = bounded(&state, families);
+        unsigned offset = 1 + bounded(&state, families - 1);
+        result.options[i] = (uint8_t)(player ? (first + offset) % families : first);
     }
     /* Draw all six offers identically for both peers. Distinct root families
      * avoid duplicate Ralts branches and avoid weighting multi-Mega families. */
@@ -92,6 +92,11 @@ UnivResult univ_journey_begin(UnivJourney *journey, uint32_t seed, unsigned play
     }
     *journey = result;
     return UNIV_OK;
+}
+
+UnivResult univ_journey_begin(UnivJourney *journey, uint32_t seed, unsigned player)
+{
+    return univ_journey_begin_supported(journey, seed, player, UNIV_STARTER_FAMILIES);
 }
 
 const UnivSpecies *univ_journey_option(const UnivJourney *journey, unsigned type_slot)

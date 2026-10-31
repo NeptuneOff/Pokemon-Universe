@@ -1,0 +1,126 @@
+{
+  "schema": 1,
+  "id": "fan:icyethics:canight",
+  "source_name": "CANIGHT",
+  "author_credit": "IcyEthics",
+  "repository": "https://github.com/icyethics/PokemonAssets",
+  "commit": "7dbfbfd2cfa89cb65061823fb30f1bf628fcd283",
+  "terms_source": "https://github.com/icyethics/PokemonAssets/blob/7dbfbfd2cfa89cb65061823fb30f1bf628fcd283/README.md",
+  "terms_file": "SOURCE-TERMS.md",
+  "status": "source-art-preserved-not-in-native-runtime",
+  "notes": [
+    "Original PNG bytes retained, no resizing or recoloring.",
+    "Not an official national-dex species; gameplay data and French naming remain to be designed.",
+    "Native import requires indexed palettes, views and animation integration; these files alone do not create a playable species."
+  ],
+  "assets": [
+    {
+      "file": "front.png",
+      "source_path": "Pokémon Sprites Formatted/Front/CANIGHT.png",
+      "source_url": "https://raw.githubusercontent.com/icyethics/PokemonAssets/7dbfbfd2cfa89cb65061823fb30f1bf628fcd283/Pok%C3%A9mon%20Sprites%20Formatted/Front/CANIGHT.png",
+      "sha256": "7decc8132f6e1ee6eb070e6f03ff98884b87ffe645acb6fc7ce707c2d15110a2",
+      "bytes": 1302,
+      "dimensions": [
+        96,
+        96
+      ],
+      "opaque_bbox": [
+        31,
+        42,
+        64,
+        74
+      ],
+      "opaque_colors": 14
+    },
+    {
+      "file": "back.png",
+      "source_path": "Pokémon Sprites Formatted/Back/CANIGHT.png",
+      "source_url": "https://raw.githubusercontent.com/icyethics/PokemonAssets/7dbfbfd2cfa89cb65061823fb30f1bf628fcd283/Pok%C3%A9mon%20Sprites%20Formatted/Back/CANIGHT.png",
+      "sha256": "fbc5634481996f32e476949da2b2d65ad6804055a25ed484ac1145d0805cc005",
+      "bytes": 1079,
+      "dimensions": [
+        96,
+        96
+      ],
+      "opaque_bbox": [
+        14,
+        59,
+        78,
+        96
+      ],
+      "opaque_colors": 8
+    },
+    {
+      "file": "front-shiny.png",
+      "source_path": "Pokémon Sprites Formatted/Front Shiny/CANIGHT.png",
+      "source_url": "https://raw.githubusercontent.com/icyethics/PokemonAssets/7dbfbfd2cfa89cb65061823fb30f1bf628fcd283/Pok%C3%A9mon%20Sprites%20Formatted/Front%20Shiny/CANIGHT.png",
+      "sha256": "95dfa95125a70ce6a872163231bc1c6ffa704a09a45a75f0ec68b5b4353b887d",
+      "bytes": 1362,
+      "dimensions": [
+        96,
+        96
+      ],
+      "opaque_bbox": [
+        31,
+        42,
+        64,
+        74
+      ],
+      "opaque_colors": 14
+    },
+    {
+      "file": "back-shiny.png",
+      "source_path": "Pokémon Sprites Formatted/Back Shiny/CANIGHT.png",
+      "source_url": "https://raw.githubusercontent.com/icyethics/PokemonAssets/7dbfbfd2cfa89cb65061823fb30f1bf628fcd283/Pok%C3%A9mon%20Sprites%20Formatted/Back%20Shiny/CANIGHT.png",
+      "sha256": "ddbcfb787ad34345f612cc3ccfdfb290764a024c19283f729cae0d551ad3a038",
+      "bytes": 1435,
+      "dimensions": [
+        96,
+        96
+      ],
+      "opaque_bbox": [
+        14,
+        59,
+        78,
+        96
+      ],
+      "opaque_colors": 8
+    },
+    {
+      "file": "icon.png",
+      "source_path": "Pokémon Sprites Formatted/Icons/CANIGHT.png",
+      "source_url": "https://raw.githubusercontent.com/icyethics/PokemonAssets/7dbfbfd2cfa89cb65061823fb30f1bf628fcd283/Pok%C3%A9mon%20Sprites%20Formatted/Icons/CANIGHT.png",
+      "sha256": "e97b6b1fee02dd47fdc90490842d1cb771f03892d9421bffc8fb07743bb91234",
+      "bytes": 2073,
+      "dimensions": [
+        128,
+        64
+      ],
+      "opaque_bbox": [
+        12,
+        22,
+        118,
+        60
+      ],
+      "opaque_colors": 51
+    },
+    {
+      "file": "footprint.png",
+      "source_path": "Pokémon Sprites Formatted/Footprints/CANIGHT.png",
+      "source_url": "https://raw.githubusercontent.com/icyethics/PokemonAssets/7dbfbfd2cfa89cb65061823fb30f1bf628fcd283/Pok%C3%A9mon%20Sprites%20Formatted/Footprints/CANIGHT.png",
+      "sha256": "9423dbf97e033d531f681d5a6856eab97f7a0745438d00bf6c3cda8b4d9a35ac",
+      "bytes": 83,
+      "dimensions": [
+        32,
+        32
+      ],
+      "opaque_bbox": null,
+      "opaque_colors": 0
+    }
+  ],
+  "qa": {
+    "front_back_review": "Source drawings inspected; back view uses a different scale and needs native placement review.",
+    "icon_review": "Source icon sheet contains 51 opaque colors and a dark second-frame background; needs a pixel-art cleanup before native import.",
+    "footprint_review": "Source footprint is entirely transparent; not a usable footprint."
+  }
+}

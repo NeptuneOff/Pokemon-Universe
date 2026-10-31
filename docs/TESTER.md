@@ -18,7 +18,7 @@ Dans le profil admin, **F10**, puis **Application** ouvre les outils du port Pla
 |---|---|
 | Gen Pokemon | Choisir une espèce native et son niveau ; il faut une place dans l'équipe |
 | Gen Items | Ajouter un objet natif et une quantité |
-| Jump to Map | Aller dans une ville de Sinnoh ou indiquer une carte et ses coordonnées |
+| Jump to Map | Aller dans une ville de Sinnoh ou indiquer un identifiant de carte |
 | Cheats | Désactiver les rencontres, traverser les murs, fuir un combat de Dresseur |
 
 Attendre d'être sur une carte, sans dialogue, animation ou menu actif avant d'utiliser ces outils. Une téléportation ne joue pas les scènes précédentes et ne valide pas leurs événements : elle sert à inspecter une zone, pas à simuler une progression cohérente. Sauvegarder dans le jeu pour conserver les modifications admin. Les menus techniques hérités sont actuellement en anglais.

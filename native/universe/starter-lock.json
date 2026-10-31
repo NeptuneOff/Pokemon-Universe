@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "engine_commit": "35067868f64f23d25d17ac3e536cfdd9a7f40523",
+  "starter_native_version": 1,
+  "source_sha256": {
+    "include/struct_defs/choose_starter_data.h": "d8419e8a8e7391c07f986da6b8d355b1b46cd80cd03e8bcb7a74acb0f9d7c79a",
+    "src/choose_starter/choose_starter_app.c": "78c3d8827a7ce3bebf91392b1fee50404845d04cfc6b79a24fedb38a40f9627a",
+    "src/scrcmd.c": "b8898c0d21a88f6f099d3a46f1c3ba2466e87ac6e9decc4264458c127ff56e3d",
+    "src/scrcmd_party.c": "8fab23ba897a9bb565d94c81f2aa2f3a6ef886c4a15a392b45fc603c05882fcd",
+    "src/system_vars.c": "efe687d441411bf18878755fa56e2d24f95463bf009dd1064379bfc9197bfb35",
+    "src/trainer_data.c": "c0d07e1073b952757b34671b8fbaecf4dc7adaa216c856ce399c0eff38531a79",
+    "src/game_start.c": "777c655716452c7a88b75e594f710156392c4ad1c040e863e2329cc18a322086"
+  }
+}

@@ -30,7 +30,7 @@ class JourneyTests(unittest.TestCase):
                 str(ROOT / 'content/native/expansion/sources/pokedex.ts.gz'), str(output)],
                 capture_output=True, text=True, timeout=30)
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-            dex = json.loads(output.read_text())
+            dex = json.loads(output.read_text(encoding='utf-8'))
         self.assertEqual(compile_partners(dex, {'entries': list(catalog.values())}, config['classic_pools']), config['partner_choices'])
         self.assertEqual((ROOT / 'native/universe/generated/journey.inc').read_text(), c_partners(config['partner_choices']))
         self.assertEqual(config['partner_draw']['families'], 48)

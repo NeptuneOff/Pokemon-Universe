@@ -2,6 +2,10 @@
 
 Code existant : [cybervisi0n/pokeplatinum](https://github.com/cybervisi0n/pokeplatinum), dérivé de pret/pokeplatinum et des bibliothèques libntr. Les auteurs amont ne sont pas affiliés à Universe. Leurs notices restent dans les sources référencées.
 
+## Ressources communautaires natives en préparation
+
+CANIGHT — dessins d’**IcyEthics**, dépôt [PokemonAssets](https://github.com/icyethics/PokemonAssets/tree/7dbfbfd2cfa89cb65061823fb30f1bf628fcd283). Les PNG originaux, leurs empreintes et les conditions de réutilisation sont conservés dans `content/native/community/icyethics/canight/`. Ils sont réutilisables et adaptables selon les conditions de l’auteur, et ne sont pas encore installés dans le runtime. Universe ne revendique pas la création de ces dessins. Voir [les ressources examinées](docs/RESSOURCES-COMMUNAUTAIRES.md).
+
 Les crédits ci-dessous concernent uniquement le prototype web archivé.
 
 # Crédits et provenance

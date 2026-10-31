@@ -169,10 +169,19 @@ def main():
                 name = step['capture']
                 if not name.replace('-', '').replace('_', '').isalnum():
                     raise ValueError('Invalid capture name')
-                shot = grab_window(window)
+                # Native transitions can fade both screens to black. Wait for
+                # real pixels to return; a persistent blank still fails.
+                for attempt in range(40):
+                    shot = grab_window(window)
+                    if max(ImageStat.Stat(shot).stddev) >= 2:
+                        break
+                    if process.poll() is not None:
+                        raise RuntimeError('The game exited during a screen transition')
+                    time.sleep(0.5)
+                else:
+                    shot.save(evidence / (name + '-blank.png'))
+                    raise RuntimeError('The captured game window stayed blank for 20 seconds')
                 w, h = shot.size
-                if max(ImageStat.Stat(shot).stddev) < 2:
-                    raise RuntimeError('The captured game window is blank')
                 screenshot = evidence / (name + '.png')
                 shot.save(screenshot)
                 capture = {'file': name + '.png', 'width': w, 'height': h}
@@ -241,6 +250,14 @@ def main():
                 else:
                     report['live_state'] = 'deadline'
             report['completed'] = True
+    except Exception as exc:
+        report['failure'] = str(exc)
+        if process and process.poll() is None and window:
+            try:
+                execute_steps([{'capture': 'failure-screen'}])
+            except Exception as capture_error:
+                report['failure_capture_error'] = str(capture_error)
+        raise
     finally:
         if process and process.poll() is None:
             xdo('windowfocus', window, check=False)

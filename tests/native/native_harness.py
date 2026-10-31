@@ -8,7 +8,7 @@ import tempfile
 ROOT = Path(__file__).resolve().parents[2]
 
 
-def run_native(source):
+def run_native(source, extra_sources=(), include_paths=()):
     with tempfile.TemporaryDirectory(prefix='universe-native-') as folder:
         base = Path(folder)
         harness = base / 'harness.c'
@@ -22,16 +22,19 @@ def run_native(source):
                 r'VC\Auxiliary\Build\vcvars64.bat'], text=True).splitlines()
             assert paths, 'A C compiler is required for the native component tests'
             script = base / 'compile.cmd'
+            extra_args = ' '.join('/I"' + str(path) + '"' for path in include_paths)
+            extra_args += ' ' + ' '.join('"' + str(path) + '"' for path in extra_sources)
             script.write_text('@echo off\ncall "' + paths[0] + '" >nul\nif errorlevel 1 exit /b 1\n'
                 'cl /nologo /std:c11 /utf-8 /W4 /WX /I"' + str(engine / 'include') + '" /I"' + str(engine) + '" '
-                '/Fe:"' + str(exe) + '" "' + str(engine / 'universe.c') + '" "' + str(engine / 'journey.c') + '" "' + str(engine / 'port_bridge.c') + '" "' + str(harness) + '"\nexit /b %errorlevel%\n')
+                '/Fe:"' + str(exe) + '" "' + str(engine / 'universe.c') + '" "' + str(engine / 'journey.c') + '" "' + str(engine / 'port_bridge.c') + '" "' + str(harness) + '" ' + extra_args + '\nexit /b %errorlevel%\n')
             command = ['cmd.exe', '/d', '/c', str(script)]
         else:
             compiler = shutil.which('gcc') or shutil.which('clang')
             assert compiler, 'A C compiler is required for the native component tests'
             command = [compiler, '-std=c11', '-Wall', '-Wextra', '-Werror', '-pedantic',
                 '-I' + str(engine / 'include'), '-I' + str(engine), str(engine / 'universe.c'),
-                str(engine / 'journey.c'), str(engine / 'port_bridge.c'), str(harness), '-o', str(exe)]
+                str(engine / 'journey.c'), str(engine / 'port_bridge.c'), str(harness),
+                *['-I' + str(path) for path in include_paths], *map(str, extra_sources), '-o', str(exe)]
         built = subprocess.run(command, cwd=base, capture_output=True, text=True, errors='replace', timeout=120)
         assert built.returncode == 0, built.stdout + built.stderr
         run = subprocess.run([str(exe)], cwd=base, capture_output=True, text=True, timeout=30)

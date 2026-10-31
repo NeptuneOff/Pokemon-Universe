@@ -18,4 +18,4 @@ Conserver un identifiant de contenu tel que `fan:artiste:espece`, distinct des n
 
 Une image de 96 pixels ne doit pas être réduite automatiquement pour entrer dans une case de Platine : cadrage, lisibilité et animation se contrôlent individuellement. Les variantes shiny utilisent leurs palettes propres. Un sprite sans vue arrière ou sans données reste un candidat, pas un remplacement silencieux d'une espèce officielle.
 
-Le premier lot CANIGHT ne modifie pas encore la distribution jouable. Son manifeste rapporte les dimensions et couleurs des originaux ; il reste à concevoir son adaptation au moteur.
+Le premier lot CANIGHT ne modifie pas encore la distribution jouable. Son manifeste rapporte les dimensions et couleurs des originaux. La vue arrière exige un contrôle d’échelle ; l’icône source comporte un fond sombre et 51 couleurs ; l’empreinte est vide. Ces défauts sont signalés avant toute activation, et les originaux sont conservés pour l’adaptation.
