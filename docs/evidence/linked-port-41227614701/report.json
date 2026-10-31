@@ -85,6 +85,18 @@
       "width": 512,
       "height": 768,
       "observed_ocr_text": "oe"
+    },
+    {
+      "file": "01-room-stairs.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "(3"
+    },
+    {
+      "file": "live-001.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "Pv\n\nren\n\n=\n\nHaman: Daniel !"
     }
   ],
   "steps": [
@@ -291,6 +303,16 @@
       "seconds": 0.65,
       "wait": 3,
       "capture": "rival-house-interior"
+    },
+    {
+      "hold": "Right",
+      "seconds": 1.2,
+      "wait": 4,
+      "capture": "01-room-stairs"
+    },
+    {
+      "wait": 1,
+      "capture": "live-001"
     }
   ],
   "resumed_disposable_flash": true,
@@ -306,5 +328,5 @@
   "native_starter_received": [],
   "native_npc_starter_mappings": [],
   "live_state": "waiting",
-  "interactive_sequence": 0
+  "interactive_sequence": 1
 }
