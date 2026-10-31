@@ -19,6 +19,18 @@
       "width": 512,
       "height": 768,
       "observed_ocr_text": "Oo\n\ntet"
+    },
+    {
+      "file": "15-rival-downstairs.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "AS"
+    },
+    {
+      "file": "live-001.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "AS"
     }
   ],
   "steps": [
@@ -40,6 +52,20 @@
       "key": "z",
       "wait": 6,
       "capture": "02-resume-rival"
+    },
+    {
+      "key": "Up",
+      "wait": 1
+    },
+    {
+      "hold": "Left",
+      "seconds": 1.2,
+      "wait": 3,
+      "capture": "15-rival-downstairs"
+    },
+    {
+      "wait": 1,
+      "capture": "live-001"
     }
   ],
   "resumed_disposable_flash": true,
@@ -55,5 +81,5 @@
   "native_starter_received": [],
   "native_npc_starter_mappings": [],
   "live_state": "waiting",
-  "interactive_sequence": 0
+  "interactive_sequence": 1
 }
