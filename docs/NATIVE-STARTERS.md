@@ -18,4 +18,4 @@ Les parties ayant déjà choisi leur starter gardent leur Pokémon et leurs comp
 
 Le second compagnon et les Méga restent un raccordement séparé. Ce menu ne prétend pas avoir rendu jouables les 27 starters ni les 48 lignées du second choix.
 
-La préparation vérifie séparément `starter-lock.json` avant de modifier la copie de compilation. Le sous-module amont n'est pas modifié. La publication de cette source ne remplace pas à elle seule le moteur livré : attendre la promotion du candidat compilé dans `distribution/windows`, recensée dans les versions testables.
+La préparation vérifie séparément `starter-lock.json` avant de modifier la copie de compilation. Le sous-module amont n'est pas modifié. Le moteur compilé est livré dans `distribution/windows` ; sa version et ses preuves de validation sont recensées dans [les versions testables](VERSIONS-TESTABLES.md).

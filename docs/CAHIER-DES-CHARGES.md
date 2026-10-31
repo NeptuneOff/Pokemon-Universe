@@ -24,7 +24,7 @@ L’étape actuelle installe le port existant avec les ressources françaises, u
 
 Le prologue à Sinnoh valide une première scène sur la base d’origine ; il ne verrouille pas l’ordre final des sept régions.
 
-Les règles C du nouveau départ couvrent les 27 starters des neuf générations publiées et trois propositions de compagnon tirées dans 48 lignées éligibles, avec 53 parcours vers une Méga. Les choix, leur conservation, l'ordre des deux sélections et le contrat de remise du Pokémon avec sa gemme sont testés. **Ces règles ne sont pas encore raccordées à l'écran de choix ni aux équipes et au Sac natifs.** Le registre des espèces n'autorise pas à écrire leurs numéros nationaux dans les anciennes tables de Platine. Voir [le nouvel arc](SCENARIO-RESONANCE.md).
+Les règles C du nouveau départ couvrent les 27 starters des neuf générations publiées et trois propositions de compagnon tirées dans 48 lignées éligibles, avec 53 parcours vers une Méga. Les choix, leur conservation, l'ordre des deux sélections et le contrat de remise du Pokémon avec sa gemme sont testés. Le premier choix est raccordé au menu, au don et aux équipes natives pour les **12 starters des générations 1 à 4**. Leurs propositions sont conservées et le rival utilise une des deux offres restantes, avec sa propre lignée et ses capacités. Les 15 starters suivants, le second compagnon et sa gemme ne sont pas encore raccordés. Voir [les limites du raccordement](NATIVE-STARTERS.md). Le registre des espèces n'autorise pas à écrire leurs numéros nationaux dans les anciennes tables de Platine. Voir [le nouvel arc](SCENARIO-RESONANCE.md).
 
 ## Prochain jalon de gameplay
 

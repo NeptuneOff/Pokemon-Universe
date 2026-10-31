@@ -1,5 +1,16 @@
 # Versions testables
 
+## Premier choix — starters aléatoires natifs
+
+Distribution Windows : `74a08fe19741926b6c30`. Moteur compilé depuis `7bd2e2e0f7eae6dcc6177a7c78987e5f7ab094a9` ; les 340 ressources françaises et les décors de Platine sont conservés.
+
+- **Actif** : trois propositions persistantes, une Plante, une Feu et une Eau, tirées parmi les 12 starters des générations 1 à 4 ; sprites, cris, noms français et Pokémon remis raccordés au choix. Le rival et l'autre personnage prennent les offres restantes ; leurs évolutions et capacités suivent la bonne lignée.
+- **À essayer** : `git pull --ff-only`, puis `JOUER.bat`. Choisir **4 — Nouvelle partie Admin**, puis atteindre la mallette de Sorbier sur la Route 201, regarder les trois propositions, choisir son Pokémon et faire le premier combat. Le trio Sinnoh reste un résultat possible du tirage.
+- **Compatibilité** : une partie antérieure au choix bénéficie du tirage ; une partie ayant déjà reçu son starter conserve son Pokémon. Les propositions ne changent pas lors d'une reprise. Ne pas effacer sa campagne pour tester.
+- **Limites** : les 15 starters postérieurs à Platine, le second compagnon et sa gemme, les Méga en combat, les nouveaux habitats et le duo réseau restent à intégrer. Le choix 4 du lanceur permet de recommencer les tests en protégeant la partie admin précédente ; les outils natifs existants restent accessibles.
+
+[Compilation Windows et diagnostic portable](https://github.com/NeptuneOff/Pokemon-Universe/actions/runs/41225809067) réussis. [76 tests natifs sous Windows et contrôles Linux](https://github.com/NeptuneOff/Pokemon-Universe/actions/runs/41232153107) réussis. Le test du véritable adaptateur C couvre la conservation, le don et les lignées des personnages. Le menu, le don de Gobou, le combat contre Germignon, la sauvegarde et la reprise ont été parcourus dans le véritable exécutable sous Wine. Les preuves graphiques du parcours sont décrites dans [NATIVE-VALIDATION.md](NATIVE-VALIDATION.md).
+
 ## Résonance — début du récit et profil admin
 
 Distribution Windows : `47cbbf0e8630133f0426`. Moteur Universe compilé depuis `55f930ab529a74f2c461bb7703c393cea831a5d3` ; ressources françaises conservées.

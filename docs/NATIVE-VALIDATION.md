@@ -1,6 +1,20 @@
 # Validation de la base native française
 
-## État courant — 30 octobre 2026
+## État courant — 31 octobre 2026
+
+La distribution Git courante est **`74a08fe19741926b6c30`**, compilée depuis **`7bd2e2e0f7eae6dcc6177a7c78987e5f7ab094a9`**. Exécutable SHA-256 : `b9fa3f6bcde2840a3782719a98cee3172762d67c36f64726ab1dd676e899eb73`.
+
+- [Compilation complète Windows et diagnostic portable](https://github.com/NeptuneOff/Pokemon-Universe/actions/runs/41225809067) réussis. Reconstruction locale des paquets Git : 357 fichiers vérifiés, 340 ressources conservées. Seuls `main.exe`, `universe-install.json` et `universe-port-build.json` diffèrent de la livraison précédente ; les tuiles, cartes, textes, sprites et animations de Platine restent identiques.
+- [Tests Windows et Linux du raccordement](https://github.com/NeptuneOff/Pokemon-Universe/actions/runs/41231425255) : 73 tests réussis sous Windows. L'adaptateur natif C est compilé et exécuté avec une petite simulation des API de sauvegarde : 512 graines, validité des offres, conservation, don du vrai Pokémon, branches historiques et lignées des personnages sont contrôlés. Ce test ne remplace pas le parcours graphique. [76 tests après ajout du nouveau départ Admin](https://github.com/NeptuneOff/Pokemon-Universe/actions/runs/41232153107) réussissent aussi sous Windows ; ils vérifient la protection de l’ancienne partie de test, la campagne intacte, le nouveau départ après mise à jour et le refus d’une copie de secours altérée.
+- [Parcours réel de cette compilation](https://github.com/NeptuneOff/Pokemon-Universe/actions/runs/41231425244) sous Wine/Xvfb/Mesa logiciel : reprise d'une sauvegarde de test, scène de Sorbier et ouverture de la mallette. Le tirage observé est Germignon / Salamèche / Gobou. Les trois aperçus affichent les sprites correspondants, les noms français et le choix Oui/Non dans l'interface originale. Gobou est confirmé et effectivement remis ; le rival reçoit Germignon. Le premier combat affiche leurs sprites avant/arrière, leurs noms et leurs PV dans les deux écrans natifs, puis se termine et rend la main au scénario. Les journaux observent le don de l'espèce 258, le remplacement du Tortipouss adverse par l'espèce 152 et l'entrée/sortie du combat. Après le combat et la scène de la mère, l'écran d'équipe retrouve Gobou mâle, niveau 6, 22/22 PV.
+
+- [Fermeture complète et reprise](https://github.com/NeptuneOff/Pokemon-Universe/actions/runs/41233017249) réussies : le premier processus se ferme avec le code 0, puis une installation neuve reçoit uniquement son checkpoint de sauvegarde vérifié. **CONTINUER** reprend chez la mère et l'équipe retrouve Gobou mâle, niveau 6, 22/22 PV. Aucun nouveau tirage n'est observé. Le second processus se ferme aussi avec le code 0.
+
+[Captures immuables du choix et du premier combat](https://github.com/NeptuneOff/Pokemon-Universe/tree/5a49ae88052f2c951756ca02c37fe29bba59361d/docs/evidence/linked-port-41231425244) · [Équipe après redémarrage](https://github.com/NeptuneOff/Pokemon-Universe/tree/dc10fe4fa1875dc92033dea95cdda235ca93a6ad/docs/evidence/linked-port-41233017249).
+
+La campagne entière, les combats après évolution, le son et un bureau Windows natif restent à parcourir. Le second compagnon et sa gemme, les 15 starters suivants, les transformations Méga, les autres régions et le duo réseau restent hors de cette livraison.
+
+## Livraison précédente — 30 octobre 2026
 
 La distribution Git courante est **`47cbbf0e8630133f0426`**, moteur compilé depuis **`55f930ab529a74f2c461bb7703c393cea831a5d3`**. Les sections suivantes conservent l'historique des contrôles précédents ; leurs anciennes limites de raccordement ne décrivent pas toutes le moteur courant.
 

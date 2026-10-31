@@ -9,8 +9,9 @@ Après chaque étape jouable publiée sur `main` : `git pull`, puis ouvrir **JOU
 | 1 — Campagne | Reprendre sa partie normale |
 | 2 — Admin | Commencer ou reprendre une partie de test indépendante |
 | 3 — Copier ma campagne | Copier la campagne dans le profil admin, puis tester cette copie |
+| 4 — Nouvelle partie Admin | Protéger la sauvegarde admin précédente, puis commencer une partie vierge |
 
-Le choix 3 remplace la progression admin après sauvegarde de secours. Il ne remplace jamais la campagne. Le choix 2 crée une nouvelle partie admin si aucune n'existe. Les profils conservent chacun leur progression lors des mises à jour.
+Le choix 3 remplace la progression admin après sauvegarde de secours. Il ne remplace jamais la campagne. Le choix 2 crée une nouvelle partie admin si aucune n'existe. Les profils conservent chacun leur progression lors des mises à jour. Pour refaire les choix initiaux, utiliser le choix 4 : la progression admin précédente est protégée par une copie vérifiée dans `native-runtime/universe-admin-backups`, et la campagne reste intacte. Si cette copie ne peut pas être protégée, le lancement s’arrête avant de retirer la sauvegarde admin.
 
 Dans le profil admin, **F10**, puis **Application** ouvre les outils du port Platine :
 
@@ -25,7 +26,7 @@ Attendre d'être sur une carte, sans dialogue, animation ou menu actif avant d'u
 
 **Ces outils ne débloquent que le contenu déjà installé dans le moteur** : ils ne rendent pas jouables les espèces supplémentaires, les Méga ou les régions encore en développement. L'entrée « Multiplayer » du débogueur libntr n'est pas la coopération Universe.
 
-Invocation facultative depuis un terminal Windows, toujours avec le même fichier : `JOUER.bat -Admin` ou `JOUER.bat -Admin -CopyCampaign`. Le double-clic affiche les choix.
+Invocation facultative depuis un terminal Windows, toujours avec le même fichier : `JOUER.bat -Admin` ou `JOUER.bat -Admin -CopyCampaign`. `JOUER.bat -NewAdmin` démarre une nouvelle partie de test avec la même protection que le choix 4. Le double-clic affiche les choix.
 
 ## Livraisons et retours
 
