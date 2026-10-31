@@ -115,6 +115,24 @@
       "width": 512,
       "height": 768,
       "observed_ocr_text": "(3"
+    },
+    {
+      "file": "03-door.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "(3"
+    },
+    {
+      "file": "03-outside.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "(3"
+    },
+    {
+      "file": "live-003.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "(3"
     }
   ],
   "steps": [
@@ -357,6 +375,52 @@
     {
       "wait": 1,
       "capture": "live-002"
+    },
+    {
+      "hold": "Down",
+      "seconds": 1.4,
+      "wait": 0.7
+    },
+    {
+      "hold": "Left",
+      "seconds": 0.9,
+      "wait": 0.7
+    },
+    {
+      "hold": "Down",
+      "seconds": 0.6,
+      "wait": 2,
+      "capture": "03-door"
+    },
+    {
+      "until_text": "QUITTER",
+      "advance_keys": [
+        "z",
+        "c"
+      ],
+      "ocr_box": [
+        310,
+        0,
+        512,
+        310
+      ],
+      "ocr_psm": 6,
+      "attempts": 40,
+      "delay_ms": 700
+    },
+    {
+      "key": "x",
+      "wait": 0.5
+    },
+    {
+      "hold": "Down",
+      "seconds": 0.6,
+      "wait": 3,
+      "capture": "03-outside"
+    },
+    {
+      "wait": 1,
+      "capture": "live-003"
     }
   ],
   "resumed_disposable_flash": true,
@@ -372,5 +436,5 @@
   "native_starter_received": [],
   "native_npc_starter_mappings": [],
   "live_state": "waiting",
-  "interactive_sequence": 2
+  "interactive_sequence": 3
 }
