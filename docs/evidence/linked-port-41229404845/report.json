@@ -109,6 +109,18 @@
       "width": 512,
       "height": 768,
       "observed_ocr_text": "Lies\n\nie}"
+    },
+    {
+      "file": "14-checkpoint-final.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "Lies\n\nie}"
+    },
+    {
+      "file": "live-001.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "Lies\n\nie}"
     }
   ],
   "steps": [
@@ -412,6 +424,14 @@
       "key": "x",
       "wait": 1,
       "capture": "13-ready"
+    },
+    {
+      "wait": 1,
+      "capture": "14-checkpoint-final"
+    },
+    {
+      "wait": 1,
+      "capture": "live-001"
     }
   ],
   "resumed_disposable_flash": true,
@@ -426,6 +446,6 @@
   "native_starter_confirmed": [],
   "native_starter_received": [],
   "native_npc_starter_mappings": [],
-  "live_state": "waiting",
-  "interactive_sequence": 0
+  "live_state": "finished",
+  "interactive_sequence": 1
 }
