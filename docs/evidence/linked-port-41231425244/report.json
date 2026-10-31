@@ -549,5 +549,8 @@
     }
   ],
   "live_state": "finished",
-  "interactive_sequence": 9
+  "interactive_sequence": 9,
+  "completed": true,
+  "process_exit": 0,
+  "disposable_flash_retained": true
 }
