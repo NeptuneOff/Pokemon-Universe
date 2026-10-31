@@ -73,6 +73,18 @@
       "width": 512,
       "height": 768,
       "observed_ocr_text": "ll\n\nos |\n\nSCs\n\n\u2014\u2014\u2014\u2014\n\nuP ad"
+    },
+    {
+      "file": "20-route-scene.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "he F\n\nms"
+    },
+    {
+      "file": "live-005.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "he F\n\nms"
     }
   ],
   "steps": [
@@ -176,6 +188,21 @@
     {
       "wait": 1,
       "capture": "live-004"
+    },
+    {
+      "hold": "Right",
+      "seconds": 2,
+      "wait": 0.5
+    },
+    {
+      "hold": "Up",
+      "seconds": 7,
+      "wait": 3,
+      "capture": "20-route-scene"
+    },
+    {
+      "wait": 1,
+      "capture": "live-005"
     }
   ],
   "resumed_disposable_flash": true,
@@ -191,5 +218,5 @@
   "native_starter_received": [],
   "native_npc_starter_mappings": [],
   "live_state": "waiting",
-  "interactive_sequence": 4
+  "interactive_sequence": 5
 }
