@@ -139,6 +139,18 @@
       "width": 512,
       "height": 768,
       "observed_ocr_text": "GERI\n\nGHOH\n\na\n\nVS\n\nio\n\nGil\n\nEOL)\n\nWS\n\na\n\nOF ae\n\n4S \u201caTTAQUE"
+    },
+    {
+      "file": "31-first-battle-complete.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "a\n\n[= [PElSyaes. E ecateckrcpacks"
+    },
+    {
+      "file": "live-005.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "a\n\n[= [PElSyaes. E ecateckrcpacks"
     }
   ],
   "steps": [
@@ -343,6 +355,18 @@
     {
       "wait": 1,
       "capture": "live-004"
+    },
+    {
+      "until_log": "native extension state released\\.",
+      "attempts": 180,
+      "delay_ms": 1000,
+      "allow_timeout": true,
+      "wait": 3,
+      "capture": "31-first-battle-complete"
+    },
+    {
+      "wait": 1,
+      "capture": "live-005"
     }
   ],
   "resumed_disposable_flash": true,
@@ -352,7 +376,7 @@
   "window_title": "POKEMON PL [CPUE01]",
   "actual_startup_hook_observed": true,
   "battle_begin_observed": true,
-  "battle_end_observed": false,
+  "battle_end_observed": true,
   "native_starter_draws": [
     {
       "grass": 152,
@@ -374,5 +398,5 @@
     }
   ],
   "live_state": "waiting",
-  "interactive_sequence": 4
+  "interactive_sequence": 5
 }
