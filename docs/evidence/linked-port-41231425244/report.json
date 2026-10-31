@@ -205,6 +205,18 @@
       "width": 512,
       "height": 768,
       "observed_ocr_text": "4\n\nbdo ES"
+    },
+    {
+      "file": "38-before-close.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "4\n\nbdo ES"
+    },
+    {
+      "file": "live-009.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "4\n\nbdo ES"
     }
   ],
   "steps": [
@@ -499,6 +511,13 @@
     {
       "wait": 1,
       "capture": "live-008"
+    },
+    {
+      "capture": "38-before-close"
+    },
+    {
+      "wait": 1,
+      "capture": "live-009"
     }
   ],
   "resumed_disposable_flash": true,
@@ -529,6 +548,6 @@
       "stage": 0
     }
   ],
-  "live_state": "waiting",
-  "interactive_sequence": 8
+  "live_state": "finished",
+  "interactive_sequence": 9
 }
