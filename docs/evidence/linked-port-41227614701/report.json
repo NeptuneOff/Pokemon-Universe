@@ -133,6 +133,18 @@
       "width": 512,
       "height": 768,
       "observed_ocr_text": "(3"
+    },
+    {
+      "file": "04-town.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "ll\n\nst\n\n(Be\n\nSEF\n\ne\n\n*\n\n-_*\n\nid\n\na\n\n_*"
+    },
+    {
+      "file": "live-004.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "ll\n\nst\n\n(Be\n\nSEF\n\ne\n\n*\n\n-_*\n\nid\n\na\n\n_*"
     }
   ],
   "steps": [
@@ -421,6 +433,46 @@
     {
       "wait": 1,
       "capture": "live-003"
+    },
+    {
+      "hold": "Left",
+      "seconds": 0.7,
+      "wait": 0.4
+    },
+    {
+      "hold": "Down",
+      "seconds": 0.7,
+      "wait": 2
+    },
+    {
+      "until_text": "QUITTER",
+      "advance_keys": [
+        "z",
+        "c"
+      ],
+      "ocr_box": [
+        310,
+        0,
+        512,
+        310
+      ],
+      "ocr_psm": 6,
+      "attempts": 40,
+      "delay_ms": 700
+    },
+    {
+      "key": "x",
+      "wait": 0.5
+    },
+    {
+      "hold": "Down",
+      "seconds": 0.7,
+      "wait": 3,
+      "capture": "04-town"
+    },
+    {
+      "wait": 1,
+      "capture": "live-004"
     }
   ],
   "resumed_disposable_flash": true,
@@ -436,5 +488,5 @@
   "native_starter_received": [],
   "native_npc_starter_mappings": [],
   "live_state": "waiting",
-  "interactive_sequence": 3
+  "interactive_sequence": 4
 }
