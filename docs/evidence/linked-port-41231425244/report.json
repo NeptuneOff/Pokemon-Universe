@@ -121,6 +121,24 @@
       "width": 512,
       "height": 768,
       "observed_ocr_text": ""
+    },
+    {
+      "file": "29-starter-received.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "a"
+    },
+    {
+      "file": "30-first-battle.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "GERI\n\nGHOH\n\na\n\nVS\n\n2\n\nGOBOU\n\na\n\nVS\n\nOF ae\n\n=\n\n=\n\noy\n\n4S \u201caTTAQUE"
+    },
+    {
+      "file": "live-004.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "GERI\n\nGHOH\n\na\n\nVS\n\nio\n\nGil\n\nEOL)\n\nWS\n\na\n\nOF ae\n\n4S \u201caTTAQUE"
     }
   ],
   "steps": [
@@ -302,6 +320,29 @@
     {
       "wait": 1,
       "capture": "live-003"
+    },
+    {
+      "key": "z",
+      "wait": 8
+    },
+    {
+      "until_log": "Native starter received:",
+      "attempts": 30,
+      "delay_ms": 900,
+      "allow_timeout": true,
+      "capture": "29-starter-received"
+    },
+    {
+      "until_log": "native extension state initialized\\.",
+      "attempts": 180,
+      "delay_ms": 1000,
+      "allow_timeout": true,
+      "wait": 8,
+      "capture": "30-first-battle"
+    },
+    {
+      "wait": 1,
+      "capture": "live-004"
     }
   ],
   "resumed_disposable_flash": true,
@@ -310,7 +351,7 @@
   "glxinfo": "name of display: :99\ndisplay: :99  screen: 0\ndirect rendering: Yes\nExtended renderer info (GLX_MESA_query_renderer):\n    Vendor: Mesa (0xffffffff)\n    Device: llvmpipe (LLVM 20.1.2, 256 bits) (0xffffffff)\n    Version: 25.2.8\n    Accelerated: no\n    Video memory: 15983MB\n    Unified memory: yes\n    Preferred profile: core (0x1)\n    Max core profile version: 4.5\n    Max compat profile version: 4.5\n    Max GLES1 profile version: 1.1\n    Max GLES[23] profile version: 3.2\nMemory info (GL_ATI_meminfo):\n    VBO free memory - total: 0 MB, largest block: 0 MB\n    VBO free aux. memory - total: 14482 MB, largest block: 14482 MB\n    Texture free memory - total: 0 MB, largest block: 0 MB\n    Texture free aux. memory - total: 14482 MB, largest block: 14482 MB\n    Renderbuffer free memory - total: 0 MB, largest block: 0 MB\n    Renderbuffer free aux. memory - total: 14482 MB, largest block: 14482 MB\nMemory info (GL_NVX_gpu_memory_info):\n    Dedicated video memory: 0 MB\n    Total available memory: 15983 MB\n    Currently available dedicated video memory: 0 MB\nOpenGL vendor string: Mesa\nOpenGL renderer string: llvmpipe (LLVM 20.1.2, 256 bits)\nOpenGL core profile version string: 4.5 (Core Profile) Mesa 25.2.8-0ubuntu0.24.04.4\nOpenGL core profile shading language version string: 4.50\nOpenGL core profile context flags: (none)\nOpenGL core profile profile mask: core profile\n\nOpenGL version string: 4.5 (Compatibility Profile) Mesa 25.2.8-0ubuntu0.24.04.4\nOpenGL shading language version string: 4.50\nOpenGL context flags: (none)\nOpenGL profile mask: compatibility profile\n\nOpenGL ES profile version string: OpenGL ES 3.2 Mesa 25.2.8-0ubuntu0.24.04.4\nOpenGL ES profile shading language version string: OpenGL ES GLSL ES 3.20\n\n",
   "window_title": "POKEMON PL [CPUE01]",
   "actual_startup_hook_observed": true,
-  "battle_begin_observed": false,
+  "battle_begin_observed": true,
   "battle_end_observed": false,
   "native_starter_draws": [
     {
@@ -319,9 +360,19 @@
       "water": 258
     }
   ],
-  "native_starter_confirmed": [],
-  "native_starter_received": [],
-  "native_npc_starter_mappings": [],
+  "native_starter_confirmed": [
+    258
+  ],
+  "native_starter_received": [
+    258
+  ],
+  "native_npc_starter_mappings": [
+    {
+      "source": 387,
+      "target": 152,
+      "stage": 0
+    }
+  ],
   "live_state": "waiting",
-  "interactive_sequence": 3
+  "interactive_sequence": 4
 }
