@@ -1,1 +1,1 @@
-{"run_id":41227614701,"sequence":8,"steps":[{"hold":"Up","seconds":0.7,"wait":3},{"until_text":"QUITTER","advance_keys":["z","c"],"ocr_box":[310,0,512,310],"ocr_psm":6,"attempts":40,"delay_ms":700},{"key":"x","wait":0.5,"capture":"08-rival-scene-ended"}],"finish":false}
+{"run_id":41227614701,"sequence":9,"steps":[{"hold":"Left","seconds":0.6,"wait":3},{"until_text":"QUITTER","advance_keys":["z","c"],"ocr_box":[310,0,512,310],"ocr_psm":6,"attempts":40,"delay_ms":700},{"key":"x","wait":0.5,"capture":"09-rival-upper-scene"}],"finish":false}
