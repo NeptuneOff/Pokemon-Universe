@@ -52,6 +52,9 @@ jobs:
           path: native-runtime/qa-resume
           run-id: ${{ steps.checkpoint.outputs.run_id }}
           github-token: ${{ github.token }}
+      - name: Migrate the reviewed disposable pre-starter checkpoint
+        if: steps.checkpoint.outputs.run_id == '41051144920'
+        run: python tools/native/migrate_ci_checkpoint.py --checkpoint native-runtime/qa-resume --distribution candidate/distribution/windows
       - name: Run the Windows executable and capture its real pixels
         id: render
         run: |

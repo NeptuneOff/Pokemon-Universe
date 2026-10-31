@@ -98,6 +98,18 @@ def main():
     if diagnostic.returncode != 0 or '"universe_native_linked":true' not in diagnostic.stdout:
         raise RuntimeError('The linked executable diagnostic failed')
 
+    def observe_native_state():
+        contents = log.read_text(errors='replace') if log.exists() else ''
+        report['actual_startup_hook_observed'] = '[Universe] Native registry linked:' in contents
+        report['battle_begin_observed'] = 'native extension state initialized.' in contents
+        report['battle_end_observed'] = 'native extension state released.' in contents
+        report['native_starter_draws'] = [dict(zip(('grass', 'fire', 'water'), map(int, row)))
+            for row in re.findall(r'Native starter draw saved: Grass=(\d+) Fire=(\d+) Water=(\d+); pool=12', contents)]
+        report['native_starter_confirmed'] = list(map(int, re.findall(r'Native starter confirmed: species=(\d+)', contents)))
+        report['native_starter_received'] = list(map(int, re.findall(r'Native starter received: species=(\d+)', contents)))
+        report['native_npc_starter_mappings'] = [dict(zip(('source', 'target', 'stage'), map(int, row)))
+            for row in re.findall(r'Native NPC starter mapped: (\d+) -> (\d+); stage=(\d+)', contents)]
+
     def xdo(*cmd, check=True):
         return subprocess.run(['xdotool', *map(str, cmd)], env=env, capture_output=True,
                               text=True, timeout=10, check=check).stdout.strip()
@@ -216,7 +228,7 @@ def main():
             report['window_title'] = xdo('getwindowname', window)
             xdo('windowfocus', '--sync', window)
             execute_steps(json.loads(args.recipe.read_text(encoding='utf-8')))
-            report['actual_startup_hook_observed'] = '[Universe] Native registry linked:' in log.read_text(errors='replace')
+            observe_native_state()
             if not report['actual_startup_hook_observed']:
                 raise RuntimeError('The actual graphical startup did not reach Universe')
             report['battle_begin_observed'] = 'native extension state initialized.' in log.read_text(errors='replace')
@@ -240,8 +252,7 @@ def main():
                         execute_steps([{'wait': 1, 'capture': 'live-' + str(sequence).zfill(3)}])
                         report['interactive_sequence'] = sequence
                         report['live_state'] = 'finished' if batch['finish'] else 'waiting'
-                        report['battle_begin_observed'] = 'native extension state initialized.' in log.read_text(errors='replace')
-                        report['battle_end_observed'] = 'native extension state released.' in log.read_text(errors='replace')
+                        observe_native_state()
                         (evidence / 'report.json').write_text(json.dumps(report, indent=2) + '\n')
                         publish_evidence(repo, evidence, run_id, sequence)
                         if batch['finish']:
@@ -249,6 +260,7 @@ def main():
                     time.sleep(2)
                 else:
                     report['live_state'] = 'deadline'
+            observe_native_state()
             report['completed'] = True
     except Exception as exc:
         report['failure'] = str(exc)

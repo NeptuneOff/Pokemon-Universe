@@ -1,94 +1,206 @@
 [
   {
-    "wait": 20,
-    "capture": "01-boot"
+    "wait": 20
   },
   {
     "key": "Return",
-    "wait": 5,
-    "capture": "02-start"
+    "wait": 5
+  },
+  {
+    "until_text": "CONTINUER",
+    "advance_key": "z",
+    "attempts": 30,
+    "delay_ms": 850,
+    "capture": "01-continue"
   },
   {
     "key": "z",
-    "wait": 3,
-    "capture": "03-opening-01"
+    "wait": 6,
+    "capture": "02-resumed"
   },
   {
-    "key": "z",
+    "key": "Right",
+    "repeat": 2,
+    "delay_ms": 500,
     "wait": 3,
-    "capture": "03-opening-02"
+    "capture": "03-stairs-exit"
   },
   {
-    "key": "z",
-    "wait": 3,
-    "capture": "03-opening-03"
+    "until_text": "QUITTER",
+    "advance_keys": [
+      "z",
+      "c"
+    ],
+    "ocr_box": [
+      310,
+      0,
+      512,
+      310
+    ],
+    "ocr_psm": 6,
+    "attempts": 60,
+    "delay_ms": 900,
+    "capture": "04-scene-finished"
   },
   {
-    "key": "z",
-    "wait": 3,
-    "capture": "03-opening-04"
+    "key": "x",
+    "wait": 1,
+    "capture": "00-ready"
   },
   {
-    "key": "z",
-    "wait": 3,
-    "capture": "03-opening-05"
+    "key": "Down",
+    "repeat": 6,
+    "delay_ms": 450
   },
   {
-    "key": "z",
-    "wait": 3,
-    "capture": "03-opening-06"
+    "key": "Left",
+    "repeat": 5,
+    "delay_ms": 450
   },
   {
-    "key": "z",
-    "wait": 3,
-    "capture": "03-opening-07"
-  },
-  {
-    "key": "z",
-    "wait": 3,
-    "capture": "03-opening-08"
-  },
-  {
-    "key": "z",
-    "wait": 3,
-    "capture": "03-opening-09"
-  },
-  {
-    "key": "z",
-    "wait": 3,
-    "capture": "03-opening-10"
-  },
-  {
-    "key": "z",
-    "wait": 3,
-    "capture": "03-opening-11"
-  },
-  {
-    "key": "z",
-    "wait": 3,
-    "capture": "03-opening-12"
-  },
-  {
-    "key": "z",
-    "wait": 3,
-    "capture": "03-opening-13"
-  },
-  {
-    "key": "z",
-    "wait": 3,
-    "capture": "03-opening-14"
-  },
-  {
-    "key": "F10",
+    "key": "Down",
+    "repeat": 2,
+    "delay_ms": 450,
     "wait": 2,
-    "capture": "04-admin-panel"
+    "capture": "door-warning"
   },
   {
+    "until_text": "QUITTER",
+    "advance_keys": [
+      "z",
+      "c"
+    ],
+    "ocr_box": [
+      310,
+      0,
+      512,
+      310
+    ],
+    "ocr_psm": 6,
+    "attempts": 60,
+    "delay_ms": 900
+  },
+  {
+    "key": "x"
+  },
+  {
+    "key": "Down",
+    "repeat": 2,
+    "delay_ms": 500,
+    "wait": 4,
+    "capture": "town-exit"
+  },
+  {
+    "key": "Left",
+    "repeat": 12,
+    "delay_ms": 450
+  },
+  {
+    "key": "Up",
+    "repeat": 11,
+    "delay_ms": 450,
     "wait": 2,
-    "capture": "05-admin-application",
-    "click": [
-      116,
-      244
-    ]
+    "capture": "rival-thud"
+  },
+  {
+    "until_text": "QUITTER",
+    "advance_keys": [
+      "z",
+      "c"
+    ],
+    "ocr_box": [
+      310,
+      0,
+      512,
+      310
+    ],
+    "ocr_psm": 6,
+    "attempts": 60,
+    "delay_ms": 900
+  },
+  {
+    "key": "x"
+  },
+  {
+    "key": "Up",
+    "repeat": 3,
+    "delay_ms": 500,
+    "wait": 4,
+    "capture": "rival-house"
+  },
+  {
+    "key": "Right",
+    "repeat": 8,
+    "delay_ms": 400
+  },
+  {
+    "key": "Up",
+    "repeat": 11,
+    "delay_ms": 400
+  },
+  {
+    "key": "Left",
+    "repeat": 8,
+    "delay_ms": 400,
+    "wait": 2,
+    "capture": "rival-door-scene"
+  },
+  {
+    "until_text": "QUITTER",
+    "advance_keys": [
+      "z",
+      "c"
+    ],
+    "ocr_box": [
+      310,
+      0,
+      512,
+      310
+    ],
+    "ocr_psm": 6,
+    "attempts": 60,
+    "delay_ms": 800
+  },
+  {
+    "key": "x"
+  },
+  {
+    "key": "Up",
+    "repeat": 3,
+    "delay_ms": 500,
+    "wait": 3,
+    "capture": "rival-house-entry"
+  },
+  {
+    "hold": "Up",
+    "seconds": 0.65,
+    "wait": 3,
+    "capture": "rival-house-step-in"
+  },
+  {
+    "until_text": "QUITTER",
+    "advance_keys": [
+      "z",
+      "c"
+    ],
+    "ocr_box": [
+      310,
+      0,
+      512,
+      310
+    ],
+    "ocr_psm": 6,
+    "attempts": 60,
+    "delay_ms": 700
+  },
+  {
+    "key": "x",
+    "wait": 0.7
+  },
+  {
+    "hold": "Up",
+    "seconds": 0.65,
+    "wait": 3,
+    "capture": "rival-house-interior"
   }
 ]
