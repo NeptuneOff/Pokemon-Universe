@@ -169,6 +169,24 @@
       "width": 512,
       "height": 768,
       "observed_ocr_text": "PFERMER\n\n|BEBESREEEl:\n\nPOCHE\n\ncl F 1"
+    },
+    {
+      "file": "34-return-menu.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "a By\n\n4\n\n{="
+    },
+    {
+      "file": "35-gobou-party.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "eae\n\nChai\n\nSez\n\na\n\namor"
+    },
+    {
+      "file": "live-007.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "eae\n\nChai\n\nSez\n\na\n\namor"
     }
   ],
   "steps": [
@@ -420,6 +438,24 @@
     {
       "wait": 1,
       "capture": "live-006"
+    },
+    {
+      "key": "x",
+      "wait": 3,
+      "capture": "34-return-menu"
+    },
+    {
+      "key": "Up",
+      "wait": 1
+    },
+    {
+      "key": "z",
+      "wait": 5,
+      "capture": "35-gobou-party"
+    },
+    {
+      "wait": 1,
+      "capture": "live-007"
     }
   ],
   "resumed_disposable_flash": true,
@@ -451,5 +487,5 @@
     }
   ],
   "live_state": "waiting",
-  "interactive_sequence": 6
+  "interactive_sequence": 7
 }
