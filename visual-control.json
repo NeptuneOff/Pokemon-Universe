@@ -1,1 +1,1 @@
-{"run_id":41231425244,"sequence":1,"steps":[{"key":"Left","repeat":2,"delay_ms":900,"wait":1,"capture":"23-briefcase-facing"},{"key":"z","wait":10,"capture":"24-native-starter-menu"}],"finish":false}
+{"run_id":41231425244,"sequence":2,"steps":[{"wait":4,"key":"z","capture":"25-first-starter-preview"}],"finish":false}
