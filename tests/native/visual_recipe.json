@@ -16,14 +16,13 @@
   {
     "key": "z",
     "wait": 6,
-    "capture": "02-resumed"
+    "capture": "02-resume"
   },
   {
-    "key": "Right",
-    "repeat": 2,
-    "delay_ms": 500,
-    "wait": 3,
-    "capture": "03-stairs-exit"
+    "hold": "Right",
+    "seconds": 1.2,
+    "wait": 4,
+    "capture": "01-room-stairs"
   },
   {
     "until_text": "QUITTER",
@@ -38,31 +37,30 @@
       310
     ],
     "ocr_psm": 6,
-    "attempts": 60,
-    "delay_ms": 900,
-    "capture": "04-scene-finished"
+    "attempts": 40,
+    "delay_ms": 700,
+    "capture": "02-mother-ended"
   },
   {
     "key": "x",
     "wait": 1,
-    "capture": "00-ready"
+    "capture": "02-house-floor"
   },
   {
-    "key": "Down",
-    "repeat": 6,
-    "delay_ms": 450
+    "hold": "Down",
+    "seconds": 1.4,
+    "wait": 0.7
   },
   {
-    "key": "Left",
-    "repeat": 5,
-    "delay_ms": 450
+    "hold": "Left",
+    "seconds": 0.9,
+    "wait": 0.7
   },
   {
-    "key": "Down",
-    "repeat": 2,
-    "delay_ms": 450,
+    "hold": "Down",
+    "seconds": 0.6,
     "wait": 2,
-    "capture": "door-warning"
+    "capture": "03-door"
   },
   {
     "until_text": "QUITTER",
@@ -77,130 +75,229 @@
       310
     ],
     "ocr_psm": 6,
-    "attempts": 60,
-    "delay_ms": 900
-  },
-  {
-    "key": "x"
-  },
-  {
-    "key": "Down",
-    "repeat": 2,
-    "delay_ms": 500,
-    "wait": 4,
-    "capture": "town-exit"
-  },
-  {
-    "key": "Left",
-    "repeat": 12,
-    "delay_ms": 450
-  },
-  {
-    "key": "Up",
-    "repeat": 11,
-    "delay_ms": 450,
-    "wait": 2,
-    "capture": "rival-thud"
-  },
-  {
-    "until_text": "QUITTER",
-    "advance_keys": [
-      "z",
-      "c"
-    ],
-    "ocr_box": [
-      310,
-      0,
-      512,
-      310
-    ],
-    "ocr_psm": 6,
-    "attempts": 60,
-    "delay_ms": 900
-  },
-  {
-    "key": "x"
-  },
-  {
-    "key": "Up",
-    "repeat": 3,
-    "delay_ms": 500,
-    "wait": 4,
-    "capture": "rival-house"
-  },
-  {
-    "key": "Right",
-    "repeat": 8,
-    "delay_ms": 400
-  },
-  {
-    "key": "Up",
-    "repeat": 11,
-    "delay_ms": 400
-  },
-  {
-    "key": "Left",
-    "repeat": 8,
-    "delay_ms": 400,
-    "wait": 2,
-    "capture": "rival-door-scene"
-  },
-  {
-    "until_text": "QUITTER",
-    "advance_keys": [
-      "z",
-      "c"
-    ],
-    "ocr_box": [
-      310,
-      0,
-      512,
-      310
-    ],
-    "ocr_psm": 6,
-    "attempts": 60,
-    "delay_ms": 800
-  },
-  {
-    "key": "x"
-  },
-  {
-    "key": "Up",
-    "repeat": 3,
-    "delay_ms": 500,
-    "wait": 3,
-    "capture": "rival-house-entry"
-  },
-  {
-    "hold": "Up",
-    "seconds": 0.65,
-    "wait": 3,
-    "capture": "rival-house-step-in"
-  },
-  {
-    "until_text": "QUITTER",
-    "advance_keys": [
-      "z",
-      "c"
-    ],
-    "ocr_box": [
-      310,
-      0,
-      512,
-      310
-    ],
-    "ocr_psm": 6,
-    "attempts": 60,
+    "attempts": 40,
     "delay_ms": 700
   },
   {
     "key": "x",
-    "wait": 0.7
+    "wait": 0.5
+  },
+  {
+    "hold": "Down",
+    "seconds": 0.6,
+    "wait": 3,
+    "capture": "03-outside"
+  },
+  {
+    "hold": "Left",
+    "seconds": 0.7,
+    "wait": 0.4
+  },
+  {
+    "hold": "Down",
+    "seconds": 0.7,
+    "wait": 2
+  },
+  {
+    "until_text": "QUITTER",
+    "advance_keys": [
+      "z",
+      "c"
+    ],
+    "ocr_box": [
+      310,
+      0,
+      512,
+      310
+    ],
+    "ocr_psm": 6,
+    "attempts": 40,
+    "delay_ms": 700
+  },
+  {
+    "key": "x",
+    "wait": 0.5
+  },
+  {
+    "hold": "Down",
+    "seconds": 0.7,
+    "wait": 3,
+    "capture": "04-town"
+  },
+  {
+    "key": "Left",
+    "repeat": 5,
+    "delay_ms": 650
+  },
+  {
+    "key": "Up",
+    "repeat": 11,
+    "delay_ms": 650
+  },
+  {
+    "key": "Left",
+    "repeat": 8,
+    "delay_ms": 650,
+    "wait": 2,
+    "capture": "05-rival-door"
   },
   {
     "hold": "Up",
-    "seconds": 0.65,
+    "seconds": 2,
+    "wait": 2
+  },
+  {
+    "until_text": "QUITTER",
+    "advance_keys": [
+      "z",
+      "c"
+    ],
+    "ocr_box": [
+      310,
+      0,
+      512,
+      310
+    ],
+    "ocr_psm": 6,
+    "attempts": 40,
+    "delay_ms": 700
+  },
+  {
+    "key": "x",
+    "wait": 0.5
+  },
+  {
+    "hold": "Up",
+    "seconds": 0.7,
     "wait": 3,
-    "capture": "rival-house-interior"
+    "capture": "06-rival-home"
+  },
+  {
+    "key": "Left",
+    "repeat": 5,
+    "delay_ms": 900
+  },
+  {
+    "key": "Up",
+    "repeat": 7,
+    "delay_ms": 900,
+    "wait": 3
+  },
+  {
+    "until_text": "QUITTER",
+    "advance_keys": [
+      "z",
+      "c"
+    ],
+    "ocr_box": [
+      310,
+      0,
+      512,
+      310
+    ],
+    "ocr_psm": 6,
+    "attempts": 40,
+    "delay_ms": 700
+  },
+  {
+    "key": "x",
+    "wait": 1,
+    "capture": "07-rival-upper"
+  },
+  {
+    "hold": "Up",
+    "seconds": 0.7,
+    "wait": 3
+  },
+  {
+    "until_text": "QUITTER",
+    "advance_keys": [
+      "z",
+      "c"
+    ],
+    "ocr_box": [
+      310,
+      0,
+      512,
+      310
+    ],
+    "ocr_psm": 6,
+    "attempts": 40,
+    "delay_ms": 700
+  },
+  {
+    "key": "x",
+    "wait": 0.5,
+    "capture": "08-rival-scene-ended"
+  },
+  {
+    "hold": "Left",
+    "seconds": 0.6,
+    "wait": 3
+  },
+  {
+    "until_text": "QUITTER",
+    "advance_keys": [
+      "z",
+      "c"
+    ],
+    "ocr_box": [
+      310,
+      0,
+      512,
+      310
+    ],
+    "ocr_psm": 6,
+    "attempts": 40,
+    "delay_ms": 700
+  },
+  {
+    "key": "x",
+    "wait": 0.5,
+    "capture": "09-rival-upper-scene"
+  },
+  {
+    "hold": "Right",
+    "seconds": 1.5,
+    "wait": 3
+  },
+  {
+    "until_text": "QUITTER",
+    "advance_keys": [
+      "z",
+      "c"
+    ],
+    "ocr_box": [
+      310,
+      0,
+      512,
+      310
+    ],
+    "ocr_psm": 6,
+    "attempts": 40,
+    "delay_ms": 700,
+    "capture": "10-rival-upper-menu"
+  },
+  {
+    "key": "Down",
+    "repeat": 2,
+    "delay_ms": 600
+  },
+  {
+    "key": "z",
+    "wait": 2,
+    "capture": "11-save-prompt"
+  },
+  {
+    "key": "z",
+    "repeat": 8,
+    "delay_ms": 900,
+    "wait": 3,
+    "capture": "12-saved"
+  },
+  {
+    "key": "x",
+    "wait": 1,
+    "capture": "13-ready"
   }
 ]
