@@ -447,5 +447,8 @@
   "native_starter_received": [],
   "native_npc_starter_mappings": [],
   "live_state": "finished",
-  "interactive_sequence": 1
+  "interactive_sequence": 1,
+  "completed": true,
+  "process_exit": 0,
+  "disposable_flash_retained": true
 }
