@@ -97,6 +97,24 @@
       "width": 512,
       "height": 768,
       "observed_ocr_text": "Pv\n\nren\n\n=\n\nHaman: Daniel !"
+    },
+    {
+      "file": "02-mother-ended.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "felled\n\ney\n\nrrr\n\nol\n\n\u2018Bo Ee"
+    },
+    {
+      "file": "02-house-floor.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "(3"
+    },
+    {
+      "file": "live-002.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "(3"
     }
   ],
   "steps": [
@@ -313,6 +331,32 @@
     {
       "wait": 1,
       "capture": "live-001"
+    },
+    {
+      "until_text": "QUITTER",
+      "advance_keys": [
+        "z",
+        "c"
+      ],
+      "ocr_box": [
+        310,
+        0,
+        512,
+        310
+      ],
+      "ocr_psm": 6,
+      "attempts": 40,
+      "delay_ms": 700,
+      "capture": "02-mother-ended"
+    },
+    {
+      "key": "x",
+      "wait": 1,
+      "capture": "02-house-floor"
+    },
+    {
+      "wait": 1,
+      "capture": "live-002"
     }
   ],
   "resumed_disposable_flash": true,
@@ -328,5 +372,5 @@
   "native_starter_received": [],
   "native_npc_starter_mappings": [],
   "live_state": "waiting",
-  "interactive_sequence": 1
+  "interactive_sequence": 2
 }
