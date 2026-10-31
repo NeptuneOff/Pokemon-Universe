@@ -193,6 +193,18 @@
       "width": 512,
       "height": 768,
       "observed_ocr_text": "eh\n\nAS"
+    },
+    {
+      "file": "09-rival-upper-scene.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "AS"
+    },
+    {
+      "file": "live-009.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "AS"
     }
   ],
   "steps": [
@@ -643,6 +655,36 @@
     {
       "wait": 1,
       "capture": "live-008"
+    },
+    {
+      "hold": "Left",
+      "seconds": 0.6,
+      "wait": 3
+    },
+    {
+      "until_text": "QUITTER",
+      "advance_keys": [
+        "z",
+        "c"
+      ],
+      "ocr_box": [
+        310,
+        0,
+        512,
+        310
+      ],
+      "ocr_psm": 6,
+      "attempts": 40,
+      "delay_ms": 700
+    },
+    {
+      "key": "x",
+      "wait": 0.5,
+      "capture": "09-rival-upper-scene"
+    },
+    {
+      "wait": 1,
+      "capture": "live-009"
     }
   ],
   "resumed_disposable_flash": true,
@@ -658,5 +700,5 @@
   "native_starter_received": [],
   "native_npc_starter_mappings": [],
   "live_state": "waiting",
-  "interactive_sequence": 8
+  "interactive_sequence": 9
 }
