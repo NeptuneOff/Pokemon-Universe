@@ -699,6 +699,9 @@
   "native_starter_confirmed": [],
   "native_starter_received": [],
   "native_npc_starter_mappings": [],
-  "live_state": "waiting",
-  "interactive_sequence": 9
+  "live_state": "deadline",
+  "interactive_sequence": 9,
+  "completed": true,
+  "process_exit": 0,
+  "disposable_flash_retained": true
 }
