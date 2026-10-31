@@ -97,6 +97,30 @@
       "width": 512,
       "height": 768,
       "observed_ocr_text": "ol\n\n_~"
+    },
+    {
+      "file": "26-preview-germignon.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": ""
+    },
+    {
+      "file": "27-preview-salameche.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "HE"
+    },
+    {
+      "file": "28-preview-gobou.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": ""
+    },
+    {
+      "file": "live-003.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": ""
     }
   ],
   "steps": [
@@ -243,6 +267,41 @@
     {
       "wait": 1,
       "capture": "live-002"
+    },
+    {
+      "key": "z",
+      "wait": 5,
+      "capture": "26-preview-germignon"
+    },
+    {
+      "key": "x",
+      "wait": 2
+    },
+    {
+      "key": "Right",
+      "wait": 1
+    },
+    {
+      "key": "z",
+      "wait": 5,
+      "capture": "27-preview-salameche"
+    },
+    {
+      "key": "x",
+      "wait": 2
+    },
+    {
+      "key": "Right",
+      "wait": 1
+    },
+    {
+      "key": "z",
+      "wait": 5,
+      "capture": "28-preview-gobou"
+    },
+    {
+      "wait": 1,
+      "capture": "live-003"
     }
   ],
   "resumed_disposable_flash": true,
@@ -264,5 +323,5 @@
   "native_starter_received": [],
   "native_npc_starter_mappings": [],
   "live_state": "waiting",
-  "interactive_sequence": 2
+  "interactive_sequence": 3
 }
