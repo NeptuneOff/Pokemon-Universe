@@ -1,1 +1,1 @@
-{"run_id":41227614701,"sequence":1,"steps":[{"hold":"Right","seconds":1.2,"wait":4,"capture":"01-room-stairs"}],"finish":false}
+{"run_id":41227614701,"sequence":2,"steps":[{"until_text":"QUITTER","advance_keys":["z","c"],"ocr_box":[310,0,512,310],"ocr_psm":6,"attempts":40,"delay_ms":700,"capture":"02-mother-ended"},{"key":"x","wait":1,"capture":"02-house-floor"}],"finish":false}
