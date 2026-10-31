@@ -1,1 +1,1 @@
-{"run_id":41227614701,"sequence":4,"steps":[{"hold":"Left","seconds":0.7,"wait":0.4},{"hold":"Down","seconds":0.7,"wait":2},{"until_text":"QUITTER","advance_keys":["z","c"],"ocr_box":[310,0,512,310],"ocr_psm":6,"attempts":40,"delay_ms":700},{"key":"x","wait":0.5},{"hold":"Down","seconds":0.7,"wait":3,"capture":"04-town"}],"finish":false}
+{"run_id":41227614701,"sequence":5,"steps":[{"key":"Left","repeat":5,"delay_ms":650},{"key":"Up","repeat":11,"delay_ms":650},{"key":"Left","repeat":8,"delay_ms":650,"wait":2,"capture":"05-rival-door"}],"finish":false}
