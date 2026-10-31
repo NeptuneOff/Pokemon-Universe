@@ -61,6 +61,18 @@
       "width": 512,
       "height": 768,
       "observed_ocr_text": ">"
+    },
+    {
+      "file": "19-town.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "ll\n\nos |\n\nSCs\n\n\u2014\u2014\u2014\u2014\n\nuP ad"
+    },
+    {
+      "file": "live-004.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "ll\n\nos |\n\nSCs\n\n\u2014\u2014\u2014\u2014\n\nuP ad"
     }
   ],
   "steps": [
@@ -149,6 +161,21 @@
     {
       "wait": 1,
       "capture": "live-003"
+    },
+    {
+      "key": "Right",
+      "repeat": 2,
+      "delay_ms": 900
+    },
+    {
+      "hold": "Down",
+      "seconds": 0.7,
+      "wait": 3,
+      "capture": "19-town"
+    },
+    {
+      "wait": 1,
+      "capture": "live-004"
     }
   ],
   "resumed_disposable_flash": true,
@@ -164,5 +191,5 @@
   "native_starter_received": [],
   "native_npc_starter_mappings": [],
   "live_state": "waiting",
-  "interactive_sequence": 3
+  "interactive_sequence": 4
 }
