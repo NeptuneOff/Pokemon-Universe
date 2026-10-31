@@ -1,1 +1,1 @@
-{"run_id":41229832497,"sequence":5,"steps":[{"hold":"Right","seconds":2,"wait":0.5},{"hold":"Up","seconds":7,"wait":3,"capture":"20-route-scene"}],"finish":false}
+{"run_id":41229832497,"sequence":6,"steps":[{"until_text":"QUITTER","advance_keys":["z","c"],"ocr_box":[310,0,512,310],"ocr_psm":6,"attempts":60,"delay_ms":700,"capture":"21-prof-scene-ended"},{"key":"x","wait":1,"capture":"21-briefcase-field"}],"finish":false}
