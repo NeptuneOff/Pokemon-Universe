@@ -133,6 +133,17 @@ def main():
         for step in steps:
             if process.poll() is not None:
                 raise RuntimeError('The game exited during the visual test')
+            if 'until_log' in step:
+                for attempt in range(min(step.get('attempts', 60), 180)):
+                    contents = log.read_text(errors='replace') if log.exists() else ''
+                    if re.search(step['until_log'], contents):
+                        break
+                    for key in step.get('advance_keys', [step.get('advance_key', 'z')]):
+                        xdo('key', '--clearmodifiers', '--delay', 100, key)
+                        time.sleep(0.2)
+                    time.sleep(step.get('delay_ms', 700) / 1000)
+                else:
+                    raise RuntimeError('Required native event was not observed: ' + step['until_log'])
             if 'until_text' in step:
                 for attempt in range(min(step.get('attempts', 30), 60)):
                     observed = read_window_text(window, step.get('ocr_box'), step.get('ocr_psm', 11))
