@@ -1,1 +1,1 @@
-{"run_id":41231425244,"sequence":6,"steps":[{"until_text":"QUITTER","advance_keys":["z","c"],"ocr_box":[310,0,512,310],"ocr_psm":6,"attempts":180,"delay_ms":900,"allow_timeout":true,"capture":"32-after-mother-menu"},{"key":"x","wait":1},{"key":"c","wait":1},{"key":"z","wait":5,"capture":"33-native-party"}],"finish":false}
+{"run_id":41231425244,"sequence":7,"steps":[{"key":"x","wait":3,"capture":"34-return-menu"},{"key":"Up","wait":1},{"key":"z","wait":5,"capture":"35-gobou-party"}],"finish":false}
