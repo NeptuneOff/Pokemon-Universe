@@ -1,1 +1,1 @@
-{"run_id":41231425244,"sequence":7,"steps":[{"key":"x","wait":3,"capture":"34-return-menu"},{"key":"Up","wait":1},{"key":"z","wait":5,"capture":"35-gobou-party"}],"finish":false}
+{"run_id":41231425244,"sequence":8,"steps":[{"key":"x","wait":3},{"key":"Down","repeat":3,"delay_ms":850},{"key":"z","wait":2,"capture":"36-save-prompt"},{"key":"z","repeat":6,"delay_ms":1800,"wait":8,"capture":"37-save-complete"}],"finish":false}
