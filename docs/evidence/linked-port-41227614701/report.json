@@ -145,6 +145,18 @@
       "width": 512,
       "height": 768,
       "observed_ocr_text": "ll\n\nst\n\n(Be\n\nSEF\n\ne\n\n*\n\n-_*\n\nid\n\na\n\n_*"
+    },
+    {
+      "file": "05-rival-door.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "SEF\n\n\u201c7\n\ni\u201c\n\ne\n\nBi\n\n\"he\n\nrd\n\nat\n\ngi~\n\nfal\n\nde"
+    },
+    {
+      "file": "live-005.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "SEF\n\n\u201c7\n\ni\u201c\n\ne\n\nBi\n\n\"he\n\nrd\n\nat\n\ngi~\n\nfal\n\nde"
     }
   ],
   "steps": [
@@ -473,6 +485,27 @@
     {
       "wait": 1,
       "capture": "live-004"
+    },
+    {
+      "key": "Left",
+      "repeat": 5,
+      "delay_ms": 650
+    },
+    {
+      "key": "Up",
+      "repeat": 11,
+      "delay_ms": 650
+    },
+    {
+      "key": "Left",
+      "repeat": 8,
+      "delay_ms": 650,
+      "wait": 2,
+      "capture": "05-rival-door"
+    },
+    {
+      "wait": 1,
+      "capture": "live-005"
     }
   ],
   "resumed_disposable_flash": true,
@@ -488,5 +521,5 @@
   "native_starter_received": [],
   "native_npc_starter_mappings": [],
   "live_state": "waiting",
-  "interactive_sequence": 4
+  "interactive_sequence": 5
 }
