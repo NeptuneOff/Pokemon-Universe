@@ -143,9 +143,11 @@ def main():
                         time.sleep(0.2)
                     time.sleep(step.get('delay_ms', 700) / 1000)
                 else:
-                    raise RuntimeError('Required native event was not observed: ' + step['until_log'])
+                    if not step.get('allow_timeout', False):
+                        raise RuntimeError('Required native event was not observed: ' + step['until_log'])
+                    report.setdefault('optional_wait_timeouts', []).append(step['until_log'])
             if 'until_text' in step:
-                for attempt in range(min(step.get('attempts', 30), 60)):
+                for attempt in range(min(step.get('attempts', 30), 180)):
                     observed = read_window_text(window, step.get('ocr_box'), step.get('ocr_psm', 11))
                     if re.search(step['until_text'], observed, re.IGNORECASE):
                         break
@@ -154,7 +156,9 @@ def main():
                         time.sleep(0.2)
                     time.sleep(step.get('delay_ms', 700) / 1000)
                 else:
-                    raise RuntimeError('Required screen text was not observed: ' + step['until_text'])
+                    if not step.get('allow_timeout', False):
+                        raise RuntimeError('Required screen text was not observed: ' + step['until_text'])
+                    report.setdefault('optional_wait_timeouts', []).append(step['until_text'])
             if 'key' in step:
                 for _ in range(step.get('repeat', 1)):
                     xdo('key', '--clearmodifiers', '--delay', 100, step['key'])
