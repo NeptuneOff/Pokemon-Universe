@@ -181,6 +181,18 @@
       "width": 512,
       "height": 768,
       "observed_ocr_text": "tee\n\nAs"
+    },
+    {
+      "file": "08-rival-scene-ended.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "eh\n\nAS"
+    },
+    {
+      "file": "live-008.png",
+      "width": 512,
+      "height": 768,
+      "observed_ocr_text": "eh\n\nAS"
     }
   ],
   "steps": [
@@ -601,6 +613,36 @@
     {
       "wait": 1,
       "capture": "live-007"
+    },
+    {
+      "hold": "Up",
+      "seconds": 0.7,
+      "wait": 3
+    },
+    {
+      "until_text": "QUITTER",
+      "advance_keys": [
+        "z",
+        "c"
+      ],
+      "ocr_box": [
+        310,
+        0,
+        512,
+        310
+      ],
+      "ocr_psm": 6,
+      "attempts": 40,
+      "delay_ms": 700
+    },
+    {
+      "key": "x",
+      "wait": 0.5,
+      "capture": "08-rival-scene-ended"
+    },
+    {
+      "wait": 1,
+      "capture": "live-008"
     }
   ],
   "resumed_disposable_flash": true,
@@ -616,5 +658,5 @@
   "native_starter_received": [],
   "native_npc_starter_mappings": [],
   "live_state": "waiting",
-  "interactive_sequence": 7
+  "interactive_sequence": 8
 }
