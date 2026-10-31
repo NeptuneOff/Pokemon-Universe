@@ -1,6 +1,6 @@
 # Windows PowerShell 5.1. All game packages come from this Git checkout.
 [CmdletBinding()]
-param([switch]$PrepareOnly, [switch]$Admin, [switch]$CopyCampaign, [switch]$Menu)
+param([switch]$PrepareOnly, [switch]$Admin, [switch]$CopyCampaign, [switch]$NewAdmin, [switch]$Menu)
 
 # JOUER.bat presents one entry point; direct/CI invocations remain non-interactive.
 if ($Menu -and -not $PrepareOnly) {
@@ -8,16 +8,20 @@ if ($Menu -and -not $PrepareOnly) {
     Write-Host '1 - Jouer / continuer la campagne'
     Write-Host '2 - Mode admin / continuer les tests'
     Write-Host '3 - Mode admin / copier ma campagne pour tester'
+    Write-Host '4 - Mode admin / nouvelle partie (ancienne protegee)'
     Write-Host '0 - Quitter'
     $selection = Read-Host 'Choix'
     switch ($selection) {
         '1' { }
         '2' { $Admin = $true }
         '3' { $Admin = $true; $CopyCampaign = $true }
+        '4' { $NewAdmin = $true }
         '0' { exit 0 }
         default { Write-Host 'Choix inconnu. Relancer JOUER.bat.'; exit 1 }
     }
 }
+if ($NewAdmin) { $Admin = $true }
+if ($NewAdmin -and $CopyCampaign) { Write-Host '-NewAdmin et -CopyCampaign sont incompatibles.'; exit 1 }
 if ($CopyCampaign -and -not $Admin) { Write-Host '-CopyCampaign exige -Admin.'; exit 1 }
 
 Set-StrictMode -Version 2.0
@@ -296,6 +300,22 @@ function Copy-CampaignToAdmin($Release, [string]$Runtime) {
     Write-Log 'Copie de campagne dans le profil ADMIN. La campagne originale reste conservee.'
 }
 
+function Start-NewAdmin($Release, [string]$Runtime) {
+    if (-not $script:Admin) { throw 'Une nouvelle partie de test exige le profil ADMIN.' }
+    $source = Select-SaveSource $Release $Runtime
+    if (-not [string]::Equals($source, $Runtime, [StringComparison]::OrdinalIgnoreCase)) {
+        Assert-NoLink $source
+        Assert-GameStopped $source
+        $script:sourceLock = [IO.File]::Open((Join-Path $source 'universe-session.lock'), [IO.FileMode]::OpenOrCreate,
+            [IO.FileAccess]::ReadWrite, [IO.FileShare]::None)
+        Backup-Save $source
+    }
+    Backup-Save $Runtime
+    $save = Join-Path $Runtime 'save.bin'
+    if (Test-Path -LiteralPath $save) { Remove-Item -LiteralPath $save }
+    Write-Log 'Nouvelle partie ADMIN : anciennes sauvegardes protegees dans universe-admin-backups.'
+}
+
 function Enable-AdminTools([string]$Runtime) {
     $config = Join-Path $Runtime 'sim_config.ini'
     Assert-NoLink $config
@@ -347,7 +367,8 @@ try {
         $exitStatus = 0
     } else {
         $phase = 'sauvegarde'
-        if ($Admin -and $CopyCampaign) { Copy-CampaignToAdmin $release $runtime }
+        if ($NewAdmin) { Start-NewAdmin $release $runtime }
+        elseif ($Admin -and $CopyCampaign) { Copy-CampaignToAdmin $release $runtime }
         else {
             $source = Select-SaveSource $release $runtime
             Import-Progress $release $source $runtime

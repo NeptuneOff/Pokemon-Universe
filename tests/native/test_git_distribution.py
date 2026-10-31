@@ -254,6 +254,46 @@ public class Program {
         self.assertFalse((admin / 'save.bin').exists())
         self.assertFalse((self.storage / 'windows-current.json').exists())
 
+    def test_new_admin_protects_old_test_save_and_keeps_campaign_untouched(self):
+        self.launch()
+        campaign = (self.runtime() / 'save.bin').read_bytes()
+        campaign_state = (self.storage / 'windows-current.json').read_bytes()
+        self.launch('-Admin')
+        self.launch('-Admin')
+        admin = self.storage / 'windows-admin-builds' / self.release['build_id']
+        previous = (admin / 'save.bin').read_bytes()
+        self.launch('-NewAdmin', '-PrepareOnly')
+        self.assertEqual((admin / 'save.bin').read_bytes(), previous)
+        self.launch('-NewAdmin')
+        self.assertEqual((admin / 'save.bin').read_bytes(), b'|played')
+        self.assertEqual((self.storage / 'universe-admin-backups' / (digest(previous) + '.sav')).read_bytes(), previous)
+        self.assertEqual((self.runtime() / 'save.bin').read_bytes(), campaign)
+        self.assertEqual((self.storage / 'windows-current.json').read_bytes(), campaign_state)
+        self.assertIn('Nouvelle partie ADMIN', self.diagnostic())
+        self.launch('-Admin')
+        self.assertEqual((admin / 'save.bin').read_bytes(), b'|played|played')
+
+    def test_new_admin_after_update_does_not_import_the_previous_test_party(self):
+        self.launch('-Admin')
+        old = self.storage / 'windows-admin-builds' / self.release['build_id']
+        shutil.rmtree(self.distribution)
+        self.prepared, self.package = fixture(self.base, self.executable, b'new starter content')
+        self.release = build(self.prepared, self.package, self.distribution)
+        self.launch('-NewAdmin')
+        current = self.storage / 'windows-admin-builds' / self.release['build_id']
+        self.assertEqual((old / 'save.bin').read_bytes(), b'|played')
+        self.assertEqual((current / 'save.bin').read_bytes(), b'|played')
+        self.assertFalse((self.storage / 'windows-current.json').exists())
+
+    def test_new_admin_refuses_a_bad_backup_before_removing_progress(self):
+        self.launch('-Admin')
+        admin = self.storage / 'windows-admin-builds' / self.release['build_id']
+        previous = (admin / 'save.bin').read_bytes()
+        (self.storage / 'universe-admin-backups' / (digest(previous) + '.sav')).write_bytes(b'corrupt')
+        self.launch('-NewAdmin', expected=1)
+        self.assertEqual((admin / 'save.bin').read_bytes(), previous)
+        self.assertIn('Copie de secours alteree', self.diagnostic())
+
     def test_bad_git_chunk_leaves_legacy_save_untouched(self):
         legacy = self.storage / 'windows-fr'
         legacy.mkdir(parents=True)
