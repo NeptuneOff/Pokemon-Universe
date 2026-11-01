@@ -1,0 +1,235 @@
+{
+  "schema": 1,
+  "id": "universe-habitats-opening-v1",
+  "engine_commit": "35067868f64f23d25d17ac3e536cfdd9a7f40523",
+  "archive": "fielddata/encountdata/pl_enc_data.narc",
+  "source_sha256": "44e1b7307638a509bee6e7fc4a2085267add44d12fe2d590559d69fabdbc1687",
+  "member_count": 183,
+  "slots_percent": [
+    20,
+    20,
+    10,
+    10,
+    10,
+    10,
+    5,
+    5,
+    4,
+    4,
+    1,
+    1
+  ],
+  "areas": [
+    {
+      "id": "route_201",
+      "title": "Route 201",
+      "biome": "prairie",
+      "member": 140,
+      "source_sha256": "2ea7bf103bc1b61cfe692f8fb51b2ba7efeac56a73e847c72acbb34392abe60a",
+      "grass": [
+        396,
+        399,
+        16,
+        161,
+        263,
+        265,
+        191,
+        10,
+        396,
+        399,
+        261,
+        406
+      ],
+      "day": [
+        16,
+        187
+      ],
+      "night": [
+        163,
+        261
+      ],
+      "reason_fr": "Les oiseaux migrateurs partagent les haies avec les petits mammifères et les insectes. Les nocturnes sortent après la tombée du jour."
+    },
+    {
+      "id": "route_202",
+      "title": "Route 202",
+      "biome": "prairie",
+      "member": 141,
+      "source_sha256": "696adab7a02c375acf97889439da35281becbc4c9cff4fcd6b020ba9ed7a61da",
+      "grass": [
+        403,
+        263,
+        396,
+        265,
+        399,
+        406,
+        187,
+        10,
+        161,
+        403,
+        427,
+        280
+      ],
+      "day": [
+        276,
+        406
+      ],
+      "night": [
+        163,
+        261
+      ],
+      "reason_fr": "Les lisières entre Littorella et Féli-Cité attirent oiseaux, pollinisateurs et espèces habituées aux abords des villes."
+    },
+    {
+      "id": "route_203",
+      "title": "Route 203",
+      "biome": "lisière rocheuse",
+      "member": 142,
+      "source_sha256": "c36230046ee4c90d98182aef20209294b7011fbc7456038aea5bc2ec5e9aa3ff",
+      "grass": [
+        396,
+        403,
+        161,
+        273,
+        399,
+        63,
+        27,
+        280,
+        276,
+        133,
+        63,
+        280
+      ],
+      "day": [
+        276,
+        273
+      ],
+      "night": [
+        163,
+        167
+      ],
+      "reason_fr": "La route vers Charbourg relie les haies et les affleurements rocheux. Les espèces craintives restent rares."
+    },
+    {
+      "id": "route_204_south",
+      "title": "Route 204 — sud",
+      "biome": "sous-bois",
+      "member": 143,
+      "source_sha256": "23600ba6d9fe56dc9a9eaf61f4cb376493e590f2db7562bfed339ed7b601acbc",
+      "grass": [
+        406,
+        265,
+        10,
+        165,
+        187,
+        273,
+        43,
+        46,
+        396,
+        427,
+        29,
+        32
+      ],
+      "day": [
+        165,
+        187
+      ],
+      "night": [
+        167,
+        163
+      ],
+      "reason_fr": "La végétation plus dense accueille plantes, insectes et petits habitants du sous-bois ; les araignées sortent la nuit."
+    },
+    {
+      "id": "lake_verity",
+      "title": "Lac Vérité",
+      "biome": "berges",
+      "member": 135,
+      "source_sha256": "b87092dbafc27b2334f0c00a0a41ad3ee854c31e0548ebc36ceac417c2fd7a05",
+      "grass": [
+        278,
+        399,
+        270,
+        60,
+        265,
+        396,
+        298,
+        183,
+        283,
+        187,
+        194,
+        54
+      ],
+      "day": [
+        270,
+        60
+      ],
+      "night": [
+        194,
+        163
+      ],
+      "reason_fr": "Les herbes des rives accueillent oiseaux d’eau, amphibiens et petites espèces aquatiques. Surf et pêche conservent leurs tables."
+    },
+    {
+      "id": "lake_verity_low_water",
+      "title": "Lac Vérité — basses eaux",
+      "biome": "berges",
+      "member": 134,
+      "source_sha256": "48d4ba8847cebb51edfe8dc1d08b2acc34d472e49e4d5dd2b4b7f3000a2d5ae5",
+      "grass": [
+        278,
+        399,
+        270,
+        60,
+        265,
+        396,
+        298,
+        183,
+        283,
+        187,
+        194,
+        54
+      ],
+      "day": [
+        270,
+        60
+      ],
+      "night": [
+        194,
+        163
+      ],
+      "reason_fr": "La même population de berges reste présente dans la variante de la carte à basses eaux."
+    },
+    {
+      "id": "ravaged_path",
+      "title": "Chemin Rocheux",
+      "biome": "grotte",
+      "member": 53,
+      "source_sha256": "6d77e19f9f5a2a3bc84af91b3157d0f9eecfc4e6e61b8b51ed3ec0ddd190defa",
+      "grass": [
+        41,
+        74,
+        293,
+        41,
+        74,
+        293,
+        27,
+        41,
+        74,
+        296,
+        304,
+        95
+      ],
+      "day": [
+        293,
+        41
+      ],
+      "night": [
+        293,
+        41
+      ],
+      "reason_fr": "Les chauves-souris et les espèces minérales dominent ; les habitants plus rares occupent les galeries et les éboulis."
+    }
+  ],
+  "patched_sha256": "6d1d3db7109d9ab978805730cdf377a9b3f2cc0c73e6d69ee07601f1183204ea"
+}

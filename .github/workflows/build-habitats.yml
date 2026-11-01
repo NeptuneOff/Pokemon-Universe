@@ -1,0 +1,113 @@
+name: Build native opening habitats
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'content/native/habitats.fr.json'
+      - 'tools/native/patch_habitats.py'
+      - 'tools/native/refresh_habitats.py'
+      - '.github/workflows/build-habitats.yml'
+permissions:
+  contents: write
+concurrency:
+  group: universe-native-habitats
+  cancel-in-progress: false
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    outputs:
+      build_id: ${{ steps.package.outputs.build_id }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m unittest discover -s tests/native -p test_habitats.py -v
+      - name: Rebuild and verify native encounter data from Git
+        id: package
+        run: |
+          mkdir -p native-runtime
+          python -m tools.native.refresh_habitats --base-ref "$GITHUB_SHA" --output native-runtime/habitats-distribution > native-runtime/habitats-report.json
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          report = json.loads(Path('native-runtime/habitats-report.json').read_text())
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
+              print('build_id=' + report['build_id'], file=out)
+          print(json.dumps(report, indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: universe-habitat-windows
+          path: native-runtime/habitats-distribution/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: universe-habitat-report
+          path: native-runtime/habitats-report.json
+  verify-windows:
+    needs: prepare
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Replace the disposable source distribution
+        shell: powershell
+        run: Remove-Item distribution/windows -Recurse -Force
+      - uses: actions/download-artifact@v4
+        with:
+          name: universe-habitat-windows
+          path: distribution/windows
+      - name: Install from Git packages and run the real Windows executable diagnostic
+        shell: powershell
+        run: |
+          & .\JOUER.bat -PrepareOnly
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $release = Get-Content distribution/windows/release.json -Raw | ConvertFrom-Json
+          $runtime = Join-Path 'native-runtime/windows-builds' $release.build_id
+          Push-Location $runtime
+          & .\main.exe --universe-self-test
+          $code = $LASTEXITCODE
+          Pop-Location
+          exit $code
+  publish:
+    needs: [prepare, verify-windows]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Independently reproduce the Windows-verified distribution
+        env:
+          EXPECTED_BUILD: ${{ needs.prepare.outputs.build_id }}
+        run: |
+          python -m tools.native.refresh_habitats --base-ref "$GITHUB_SHA" --output native-runtime/habitats-distribution
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          release = json.loads(Path('native-runtime/habitats-distribution/release.json').read_text())
+          assert release['build_id'] == os.environ['EXPECTED_BUILD'], 'Habitat build is not reproducible'
+          PY
+      - name: Publish a test candidate without replacing the player branch
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          branch=builds/windows-habitats
+          previous=$(git ls-remote origin "refs/heads/$branch" | cut -f1)
+          if [ -n "$previous" ]; then git fetch origin "$previous"; fi
+          rm -rf distribution/windows
+          cp -R native-runtime/habitats-distribution distribution/windows
+          git add distribution/windows
+          if git diff --cached --quiet -- distribution/windows; then exit 0; fi
+          if [ -n "$previous" ]; then git restore --source="$previous" --staged --worktree -- .github/workflows; fi
+          tree=$(git write-tree)
+          if [ -n "$previous" ]; then
+            commit=$(git commit-tree "$tree" -p "$previous" -p "$GITHUB_SHA" -m "Publish Windows-verified native habitat candidate")
+          else
+            commit=$(git commit-tree "$tree" -p "$GITHUB_SHA" -m "Publish Windows-verified native habitat candidate")
+          fi
+          git push origin "$commit:refs/heads/$branch"
